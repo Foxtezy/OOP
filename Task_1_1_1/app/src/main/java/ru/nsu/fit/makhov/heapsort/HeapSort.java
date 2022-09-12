@@ -59,7 +59,7 @@ public class HeapSort {
     return res;
   }
 
-  public void heapSort() {
+  public void sort() {
     this.heap = new int[arr.length];
     for (int x : arr) {
       add(x);
