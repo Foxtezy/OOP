@@ -1,5 +1,6 @@
-package ru.nsu.fit.makhov;
+package ru.nsu.fit.makhov.heapsort;
 
+import ru.nsu.fit.makhov.HeapSort;
 import java.util.Arrays;
 
 public class Main {
