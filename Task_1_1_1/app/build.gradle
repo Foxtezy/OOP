@@ -26,7 +26,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'ru.nsu.fit.makhov.heapsort.App'
+    mainClass = 'ru.nsu.fit.makhov.heapsort.Main'
 }
 
 tasks.named('test') {
