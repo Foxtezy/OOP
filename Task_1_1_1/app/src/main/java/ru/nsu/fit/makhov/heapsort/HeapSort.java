@@ -1,4 +1,4 @@
-package ru.nsu.fit.makhov;
+package ru.nsu.fit.makhov.heapsort;
 
 public class HeapSort {
 
