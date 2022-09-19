@@ -6,7 +6,7 @@ package ru.nsu.fit.makhov.heapsort;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class AppTest {
+public class HeapSortTests {
   @Test
   void testHeapsort() {
     int[] arr = {5, 4, 3, 2, 1};
