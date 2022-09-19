@@ -2,70 +2,31 @@ package ru.nsu.fit.makhov.heapsort;
 
 public class HeapSort {
 
-  private final int[] arr;
-  private int[] heap;
-  private int size = 0;
+  private HeapSort() {}
 
-  public HeapSort(int[] arr) {
-    this.arr = arr;
-  }
-
-  public int[] getArr() {
-    return arr;
-  }
-
-  private void swap(int i, int j) {
-    int c = heap[i];
-    heap[i] = heap[j];
-    heap[j] = c;
-  }
-
-  private void siftUp(int v) {
-    if (v < 0) return;
-    int father = (v - 1) / 2;
-    if (heap[father] > heap[v]) {
-      swap(father, v);
-      siftUp(father);
-    }
-  }
-
-  private void siftDown(int v) {
-    int l = 2 * v + 1;
-    int r = 2 * v + 2;
-    if (l >= size) return;
-    int minSon;
-    if (r == size || (heap[l] < heap[r])) {
-      minSon = l;
-    } else {
-      minSon = r;
-    }
-    if (heap[v] > heap[minSon]) {
-      swap(minSon, v);
-      siftDown(minSon);
-    }
-  }
-
-  private void add(int x) {
+  private static int add(int[] heap, int size, int x) {
     heap[size] = x;
     size++;
-    siftUp(size - 1);
+    Utils.siftUp(heap, size - 1);
+    return size;
   }
 
-  private int extractMin() {
+  private static int extractMin(int[] heap, int size) {
     int res = heap[0];
-    swap(0, size - 1);
+    Utils.swap(heap, 0, size - 1);
     size--;
-    siftDown(0);
+    Utils.siftDown(heap, size, 0);
     return res;
   }
 
-  public void sort() {
-    this.heap = new int[arr.length];
+  public static void sort(int[] arr) {
+    int[] heap = new int[arr.length];
+    int size = 0;
     for (int x : arr) {
-      add(x);
+      size = add(heap, size, x);
     }
     for (int i = 0; i < arr.length; i++) {
-      arr[i] = extractMin();
+      arr[i] = extractMin(heap, size--);
     }
   }
 }

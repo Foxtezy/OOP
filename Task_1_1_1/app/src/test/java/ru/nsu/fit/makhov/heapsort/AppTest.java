@@ -8,11 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
   @Test
-  void testHeapsort1() {
+  void testHeapsort() {
     int[] arr = {5, 4, 3, 2, 1};
     int[] sortedArr = {1, 2, 3, 4, 5};
-    HeapSort heapSort = new HeapSort(arr);
-    heapSort.sort();
-    assertArrayEquals(sortedArr, heapSort.getArr(), "Not equal");
+    HeapSort.sort(arr);
+    assertArrayEquals(sortedArr, arr, "Not equal");
   }
 }
