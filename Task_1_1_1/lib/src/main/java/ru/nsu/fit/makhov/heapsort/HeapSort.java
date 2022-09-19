@@ -40,11 +40,10 @@ public class HeapSort {
     }
   }
 
-  private static int add(int x) {
+  private static void add(int x) {
     heap[size] = x;
     size++;
     siftUp(size - 1);
-    return size;
   }
 
   private static int extractMin() {
@@ -62,9 +61,8 @@ public class HeapSort {
    */
   public static void sort(int[] arr) {
     heap = new int[arr.length];
-    int size = 0;
     for (int x : arr) {
-      size = add(x);
+      add(x);
     }
     for (int i = 0; i < arr.length; i++) {
       arr[i] = extractMin();
