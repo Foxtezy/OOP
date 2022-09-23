@@ -3,20 +3,20 @@ package ru.nsu.fit.makhov.stack;
 import java.util.Arrays;
 
 public class Stack<T> {
-  private Object[] data;
+  private T[] data;
 
   private int size = 0;
 
   public Stack() {
-    data = new Object[1];
-  }
+    data = (T[]) new Object[1];
+  } // TODO: 23.09.2022 unchecked cast
 
   public Stack(T[] content) {
     data = Arrays.copyOf(content, content.length);
   }
 
   public T[] toArray() {
-    return (T[]) Arrays.copyOf(data, size); // По идее кастование тут верное
+    return Arrays.copyOf(data, size);
   }
 
   private void grow(int size) {
@@ -35,21 +35,22 @@ public class Stack<T> {
     data[size - 1] = item;
   }
 
-  public void pushStack(T... items) { // TODO: 21.09.2022 нормально ли тут использовать vararg?
+  @SafeVarargs
+  public final void pushStack(T... items) { // TODO: 21.09.2022 нормально ли тут использовать vararg?
     grow(items.length);
     System.arraycopy(items, 0, data, size - items.length, items.length);
   }
 
   public T pop() {
     trim(1);
-    return (T) data[size];
+    return data[size];
   }
 
   public T[] popStack(int popSize) {
-    Object[] popArray = new Object[popSize];
+    T[] popArray = (T[]) new Object[popSize]; // TODO: 23.09.2022 unchecked cast
     System.arraycopy(data, size - popSize, popArray, 0, popSize);
     trim(popSize);
-    return (T[]) popArray;
+    return popArray;
   }
 
   public int count() {
