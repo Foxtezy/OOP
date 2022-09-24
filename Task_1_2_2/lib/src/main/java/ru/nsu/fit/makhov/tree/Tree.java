@@ -3,8 +3,12 @@
  */
 package ru.nsu.fit.makhov.tree;
 
-public class Library {
-    public boolean someLibraryMethod() {
-        return true;
-    }
+import java.util.TreeMap;
+
+public class Tree<T> {
+
+    private int size = 0;
+
+
+
 }

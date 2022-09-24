@@ -6,9 +6,9 @@ package ru.nsu.fit.makhov.tree;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class LibraryTest {
+class TreeTest {
     @Test void someLibraryMethodReturnsTrue() {
-        Library classUnderTest = new Library();
+        Tree classUnderTest = new Tree();
         assertTrue(classUnderTest.someLibraryMethod(), "someLibraryMethod should return 'true'");
     }
 }
