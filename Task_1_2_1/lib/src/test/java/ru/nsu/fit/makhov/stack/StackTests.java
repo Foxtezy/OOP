@@ -3,29 +3,57 @@
  */
 package ru.nsu.fit.makhov.stack;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-public class StackTests {
+class StackTests {
 
   @Test
-  public void stackTest1() {
-    Integer[] assertArray1 = {2};
-    Integer[] assertArray2 = {2, 7};
-    Integer[] assertArray3 = {2, 7, 4, 8};
-    Integer[] assertArray4 = {2, 7, 4};
-    Integer[] assertArray5 = {7, 4};
-    Stack<Integer> stack = new Stack<>();
+  public void stackTestArrayPush() {
+    Integer[] assertArray = {1, 2, 7, 4, 8};
+    Stack<Integer> stack = new Stack<>(1);
     stack.push(2);
-    Assertions.assertArrayEquals(assertArray1, stack.toArray());
     stack.push(7);
-    Assertions.assertArrayEquals(assertArray2, stack.toArray());
-    stack.pushStack(4, 8);
-    Assertions.assertArrayEquals(assertArray3, stack.toArray());
-    Assertions.assertEquals(8, stack.pop());
-    Assertions.assertArrayEquals(assertArray4, stack.toArray());
-    Assertions.assertArrayEquals(assertArray5, stack.popStack(2));
-    Assertions.assertArrayEquals(assertArray1, stack.toArray());
-    Assertions.assertEquals(1, stack.count());
+    stack.pushArray(4, 8);
+    assertArrayEquals(assertArray, stack.toArray());
+    assertEquals(5, stack.count());
+  }
+
+  @Test
+  public void stackTestArrayPop() {
+    Integer[] assertArray = {2, 7, 4};
+    Stack<Integer> stack = new Stack<>(1, 2, 7, 4, 8);
+    assertEquals(8, stack.pop());
+    assertArrayEquals(assertArray, stack.popArray(3));
+    assertEquals(1, stack.pop());
+    assertEquals(0, stack.count());
+  }
+
+  @Test
+  public void stackTestStackPush() {
+    Integer[] assertArray = {1, 2, 7, 4, 8};
+    Stack<Integer> stack = new Stack<>(1);
+    stack.push(2);
+    stack.push(7);
+    stack.pushStack(new Stack<>(4, 8));
+    assertArrayEquals(assertArray, stack.toArray());
+    assertEquals(5, stack.count());
+  }
+
+  @Test
+  public void stackTestStackPop() {
+    Integer[] assertArray = {2, 7, 4};
+    Stack<Integer> stack = new Stack<>(1, 2, 7, 4, 8);
+    assertEquals(8, stack.pop());
+    assertArrayEquals(assertArray, stack.popStack(3).toArray());
+    assertEquals(1, stack.pop());
+    assertEquals(0, stack.count());
+  }
+
+  @Test
+  public void stackTestEmpty() {
+    Stack<Integer> stack = new Stack<>();
+    stack.push(1);
+    assertThrows(RuntimeException.class, () -> stack.popStack(2));
   }
 }
