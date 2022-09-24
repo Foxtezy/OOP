@@ -3,12 +3,93 @@
  */
 package ru.nsu.fit.makhov.tree;
 
-import java.util.TreeMap;
+import java.util.*;
 
-public class Tree<T> {
+public class Tree<T> implements Iterable<T>{
 
-    private int size = 0;
+  private final Comparator<T> comparator;
+  private TreeNode<T> root = null;
+  private static final boolean RIGHT = true;
+  private static final boolean LEFT = false;
+  private boolean chose = RIGHT;
+
+  public Tree(Comparator<T> comparator) {
+    this.comparator = comparator;
+  }
+
+  public void add(T value) {
+    TreeNode<T> newNode = new TreeNode<>(value);
+    if (root == null) {
+      root = newNode;
+      return;
+    }
+    insertNode(root, newNode);
+  }
+
+  public void remove(T value) {
+    if (root == null) throw new RuntimeException();
+    TreeNode<T> delNode = findNode(root, value);
+    delNode = deleteNode(delNode);
+  }
+
+  private void insertNode(TreeNode<T> currentNode, TreeNode<T> newNode) {
+    if (comparator.compare(currentNode.getValue(), newNode.getValue()) < 0) {
+      if (currentNode.getRight() == null) currentNode.setRight(newNode);
+      else insertNode(currentNode.getRight(), newNode);
+    } else if (comparator.compare(currentNode.getValue(), newNode.getValue()) > 0) {
+      if (currentNode.getLeft() == null) currentNode.setLeft(newNode);
+      else insertNode(currentNode.getLeft(), newNode);
+    } else if (chose == RIGHT) {
+      chose = LEFT;
+      if (currentNode.getRight() == null) currentNode.setRight(newNode);
+      else insertNode(currentNode.getRight(), newNode);
+    } else {
+      chose = RIGHT;
+      if (currentNode.getLeft() == null) currentNode.setLeft(newNode);
+      else insertNode(currentNode.getLeft(), newNode);
+    }
+  }
+
+  private TreeNode<T> findNode(TreeNode<T> currentNode, T value){
+    if (comparator.compare(currentNode.getValue(), value) < 0) {
+      if (currentNode.getRight() == null) throw new RuntimeException();
+      else findNode(currentNode.getRight(), value);
+    } else if (comparator.compare(currentNode.getValue(), value) > 0) {
+      if (currentNode.getLeft() == null) throw new RuntimeException();
+      else findNode(currentNode.getLeft(), value);
+    }
+    return currentNode;
+  }
+
+  private TreeNode<T> deleteNode(TreeNode<T> currentNode){
+    if (currentNode.getLeft() == null && currentNode.getRight() == null){
+      return null;
+    }
+    if (currentNode.getLeft() == null){
+      return currentNode.getRight();
+    }
+    if (currentNode.getRight() == null){
+      return currentNode.getLeft();
+    }
+    TreeNode<T> minNodeInRightSubtree = findMinNode(currentNode.getRight());
+    currentNode.setValue(minNodeInRightSubtree.getValue());
+    TreeNode<T> delNode = findNode(currentNode.getRight(), currentNode.getValue());
+    return deleteNode(delNode);
+
+  }
+
+  private TreeNode<T> findMinNode(TreeNode<T> node) {
+    if (node.getLeft() == null) return node;
+    return findMinNode(node.getLeft());
+  }
 
 
 
+
+
+
+  @Override
+  public Iterator<T> iterator() {
+    return null;
+  }
 }

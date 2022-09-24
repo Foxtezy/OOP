@@ -4,11 +4,24 @@
 package ru.nsu.fit.makhov.tree;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.Comparator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TreeTest {
-    @Test void someLibraryMethodReturnsTrue() {
-        Tree classUnderTest = new Tree();
-        assertTrue(classUnderTest.someLibraryMethod(), "someLibraryMethod should return 'true'");
+
+    @Test
+    public void treeTest1(){
+        Tree<Integer> tree = new Tree<>(Integer::compare);
+        tree.add(1);
+        tree.add(2);
+        tree.add(3);
+        tree.add(0);
+        tree.add(-1);
+        tree.remove(2);
+        tree.add(5);
+
     }
+
 }
