@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * The <code>Stack</code> class represents a last-in-first-out (LIFO) stack of objects.
  *
- * @param <T>
+ * @param <T> type of objects.
  */
 public class Stack<T> {
   private T[] data;
@@ -17,7 +17,11 @@ public class Stack<T> {
     data = (T[]) new Object[1];
   }
 
-  /** Constructs a Stack containing the elements of the specified array. */
+  /**
+   * Constructs a stack containing the elements of the specified array.
+   *
+   * @param content array of T.
+   */
   @SafeVarargs
   public Stack(T... content) {
     data = Arrays.copyOf(content, content.length);
@@ -25,7 +29,7 @@ public class Stack<T> {
   }
 
   /**
-   * Returns an array containing all of the elements in this Stack in proper sequence (from first to
+   * Returns an array containing all of the elements in this stack in proper sequence (from first to
    * last element).
    *
    * @return array of T
@@ -46,32 +50,55 @@ public class Stack<T> {
     this.size -= size;
   }
 
-  /** Push item */
+  /**
+   * Push item
+   *
+   * @param item object of T
+   */
   public void push(T item) {
     grow(1);
     data[size - 1] = item;
   }
 
-  /** Push array of items */
+  /**
+   * Push array of items
+   *
+   * @param items array of T
+   */
   @SafeVarargs
   public final void pushArray(T... items) {
     grow(items.length);
     System.arraycopy(items, 0, data, size - items.length, items.length);
   }
 
-  /** Push stack of items */
-  public final void pushStack(Stack<T> addStack) {
-    grow(addStack.count());
-    System.arraycopy(addStack.toArray(), 0, data, size - addStack.count(), addStack.count());
+  /**
+   * Push stack of items
+   *
+   * @param itemsStack stack of T
+   */
+  public final void pushStack(Stack<T> itemsStack) {
+    grow(itemsStack.count());
+    System.arraycopy(itemsStack.toArray(), 0, data, size - itemsStack.count(), itemsStack.count());
   }
 
-  /** Pop item */
+  /**
+   * Pop item
+   *
+   * @return object of T
+   * @throws ArrayIndexOutOfBoundsException if pop empty stack
+   */
   public T pop() throws ArrayIndexOutOfBoundsException {
     trim(1);
     return data[size];
   }
 
-  /** Pop array of items */
+  /**
+   * Pop array of items
+   *
+   * @param popSize size of pop array
+   * @return array of items
+   * @throws ArrayIndexOutOfBoundsException if popSize greater than size of stack
+   */
   public T[] popArray(int popSize) throws ArrayIndexOutOfBoundsException {
     T[] popArray = (T[]) new Object[popSize];
     trim(popSize);
@@ -79,7 +106,13 @@ public class Stack<T> {
     return popArray;
   }
 
-  /** Pop stack of items */
+  /**
+   * Pop stack of items
+   *
+   * @param popSize size of pop stack
+   * @return stack of items
+   * @throws ArrayIndexOutOfBoundsException if popSize greater than size of stack
+   */
   public Stack<T> popStack(int popSize) throws ArrayIndexOutOfBoundsException {
     return new Stack<>(popArray(popSize));
   }
