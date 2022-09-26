@@ -46,12 +46,14 @@ public class Stack<T> {
   }
 
   private void trim(int size) throws ArrayIndexOutOfBoundsException {
-    if (this.size - size < 0) throw new ArrayIndexOutOfBoundsException("Not enough value");
+    if (this.size - size < 0) {
+      throw new ArrayIndexOutOfBoundsException("Not enough value");
+    }
     this.size -= size;
   }
 
   /**
-   * Push item
+   * Push item.
    *
    * @param item object of T
    */
@@ -61,7 +63,7 @@ public class Stack<T> {
   }
 
   /**
-   * Push array of items
+   * Push array of items.
    *
    * @param items array of T
    */
@@ -72,7 +74,7 @@ public class Stack<T> {
   }
 
   /**
-   * Push stack of items
+   * Push stack of items.
    *
    * @param itemsStack stack of T
    */
@@ -82,7 +84,7 @@ public class Stack<T> {
   }
 
   /**
-   * Pop item
+   * Pop item.
    *
    * @return object of T
    * @throws ArrayIndexOutOfBoundsException if pop empty stack
@@ -93,7 +95,7 @@ public class Stack<T> {
   }
 
   /**
-   * Pop array of items
+   * Pop array of items.
    *
    * @param popSize size of pop array
    * @return array of items
@@ -107,7 +109,7 @@ public class Stack<T> {
   }
 
   /**
-   * Pop stack of items
+   * Pop stack of items.
    *
    * @param popSize size of pop stack
    * @return stack of items
@@ -118,6 +120,8 @@ public class Stack<T> {
   }
 
   /**
+   * Returns size of stack.
+   *
    * @return size of stack
    */
   public int count() {
