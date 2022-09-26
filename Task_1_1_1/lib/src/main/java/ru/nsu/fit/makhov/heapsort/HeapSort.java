@@ -1,7 +1,6 @@
 package ru.nsu.fit.makhov.heapsort;
-//
 
-/** Class which contains heap sort method. */
+/** Class   which contain heap sort method. */
 public class HeapSort {
 
   private static int[] heap;
