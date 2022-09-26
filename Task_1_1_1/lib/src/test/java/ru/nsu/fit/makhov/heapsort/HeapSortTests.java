@@ -17,8 +17,8 @@ public class HeapSortTests {
 
   @Test
   void testHeapsort2() {
-    int[] arr = {1, 2, 1, 2, 1, 2};
-    int[] sortedArr = {1, 1, 1, 2, 2, 2};
+    int[] arr = {-1, 2, 1, 2, 1, 2};
+    int[] sortedArr = {-1, 1, 1, 2, 2, 2};
     HeapSort.sort(arr);
     assertArrayEquals(sortedArr, arr, "Not equal");
   }

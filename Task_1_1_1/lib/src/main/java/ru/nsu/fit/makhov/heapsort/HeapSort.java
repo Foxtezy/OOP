@@ -1,6 +1,6 @@
 package ru.nsu.fit.makhov.heapsort;
 
-/** Class which contains heap sort method */
+/** Class which contains heap sort method. */
 public class HeapSort {
 
   private static int[] heap;
@@ -16,7 +16,9 @@ public class HeapSort {
   }
 
   private static void siftUp(int v) {
-    if (v < 0) return;
+    if (v < 0) {
+      return;
+    }
     int father = (v - 1) / 2;
     if (heap[father] > heap[v]) {
       swap(father, v);
@@ -27,7 +29,9 @@ public class HeapSort {
   private static void siftDown(int v) {
     int l = 2 * v + 1;
     int r = 2 * v + 2;
-    if (l >= size) return;
+    if (l >= size) {
+      return;
+    }
     int minSon;
     if (r == size || (heap[l] < heap[r])) {
       minSon = l;
@@ -47,15 +51,15 @@ public class HeapSort {
   }
 
   private static int extractMin() {
-    int res = heap[0];
-    swap(0, size - 1);
     size--;
+    int res = heap[0];
+    swap(0, size);
     siftDown(0);
     return res;
   }
 
   /**
-   * Sorts the specified array into ascending numerical order
+   * Sorts the specified array into ascending numerical order.
    *
    * @param arr - the not null array of integers
    */
