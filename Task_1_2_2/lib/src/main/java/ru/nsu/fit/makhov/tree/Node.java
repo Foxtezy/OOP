@@ -1,12 +1,12 @@
 package ru.nsu.fit.makhov.tree;
 
-public class TreeNode<T> {
+public class Node<T> {
   private T value;
-  private TreeNode<T> left = null;
-  private TreeNode<T> right = null;
+  private Node<T> left = null;
+  private Node<T> right = null;
 
 
-  public TreeNode(T value){
+  public Node(T value){
     this.value = value;
   }
 
@@ -14,11 +14,11 @@ public class TreeNode<T> {
     return value;
   }
 
-  public TreeNode<T> getLeft() {
+  public Node<T> getLeft() {
     return left;
   }
 
-  public TreeNode<T> getRight() {
+  public Node<T> getRight() {
     return right;
   }
 
@@ -26,11 +26,11 @@ public class TreeNode<T> {
     this.value = value;
   }
 
-  public void setLeft(TreeNode<T> left) {
+  public void setLeft(Node<T> left) {
     this.left = left;
   }
 
-  public void setRight(TreeNode<T> right) {
+  public void setRight(Node<T> right) {
     this.right = right;
   }
 }
