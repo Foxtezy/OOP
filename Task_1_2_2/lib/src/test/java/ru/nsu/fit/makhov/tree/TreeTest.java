@@ -5,7 +5,11 @@ package ru.nsu.fit.makhov.tree;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,6 +25,14 @@ class TreeTest {
         tree.add(-2);
         tree.remove(1);
         tree.add(5);
+        Iterator<Integer> it = tree.iterator();
+        Integer x1 = it.next();
+        Integer x2 = it.next();
+        Integer x3 = it.next();
+        Integer x4 = it.next();
+        Integer x5 = it.next();
+        boolean x = it.hasNext();
+        System.out.println(tree.stream().map((X)->X*2).collect(Collectors.toList()));;
 
     }
 

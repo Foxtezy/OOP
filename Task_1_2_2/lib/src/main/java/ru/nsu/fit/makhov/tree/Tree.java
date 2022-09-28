@@ -1,8 +1,13 @@
 package ru.nsu.fit.makhov.tree;
 
 import java.util.Comparator;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-public class Tree<T> {
+public class Tree<T> implements Iterable<T> {
 
   private final Comparator<T> comparator;
   private Node<T> root = null;
@@ -105,16 +110,66 @@ public class Tree<T> {
     return successorNode;
   }
 
-  private static class Node<E> {
-    private E value;
+  @Override
+  public Iterator<T> iterator() {
+    return new DFSIterator(new Stack<>());
+  }
 
-    private Node<E> parent = null;
-    private Node<E> left = null;
-    private Node<E> right = null;
+  public Stream<T> stream() {
+    return StreamSupport.stream(spliterator(), false);
+  }
+
+  private static class Node<T> {
+    private T value;
+    private Node<T> parent = null;
+    private Node<T> left = null;
+    private Node<T> right = null;
     private boolean whichSon = RIGHT;
+    // private boolean visited = false;
 
-    public Node(E value) {
+    public Node(T value) {
       this.value = value;
+    }
+  }
+
+  private class DFSIterator implements Iterator<T> {
+
+    private final Stack<Node<T>> stack;
+
+    private boolean isNextLaunched = false;
+
+    public DFSIterator(Stack<Node<T>> stack) {
+      this.stack = stack;
+    }
+
+    @Override
+    public boolean hasNext() {
+      if (root == null || (stack.isEmpty() && isNextLaunched)) {
+        return false;
+      }
+      return true;
+    }
+
+    @Override
+    public T next() throws NoSuchElementException {
+      if (!hasNext()) {
+        throw new NoSuchElementException();
+      }
+      isNextLaunched = true;
+      if (stack.isEmpty()) {
+        stack.push(root);
+      }
+      Node<T> currentNode = stack.pop();
+      if (currentNode == null) {
+        currentNode = root;
+      }
+      if (currentNode.left != null) {
+        stack.push(currentNode.left);
+      }
+      if (currentNode.right != null) {
+        stack.push(currentNode.right);
+      }
+      return currentNode.value;
     }
   }
 }
