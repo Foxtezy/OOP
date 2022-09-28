@@ -1,9 +1,6 @@
 package ru.nsu.fit.makhov.tree;
 
-import java.util.Comparator;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -13,9 +10,15 @@ public class Tree<T> implements Iterable<T> {
   private Node<T> root = null;
   private static final boolean RIGHT = true;
   private static final boolean LEFT = false;
+  private Searches search = Searches.BFS;
 
   public Tree(Comparator<T> comparator) {
     this.comparator = comparator;
+  }
+
+  public Tree(Comparator<T> comparator, Searches search) {
+    this.comparator = comparator;
+    this.search = search;
   }
 
   public void add(T value) {
@@ -112,6 +115,9 @@ public class Tree<T> implements Iterable<T> {
 
   @Override
   public Iterator<T> iterator() {
+    if (search == Searches.BFS) {
+      return new BFSIterator(new ArrayDeque<>());
+    }
     return new DFSIterator(new Stack<>());
   }
 
@@ -160,9 +166,6 @@ public class Tree<T> implements Iterable<T> {
         stack.push(root);
       }
       Node<T> currentNode = stack.pop();
-      if (currentNode == null) {
-        currentNode = root;
-      }
       if (currentNode.left != null) {
         stack.push(currentNode.left);
       }
@@ -171,5 +174,48 @@ public class Tree<T> implements Iterable<T> {
       }
       return currentNode.value;
     }
+  }
+
+  private class BFSIterator implements Iterator<T> {
+
+    private final ArrayDeque<Node<T>> queue;
+
+    private boolean isNextLaunched = false;
+
+    public BFSIterator(ArrayDeque<Node<T>> queue) {
+      this.queue = queue;
+    }
+
+    @Override
+    public boolean hasNext() {
+      if (root == null || (queue.isEmpty() && isNextLaunched)) {
+        return false;
+      }
+      return true;
+    }
+
+    @Override
+    public T next() {
+      if (!hasNext()) {
+        throw new NoSuchElementException();
+      }
+      isNextLaunched = true;
+      if (queue.isEmpty()) {
+        queue.add(root);
+      }
+      Node<T> currentNode = queue.remove();
+      if (currentNode.left != null) {
+        queue.add(currentNode.left);
+      }
+      if (currentNode.right != null) {
+        queue.add(currentNode.right);
+      }
+      return currentNode.value;
+    }
+  }
+
+  public enum Searches {
+    DFS,
+    BFS
   }
 }
