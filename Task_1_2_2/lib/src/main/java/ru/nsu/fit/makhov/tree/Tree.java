@@ -1,10 +1,8 @@
 package ru.nsu.fit.makhov.tree;
 
-
 import java.util.Comparator;
-import java.util.Iterator;
 
-public class Tree<T> implements Iterable<T> {
+public class Tree<T> {
 
   private final Comparator<T> comparator;
   private Node<T> root = null;
@@ -24,15 +22,19 @@ public class Tree<T> implements Iterable<T> {
     Node<T> currentNode = root;
     while (currentNode != null) {
       Node<T> parentNode = currentNode;
-      if (comparator.compare(currentNode.getValue(), value) > 0) {
-        currentNode = currentNode.getLeft();
+      if (comparator.compare(currentNode.value, value) > 0) {
+        currentNode = currentNode.left;
         if (currentNode == null) {
-          parentNode.setLeft(newNode);
+          parentNode.left = newNode;
+          newNode.parent = parentNode;
+          newNode.whichSon = LEFT;
         }
-      } else if (comparator.compare(currentNode.getValue(), value) < 0) {
-        currentNode = currentNode.getRight();
+      } else if (comparator.compare(currentNode.value, value) < 0) {
+        currentNode = currentNode.right;
         if (currentNode == null) {
-          parentNode.setRight(newNode);
+          parentNode.right = newNode;
+          newNode.parent = parentNode;
+          newNode.whichSon = RIGHT;
         }
       } else {
         throw new RuntimeException("This value is already exist");
@@ -40,80 +42,79 @@ public class Tree<T> implements Iterable<T> {
     }
   }
 
-  public void remove(T value) {
+  private Node<T> findNode(T value) {
     if (root == null) {
-      throw new RuntimeException("This value not exist");
+      throw new RuntimeException("This value is not exist");
     }
     Node<T> currentNode = root;
-    boolean whichSon = RIGHT;
-    Node<T> parentNode = currentNode;
-    while (comparator.compare(currentNode.getValue(), value) != 0) {
-      parentNode = currentNode;
-      if (comparator.compare(currentNode.getValue(), value) > 0) {
-        whichSon = LEFT;
-        currentNode = currentNode.getLeft();
-      } else if (comparator.compare(currentNode.getValue(), value) < 0) {
-        whichSon = RIGHT;
-        currentNode = currentNode.getRight();
+    while (comparator.compare(currentNode.value, value) != 0) {
+      if (comparator.compare(currentNode.value, value) > 0) {
+        currentNode = currentNode.left;
+      } else if (comparator.compare(currentNode.value, value) < 0) {
+        currentNode = currentNode.right;
       }
       if (currentNode == null) {
-        throw new RuntimeException("This value not exist");
+        throw new RuntimeException("This value is not exist");
       }
     }
-    if (currentNode.getLeft() == null && currentNode.getRight() == null) {
-      if (currentNode == root) {
+    return currentNode;
+  }
+
+  private void delete(Node<T> delNode) {
+    if (delNode.left == null && delNode.right == null) {
+      if (delNode == root) {
         root = null;
-      } else if (whichSon == LEFT) {
-        parentNode.setLeft(null);
+      } else if (delNode.whichSon == LEFT) {
+        delNode.parent.left = null;
       } else {
-        parentNode.setRight(null);
+        delNode.parent.right = null;
       }
-    } else if (currentNode.getRight() == null) {
-      if (currentNode == root) {
-        root = currentNode.getLeft();
-      } else if (whichSon == LEFT) {
-        parentNode.setLeft(currentNode.getLeft());
+    } else if (delNode.right == null) {
+      if (delNode == root) {
+        root = delNode.left;
+      } else if (delNode.whichSon == LEFT) {
+        delNode.parent.left = delNode.left;
       } else {
-        parentNode.setRight(currentNode.getLeft());
+        delNode.parent.right = delNode.left;
       }
-    } else if (currentNode.getLeft() == null) {
-      if (currentNode == root) {
-        root = currentNode.getRight();
-      } else if (whichSon == LEFT) {
-        parentNode.setLeft(currentNode.getRight());
+    } else if (delNode.left == null) {
+      if (delNode == root) {
+        root = delNode.right;
+      } else if (delNode.whichSon == LEFT) {
+        delNode.parent.left = delNode.right;
       } else {
-        parentNode.setRight(currentNode.getRight());
+        delNode.parent.right = delNode.right;
       }
     } else {
-      Node<T> successorNode = findSuccessor(currentNode);
-      if (currentNode == root) {
-        root = successorNode;
-      } else if (whichSon == LEFT) {
-        parentNode.setLeft(successorNode);
-      } else {
-        parentNode.setRight(successorNode);
-      }
+      Node<T> successorNode = findSuccessor(delNode);
+      delNode.value = successorNode.value;
+      delete(successorNode);
     }
   }
 
+  public void remove(T value) {
+    Node<T> delNode = findNode(value);
+    delete(delNode);
+  }
+
   private Node<T> findSuccessor(Node<T> node) {
-    Node<T> parentNode = node;
-    Node<T> successorNode = node;
-    for (Node<T> currentNode = node.getRight();
-        currentNode != null;
-        currentNode = currentNode.getLeft()) {
-      parentNode = successorNode;
-      successorNode = currentNode;
-    }
-    if (successorNode != node.getRight()) {
-      parentNode.setLeft((successorNode.getRight()));
-      successorNode.setLeft(node.getRight());
+    Node<T> successorNode = node.right;
+    while (successorNode.left != null) {
+      successorNode = successorNode.left;
     }
     return successorNode;
   }
 
-  @Override
-  public Iterator<T> iterator() {
-    return null;
+  private static class Node<E> {
+    private E value;
+
+    private Node<E> parent = null;
+    private Node<E> left = null;
+    private Node<E> right = null;
+    private boolean whichSon = RIGHT;
+
+    public Node(E value) {
+      this.value = value;
+    }
   }
 }

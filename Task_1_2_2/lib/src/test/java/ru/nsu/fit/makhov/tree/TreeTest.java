@@ -15,11 +15,11 @@ class TreeTest {
     public void treeTest1(){
         Tree<Integer> tree = new Tree<>(Integer::compare);
         tree.add(1);
-        tree.add(2);
-        tree.add(3);
-        tree.add(0);
         tree.add(-1);
-        tree.remove(2);
+        tree.add(3);
+        tree.add(2);
+        tree.add(-2);
+        tree.remove(1);
         tree.add(5);
 
     }
