@@ -15,25 +15,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TreeTest {
 
-    @Test
-    public void treeTest1(){
-        Tree<Integer> tree = new Tree<>(Integer::compare);
-        tree.add(1);
-        tree.add(-1);
-        tree.add(3);
-        tree.add(2);
-        tree.add(-2);
-        tree.remove(1);
-        tree.add(5);
-        Iterator<Integer> it = tree.iterator();
-        Integer x1 = it.next();
-        Integer x2 = it.next();
-        Integer x3 = it.next();
-        Integer x4 = it.next();
-        Integer x5 = it.next();
-        boolean x = it.hasNext();
-        System.out.println(tree.stream().map((X)->X*2).collect(Collectors.toList()));;
-
-    }
-
+  @Test
+  public void treeTest1() {
+    Tree<Integer> tree = new Tree<>((o1, o2) -> (o1 > o2) ? 1 : (o1.equals(o2)) ? 0 : -1);
+    //Tree<Integer> tree = new Tree<>(Integer::compare); //[2, -1, 3, -2, 5]
+    tree.add(1);
+    tree.add(-1);
+    tree.add(3);
+    tree.add(2);
+    tree.add(-2);
+    tree.remove(1);
+    tree.add(5);
+    Iterator<Integer> it = tree.iterator();
+    Integer x1 = it.next();
+    Integer x2 = it.next();
+    Integer x3 = it.next();
+    Integer x4 = it.next();
+    Integer x5 = it.next();
+    boolean x = it.hasNext();
+    System.out.println(tree.stream().collect(Collectors.toList()));
+    ;
+  }
 }

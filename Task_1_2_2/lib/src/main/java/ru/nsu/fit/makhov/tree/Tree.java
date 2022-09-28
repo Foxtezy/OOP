@@ -12,6 +12,8 @@ public class Tree<T> implements Iterable<T> {
   private static final boolean LEFT = false;
   private Searches search = Searches.BFS;
 
+  private boolean treeChanged = false;
+
   public Tree(Comparator<T> comparator) {
     this.comparator = comparator;
   }
@@ -22,6 +24,7 @@ public class Tree<T> implements Iterable<T> {
   }
 
   public void add(T value) {
+    treeChanged = true;
     Node<T> newNode = new Node<>(value);
     if (root == null) {
       root = newNode;
@@ -101,6 +104,7 @@ public class Tree<T> implements Iterable<T> {
   }
 
   public void remove(T value) {
+    treeChanged = true;
     Node<T> delNode = findNode(value);
     delete(delNode);
   }
@@ -115,6 +119,7 @@ public class Tree<T> implements Iterable<T> {
 
   @Override
   public Iterator<T> iterator() {
+    treeChanged = false;
     if (search == Searches.BFS) {
       return new BFSIterator(new ArrayDeque<>());
     }
@@ -131,7 +136,6 @@ public class Tree<T> implements Iterable<T> {
     private Node<T> left = null;
     private Node<T> right = null;
     private boolean whichSon = RIGHT;
-    // private boolean visited = false;
 
     public Node(T value) {
       this.value = value;
@@ -142,28 +146,25 @@ public class Tree<T> implements Iterable<T> {
 
     private final Stack<Node<T>> stack;
 
-    private boolean isNextLaunched = false;
-
     public DFSIterator(Stack<Node<T>> stack) {
       this.stack = stack;
+      if (root != null) {
+        stack.push(root);
+      }
     }
 
     @Override
     public boolean hasNext() {
-      if (root == null || (stack.isEmpty() && isNextLaunched)) {
-        return false;
+      if (treeChanged){
+        throw new ConcurrentModificationException();
       }
-      return true;
+      return !stack.isEmpty();
     }
 
     @Override
     public T next() throws NoSuchElementException {
       if (!hasNext()) {
         throw new NoSuchElementException();
-      }
-      isNextLaunched = true;
-      if (stack.isEmpty()) {
-        stack.push(root);
       }
       Node<T> currentNode = stack.pop();
       if (currentNode.left != null) {
@@ -180,28 +181,25 @@ public class Tree<T> implements Iterable<T> {
 
     private final ArrayDeque<Node<T>> queue;
 
-    private boolean isNextLaunched = false;
-
     public BFSIterator(ArrayDeque<Node<T>> queue) {
       this.queue = queue;
+      if (root != null) {
+        queue.add(root);
+      }
     }
 
     @Override
     public boolean hasNext() {
-      if (root == null || (queue.isEmpty() && isNextLaunched)) {
-        return false;
+      if (treeChanged){
+        throw new ConcurrentModificationException();
       }
-      return true;
+      return !queue.isEmpty();
     }
 
     @Override
     public T next() {
       if (!hasNext()) {
         throw new NoSuchElementException();
-      }
-      isNextLaunched = true;
-      if (queue.isEmpty()) {
-        queue.add(root);
       }
       Node<T> currentNode = queue.remove();
       if (currentNode.left != null) {
