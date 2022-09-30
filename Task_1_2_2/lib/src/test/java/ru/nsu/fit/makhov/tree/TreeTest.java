@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,12 +48,20 @@ class TreeTest {
   public void treeRemoveOneChildrenNodeTest() {
     tree.remove(5);
     assertEquals(Arrays.asList(6, 2, 8, 1, 4, 7, 9, 3, 10), tree.toList());
-    System.out.println(tree.toList());
   }
 
   @Test
   public void treeAddExistValue() {
     assertThrows(RuntimeException.class, () -> tree.add(8));
+  }
+
+  @Test
+  public void treeSampleTest() {
+    Tree<String> stringTree = new Tree<>((o1, o2) -> (o1.compareTo(o2) > 0) ? 1 : (o1.equals(o2)) ? 0 : -1);
+    stringTree.add("A");
+    stringTree.add("AB");
+    stringTree.add("BB");
+    assertEquals(Arrays.asList("AB", "BB") ,stringTree.stream().filter(s -> s.contains("B")).collect(Collectors.toList()));
   }
 
 

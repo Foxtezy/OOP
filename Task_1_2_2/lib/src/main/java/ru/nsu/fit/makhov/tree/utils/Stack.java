@@ -1,4 +1,4 @@
-package ru.nsu.fit.makhov.tree;
+package ru.nsu.fit.makhov.tree.utils;
 
 import java.util.Arrays;
 

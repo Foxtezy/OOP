@@ -1,5 +1,7 @@
 package ru.nsu.fit.makhov.tree;
 
+import ru.nsu.fit.makhov.tree.utils.Stack;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -149,7 +151,7 @@ public class Tree<T> implements Iterable<T> {
     if (search == Searches.BFS) {
       return new BFSIterator(new ArrayDeque<>());
     }
-    return new DFSIterator(new Stack<>());
+    return new DFSIterator(new ru.nsu.fit.makhov.tree.utils.Stack<>());
   }
 
   public Stream<T> stream() {
@@ -170,7 +172,7 @@ public class Tree<T> implements Iterable<T> {
 
   private class DFSIterator implements Iterator<T> {
 
-    private final Stack<Node<T>> stack;
+    private final ru.nsu.fit.makhov.tree.utils.Stack<Node<T>> stack;
 
     public DFSIterator(Stack<Node<T>> stack) {
       this.stack = stack;
