@@ -3,37 +3,57 @@
  */
 package ru.nsu.fit.makhov.tree;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TreeTest {
 
-  @Test
-  public void treeTest1() {
-    Tree<Integer> tree = new Tree<>((o1, o2) -> (o1 > o2) ? 1 : (o1.equals(o2)) ? 0 : -1);
-    //Tree<Integer> tree = new Tree<>(Integer::compare); //[2, -1, 3, -2, 5]
-    tree.add(1);
-    tree.add(-1);
-    tree.add(3);
-    tree.add(2);
-    tree.add(-2);
-    tree.remove(1);
-    tree.add(5);
-    Iterator<Integer> it = tree.iterator();
-    Integer x1 = it.next();
-    Integer x2 = it.next();
-    Integer x3 = it.next();
-    Integer x4 = it.next();
-    Integer x5 = it.next();
-    boolean x = it.hasNext();
-    System.out.println(tree.stream().collect(Collectors.toList()));
-    ;
+  private Tree<Integer> tree;
+
+  @BeforeEach
+  public void setup(){
+    tree = new Tree<>(((o1, o2) -> (o1 > o2) ? 1 : (o1.equals(o2)) ? 0 : -1), 6, 8, 5, 2, 9, 7, 4, 10, 3, 1);
   }
+
+  @Test
+  public void treeDFSTest() {
+    tree.setSearch(Tree.Searches.DFS);
+    assertEquals(Arrays.asList(6, 8, 9, 10, 7, 5, 2, 4, 3, 1), tree.toList());
+  }
+
+  @Test
+  public void treeBFSTest() {
+    tree.setSearch(Tree.Searches.BFS);
+    assertEquals(Arrays.asList(6, 5, 8, 2, 7, 9, 1, 4, 10, 3), tree.toList());
+  }
+
+  @Test
+  public void treeRemoveRootTest() {
+    tree.remove(6);
+    assertEquals(Arrays.asList(7, 5, 8, 2, 9, 1, 4, 10, 3), tree.toList());
+  }
+
+  @Test
+  public void treeRemoveTwoChildrenNodeTest() {
+    tree.remove(8);
+    assertEquals(Arrays.asList(6, 5, 9, 2, 7, 10, 1, 4, 3), tree.toList());
+  }
+
+  @Test
+  public void treeRemoveOneChildrenNodeTest() {
+    tree.remove(5);
+    assertEquals(Arrays.asList(6, 2, 8, 1, 4, 7, 9, 3, 10), tree.toList());
+    System.out.println(tree.toList());
+  }
+
+  @Test
+  public void treeAddExistValue() {
+    assertThrows(RuntimeException.class, () -> tree.add(8));
+  }
+
+
 }

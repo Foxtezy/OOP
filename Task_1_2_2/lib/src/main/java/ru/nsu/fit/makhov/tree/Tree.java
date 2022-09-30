@@ -1,6 +1,7 @@
 package ru.nsu.fit.makhov.tree;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -18,9 +19,34 @@ public class Tree<T> implements Iterable<T> {
     this.comparator = comparator;
   }
 
+  @SafeVarargs
+  public Tree(Comparator<T> comparator, T... values) {
+    this.comparator = comparator;
+    for (T value : values) {
+      add(value);
+    }
+  }
+
+  @SafeVarargs
+  public Tree(Comparator<T> comparator, Searches search, T... values) {
+    this.comparator = comparator;
+    this.search = search;
+    for (T value : values) {
+      add(value);
+    }
+  }
+
   public Tree(Comparator<T> comparator, Searches search) {
     this.comparator = comparator;
     this.search = search;
+  }
+
+  public void setSearch(Searches search) {
+    this.search = search;
+  }
+
+  public List<T> toList(){
+    return this.stream().collect(Collectors.toList());
   }
 
   public void add(T value) {
@@ -53,9 +79,9 @@ public class Tree<T> implements Iterable<T> {
     }
   }
 
-  private Node<T> findNode(T value) {
+  private Node<T> findNode(T value) throws NoSuchElementException{
     if (root == null) {
-      throw new RuntimeException("This value is not exist");
+      throw new NoSuchElementException("This value is not exist");
     }
     Node<T> currentNode = root;
     while (comparator.compare(currentNode.value, value) != 0) {
@@ -65,7 +91,7 @@ public class Tree<T> implements Iterable<T> {
         currentNode = currentNode.right;
       }
       if (currentNode == null) {
-        throw new RuntimeException("This value is not exist");
+        throw new NoSuchElementException("This value is not exist");
       }
     }
     return currentNode;
@@ -154,7 +180,7 @@ public class Tree<T> implements Iterable<T> {
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean hasNext() throws ConcurrentModificationException{
       if (treeChanged){
         throw new ConcurrentModificationException();
       }
@@ -189,7 +215,7 @@ public class Tree<T> implements Iterable<T> {
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean hasNext() throws ConcurrentModificationException{
       if (treeChanged){
         throw new ConcurrentModificationException();
       }
@@ -197,7 +223,7 @@ public class Tree<T> implements Iterable<T> {
     }
 
     @Override
-    public T next() {
+    public T next() throws NoSuchElementException{
       if (!hasNext()) {
         throw new NoSuchElementException();
       }
