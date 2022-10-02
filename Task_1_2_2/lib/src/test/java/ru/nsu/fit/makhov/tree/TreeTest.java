@@ -16,19 +16,21 @@ class TreeTest {
   private Tree<Integer> tree;
 
   @BeforeEach
-  public void setup(){
-    tree = new Tree<>(((o1, o2) -> (o1 > o2) ? 1 : (o1.equals(o2)) ? 0 : -1), 6, 8, 5, 2, 9, 7, 4, 10, 3, 1);
+  public void setup() {
+    tree =
+        new Tree<>(
+            ((o1, o2) -> (o1 > o2) ? 1 : (o1.equals(o2)) ? 0 : -1), 6, 8, 5, 2, 9, 7, 4, 10, 3, 1);
   }
 
   @Test
   public void treeDFSTest() {
-    tree.setSearch(Tree.Searches.DFS);
+    tree.setSearch(Tree.Search.DFS);
     assertEquals(Arrays.asList(6, 8, 9, 10, 7, 5, 2, 4, 3, 1), tree.toList());
   }
 
   @Test
   public void treeBFSTest() {
-    tree.setSearch(Tree.Searches.BFS);
+    tree.setSearch(Tree.Search.BFS);
     assertEquals(Arrays.asList(6, 5, 8, 2, 7, 9, 1, 4, 10, 3), tree.toList());
   }
 
@@ -52,17 +54,19 @@ class TreeTest {
 
   @Test
   public void treeAddExistValue() {
-    assertThrows(RuntimeException.class, () -> tree.add(8));
+    tree.add(8);
+    assertEquals(Arrays.asList(6, 5, 8, 2, 7, 9, 1, 4, 10, 3), tree.toList());
   }
 
   @Test
   public void treeSampleTest() {
-    Tree<String> stringTree = new Tree<>((o1, o2) -> (o1.compareTo(o2) > 0) ? 1 : (o1.equals(o2)) ? 0 : -1);
+    Tree<String> stringTree =
+        new Tree<>((o1, o2) -> (o1.compareTo(o2) > 0) ? 1 : (o1.equals(o2)) ? 0 : -1);
     stringTree.add("A");
     stringTree.add("AB");
     stringTree.add("BB");
-    assertEquals(Arrays.asList("AB", "BB") ,stringTree.stream().filter(s -> s.contains("B")).collect(Collectors.toList()));
+    assertEquals(
+        Arrays.asList("AB", "BB"),
+        stringTree.stream().filter(s -> s.contains("B")).collect(Collectors.toList()));
   }
-
-
 }

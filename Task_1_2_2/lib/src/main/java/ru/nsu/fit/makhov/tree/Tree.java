@@ -1,26 +1,46 @@
 package ru.nsu.fit.makhov.tree;
 
-import ru.nsu.fit.makhov.tree.utils.Stack;
-
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Comparator;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import ru.nsu.fit.makhov.tree.utils.Stack;
 
+/**
+ * The <code>Tree</code> class represents a binary tree set of objects.
+ *
+ * @param <T> type of objects
+ */
 public class Tree<T> implements Iterable<T> {
 
   private final Comparator<T> comparator;
   private Node<T> root = null;
   private static final boolean RIGHT = true;
   private static final boolean LEFT = false;
-  private Searches search = Searches.BFS;
+  private Search search = Search.BFS;
 
   private boolean treeChanged = false;
 
+  /**
+   * Constructs a new, empty tree, sorted according to the specified comparator.
+   *
+   * @param comparator - the comparator
+   */
   public Tree(Comparator<T> comparator) {
     this.comparator = comparator;
   }
 
+  /**
+   * Constructs a new tree containing the elements in the specified array.
+   *
+   * @param comparator - the comparator
+   * @param values - array of T
+   */
   @SafeVarargs
   public Tree(Comparator<T> comparator, T... values) {
     this.comparator = comparator;
@@ -29,8 +49,16 @@ public class Tree<T> implements Iterable<T> {
     }
   }
 
+  /**
+   * Constructs a new tree containing the elements in the specified array and iterated by specified
+   * iterator.
+   *
+   * @param comparator - the comparator
+   * @param search - searches enum
+   * @param values - array of T
+   */
   @SafeVarargs
-  public Tree(Comparator<T> comparator, Searches search, T... values) {
+  public Tree(Comparator<T> comparator, Search search, T... values) {
     this.comparator = comparator;
     this.search = search;
     for (T value : values) {
@@ -38,19 +66,31 @@ public class Tree<T> implements Iterable<T> {
     }
   }
 
-  public Tree(Comparator<T> comparator, Searches search) {
+  /**
+   * Constructs a new, empty tree, sorted according to the specified comparator and iterated by
+   * specified * iterator.
+   *
+   * @param comparator - the comparator
+   * @param search searches enum
+   */
+  public Tree(Comparator<T> comparator, Search search) {
     this.comparator = comparator;
     this.search = search;
   }
 
-  public void setSearch(Searches search) {
+  public void setSearch(Search search) {
     this.search = search;
   }
 
-  public List<T> toList(){
+  public List<T> toList() {
     return this.stream().collect(Collectors.toList());
   }
 
+  /**
+   * Add value in tree.
+   *
+   * @param value - value
+   */
   public void add(T value) {
     treeChanged = true;
     Node<T> newNode = new Node<>(value);
@@ -76,12 +116,12 @@ public class Tree<T> implements Iterable<T> {
           newNode.whichSon = RIGHT;
         }
       } else {
-        throw new RuntimeException("This value is already exist");
+        return; // value is already exist
       }
     }
   }
 
-  private Node<T> findNode(T value) throws NoSuchElementException{
+  private Node<T> findNode(T value) throws NoSuchElementException {
     if (root == null) {
       throw new NoSuchElementException("This value is not exist");
     }
@@ -131,6 +171,11 @@ public class Tree<T> implements Iterable<T> {
     }
   }
 
+  /**
+   * Remove value from tree.
+   *
+   * @param value - value
+   */
   public void remove(T value) {
     treeChanged = true;
     Node<T> delNode = findNode(value);
@@ -148,10 +193,10 @@ public class Tree<T> implements Iterable<T> {
   @Override
   public Iterator<T> iterator() {
     treeChanged = false;
-    if (search == Searches.BFS) {
-      return new BFSIterator(new ArrayDeque<>());
+    if (search == Search.BFS) {
+      return new BreadthFirstSearchIterator(new ArrayDeque<>());
     }
-    return new DFSIterator(new ru.nsu.fit.makhov.tree.utils.Stack<>());
+    return new DeepFirstSearchIterator(new ru.nsu.fit.makhov.tree.utils.Stack<>());
   }
 
   public Stream<T> stream() {
@@ -170,11 +215,11 @@ public class Tree<T> implements Iterable<T> {
     }
   }
 
-  private class DFSIterator implements Iterator<T> {
+  private class DeepFirstSearchIterator implements Iterator<T> {
 
     private final ru.nsu.fit.makhov.tree.utils.Stack<Node<T>> stack;
 
-    public DFSIterator(Stack<Node<T>> stack) {
+    public DeepFirstSearchIterator(Stack<Node<T>> stack) {
       this.stack = stack;
       if (root != null) {
         stack.push(root);
@@ -182,8 +227,8 @@ public class Tree<T> implements Iterable<T> {
     }
 
     @Override
-    public boolean hasNext() throws ConcurrentModificationException{
-      if (treeChanged){
+    public boolean hasNext() throws ConcurrentModificationException {
+      if (treeChanged) {
         throw new ConcurrentModificationException();
       }
       return !stack.isEmpty();
@@ -205,11 +250,11 @@ public class Tree<T> implements Iterable<T> {
     }
   }
 
-  private class BFSIterator implements Iterator<T> {
+  private class BreadthFirstSearchIterator implements Iterator<T> {
 
     private final ArrayDeque<Node<T>> queue;
 
-    public BFSIterator(ArrayDeque<Node<T>> queue) {
+    public BreadthFirstSearchIterator(ArrayDeque<Node<T>> queue) {
       this.queue = queue;
       if (root != null) {
         queue.add(root);
@@ -217,15 +262,15 @@ public class Tree<T> implements Iterable<T> {
     }
 
     @Override
-    public boolean hasNext() throws ConcurrentModificationException{
-      if (treeChanged){
+    public boolean hasNext() throws ConcurrentModificationException {
+      if (treeChanged) {
         throw new ConcurrentModificationException();
       }
       return !queue.isEmpty();
     }
 
     @Override
-    public T next() throws NoSuchElementException{
+    public T next() throws NoSuchElementException {
       if (!hasNext()) {
         throw new NoSuchElementException();
       }
@@ -240,7 +285,8 @@ public class Tree<T> implements Iterable<T> {
     }
   }
 
-  public enum Searches {
+  /** Enum which contains name of the tree searches. */
+  public enum Search {
     DFS,
     BFS
   }
