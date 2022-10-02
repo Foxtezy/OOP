@@ -12,7 +12,7 @@ class SubstringFinderTest {
   public void substringFinderTest1() throws FileNotFoundException {
     SubstringFinder substringFinder =
         new SubstringFinder(
-            "D:\\OOP\\OOP-task-1-3-1\\Task_1_3_1\\lib\\src\\test\\resources\\input.txt");
+            "src/test/resources/input.txt"); //тут относительный путь нужен
     System.out.println(substringFinder.findSubstring("Whe"));
   }
 }
