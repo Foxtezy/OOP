@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,9 +55,17 @@ class TreeTest {
   }
 
   @Test
-  public void treeAddExistValue() {
+  public void treeAddExistValueTest() {
     tree.add(8);
     assertEquals(Arrays.asList(6, 5, 8, 2, 7, 9, 1, 4, 10, 3), tree.toList());
+  }
+
+  @Test
+  public void treeConcurrentModificationExceptionTest() {
+    Iterator<Integer> itr = tree.iterator();
+    itr.next();
+    tree.add(-10);
+    assertThrows(ConcurrentModificationException.class, itr::next);
   }
 
   @Test
@@ -69,4 +79,5 @@ class TreeTest {
         Arrays.asList("AB", "BB"),
         stringTree.stream().filter(s -> s.contains("B")).collect(Collectors.toList()));
   }
+
 }
