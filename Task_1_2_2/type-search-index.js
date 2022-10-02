@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ru.nsu.fit.makhov.tree","l":"Tree.Search"},{"p":"ru.nsu.fit.makhov.tree.utils","l":"Stack"},{"p":"ru.nsu.fit.makhov.tree","l":"Tree"}]
