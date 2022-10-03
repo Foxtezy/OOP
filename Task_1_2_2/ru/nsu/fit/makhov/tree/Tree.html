@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -135,13 +135,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>java.lang.Iterable&lt;T&gt;</code></dd>
+<dd><code>java.lang.Iterable&lt;<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;T&gt;&gt;</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">Tree&lt;T&gt;</span>
 extends java.lang.Object
-implements java.lang.Iterable&lt;T&gt;</pre>
-<div class="block">The <code>Tree</code> class represents a binary tree set of objects.</div>
+implements java.lang.Iterable&lt;<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;T&gt;&gt;</pre>
+<div class="block">The <code>Tree</code> class represents tree of objects.</div>
 </li>
 </ul>
 </div>
@@ -163,6 +163,13 @@ implements java.lang.Iterable&lt;T&gt;</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.Node.html" title="type parameter in Tree.Node">T</a>&gt;</span></code></th>
+<td class="colLast">
+<div class="block">The <code>Node</code> class represents node in <code>Tree</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="Tree.Search.html" title="enum in ru.nsu.fit.makhov.tree">Tree.Search</a></span></code></th>
 <td class="colLast">
@@ -187,34 +194,8 @@ implements java.lang.Iterable&lt;T&gt;</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.Comparator)">Tree</a></span>&#8203;(java.util.Comparator&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;comparator)</code></th>
-<td class="colLast">
-<div class="block">Constructs a new, empty tree, sorted according to the specified comparator.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.Comparator,ru.nsu.fit.makhov.tree.Tree.Search)">Tree</a></span>&#8203;(java.util.Comparator&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;comparator,
-    <a href="Tree.Search.html" title="enum in ru.nsu.fit.makhov.tree">Tree.Search</a>&nbsp;search)</code></th>
-<td class="colLast">
-<div class="block">Constructs a new, empty tree, sorted according to the specified comparator and iterated by
- specified * iterator.</div>
-</td>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.Comparator,ru.nsu.fit.makhov.tree.Tree.Search,T...)">Tree</a></span>&#8203;(java.util.Comparator&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;comparator,
-    <a href="Tree.Search.html" title="enum in ru.nsu.fit.makhov.tree">Tree.Search</a>&nbsp;search,
-    <a href="Tree.html" title="type parameter in Tree">T</a>...&nbsp;values)</code></th>
-<td class="colLast">
-<div class="block">Constructs a new tree containing the elements in the specified array and iterated by specified
- iterator.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.Comparator,T...)">Tree</a></span>&#8203;(java.util.Comparator&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;comparator,
-    <a href="Tree.html" title="type parameter in Tree">T</a>...&nbsp;values)</code></th>
-<td class="colLast">
-<div class="block">Constructs a new tree containing the elements in the specified array.</div>
-</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Tree</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -235,35 +216,43 @@ implements java.lang.Iterable&lt;T&gt;</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#add(T)">add</a></span>&#8203;(<a href="Tree.html" title="type parameter in Tree">T</a>&nbsp;value)</code></th>
+<td class="colFirst"><code><a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#add(ru.nsu.fit.makhov.tree.Tree.Node,T)">add</a></span>&#8203;(<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;parentNode,
+   <a href="Tree.html" title="type parameter in Tree">T</a>&nbsp;value)</code></th>
 <td class="colLast">
-<div class="block">Add value in tree.</div>
+<div class="block">Add new node in tree after parentNode.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.util.Iterator&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#add(T)">add</a></span>&#8203;(<a href="Tree.html" title="type parameter in Tree">T</a>&nbsp;value)</code></th>
+<td class="colLast">
+<div class="block">Add new node in tree after root.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>java.util.Iterator&lt;<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#iterator()">iterator</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#remove(T)">remove</a></span>&#8203;(<a href="Tree.html" title="type parameter in Tree">T</a>&nbsp;value)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#remove(ru.nsu.fit.makhov.tree.Tree.Node)">remove</a></span>&#8203;(<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;delNode)</code></th>
 <td class="colLast">
-<div class="block">Remove value from tree.</div>
+<div class="block">Remove node (sons of the node copy to parent node).</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSearch(ru.nsu.fit.makhov.tree.Tree.Search)">setSearch</a></span>&#8203;(<a href="Tree.Search.html" title="enum in ru.nsu.fit.makhov.tree">Tree.Search</a>&nbsp;search)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>java.util.stream.Stream&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;</code></td>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>java.util.stream.Stream&lt;<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stream()">stream</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toList()">toList</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -299,76 +288,13 @@ implements java.lang.Iterable&lt;T&gt;</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.util.Comparator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>Tree</h4>
-<pre>public&nbsp;Tree&#8203;(java.util.Comparator&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;comparator)</pre>
-<div class="block">Constructs a new, empty tree, sorted according to the specified comparator.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>comparator</code> - - the comparator</dd>
-</dl>
-</li>
-</ul>
-<a id="&lt;init&gt;(java.util.Comparator,java.lang.Object[])">
-<!--   -->
-</a><a id="&lt;init&gt;(java.util.Comparator,T...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>Tree</h4>
-<pre>@SafeVarargs
-public&nbsp;Tree&#8203;(java.util.Comparator&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;comparator,
-            <a href="Tree.html" title="type parameter in Tree">T</a>...&nbsp;values)</pre>
-<div class="block">Constructs a new tree containing the elements in the specified array.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>comparator</code> - - the comparator</dd>
-<dd><code>values</code> - - array of T</dd>
-</dl>
-</li>
-</ul>
-<a id="&lt;init&gt;(java.util.Comparator,ru.nsu.fit.makhov.tree.Tree.Search,java.lang.Object[])">
-<!--   -->
-</a><a id="&lt;init&gt;(java.util.Comparator,ru.nsu.fit.makhov.tree.Tree.Search,T...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>Tree</h4>
-<pre>@SafeVarargs
-public&nbsp;Tree&#8203;(java.util.Comparator&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;comparator,
-            <a href="Tree.Search.html" title="enum in ru.nsu.fit.makhov.tree">Tree.Search</a>&nbsp;search,
-            <a href="Tree.html" title="type parameter in Tree">T</a>...&nbsp;values)</pre>
-<div class="block">Constructs a new tree containing the elements in the specified array and iterated by specified
- iterator.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>comparator</code> - - the comparator</dd>
-<dd><code>search</code> - - searches enum</dd>
-<dd><code>values</code> - - array of T</dd>
-</dl>
-</li>
-</ul>
-<a id="&lt;init&gt;(java.util.Comparator,ru.nsu.fit.makhov.tree.Tree.Search)">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Tree</h4>
-<pre>public&nbsp;Tree&#8203;(java.util.Comparator&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;comparator,
-            <a href="Tree.Search.html" title="enum in ru.nsu.fit.makhov.tree">Tree.Search</a>&nbsp;search)</pre>
-<div class="block">Constructs a new, empty tree, sorted according to the specified comparator and iterated by
- specified * iterator.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>comparator</code> - - the comparator</dd>
-<dd><code>search</code> - searches enum</dd>
-</dl>
+<pre>public&nbsp;Tree()</pre>
 </li>
 </ul>
 </li>
@@ -407,27 +333,47 @@ public&nbsp;Tree&#8203;(java.util.Comparator&lt;<a href="Tree.html" title="type 
 <ul class="blockList">
 <li class="blockList">
 <h4>add</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;add&#8203;(<a href="Tree.html" title="type parameter in Tree">T</a>&nbsp;value)</pre>
-<div class="block">Add value in tree.</div>
+<pre class="methodSignature">public&nbsp;<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;add&#8203;(<a href="Tree.html" title="type parameter in Tree">T</a>&nbsp;value)</pre>
+<div class="block">Add new node in tree after root.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>value</code> - - value</dd>
+<dd><code>value</code> - value of new node</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>new node</dd>
 </dl>
 </li>
 </ul>
-<a id="remove(java.lang.Object)">
+<a id="add(ru.nsu.fit.makhov.tree.Tree.Node,java.lang.Object)">
 <!--   -->
-</a><a id="remove(T)">
+</a><a id="add(ru.nsu.fit.makhov.tree.Tree.Node,T)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>add</h4>
+<pre class="methodSignature">public&nbsp;<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;add&#8203;(<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;parentNode,
+                        <a href="Tree.html" title="type parameter in Tree">T</a>&nbsp;value)</pre>
+<div class="block">Add new node in tree after parentNode.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parentNode</code> - parent of new node</dd>
+<dd><code>value</code> - value of new node</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>new node</dd>
+</dl>
+</li>
+</ul>
+<a id="remove(ru.nsu.fit.makhov.tree.Tree.Node)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;remove&#8203;(<a href="Tree.html" title="type parameter in Tree">T</a>&nbsp;value)</pre>
-<div class="block">Remove value from tree.</div>
+<pre class="methodSignature">public&nbsp;void&nbsp;remove&#8203;(<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;delNode)</pre>
+<div class="block">Remove node (sons of the node copy to parent node).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>value</code> - - value</dd>
+<dd><code>delNode</code> - delete node</dd>
 </dl>
 </li>
 </ul>
@@ -437,7 +383,7 @@ public&nbsp;Tree&#8203;(java.util.Comparator&lt;<a href="Tree.html" title="type 
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre class="methodSignature">public&nbsp;java.util.Iterator&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;iterator()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Iterator&lt;<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&gt;&nbsp;iterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;</code></dd>
@@ -450,7 +396,7 @@ public&nbsp;Tree&#8203;(java.util.Comparator&lt;<a href="Tree.html" title="type 
 <ul class="blockListLast">
 <li class="blockList">
 <h4>stream</h4>
-<pre class="methodSignature">public&nbsp;java.util.stream.Stream&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;stream()</pre>
+<pre class="methodSignature">public&nbsp;java.util.stream.Stream&lt;<a href="Tree.Node.html" title="class in ru.nsu.fit.makhov.tree">Tree.Node</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&gt;&nbsp;stream()</pre>
 </li>
 </ul>
 </li>
