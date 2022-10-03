@@ -3,81 +3,99 @@
  */
 package ru.nsu.fit.makhov.tree;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.util.Arrays;
 import java.util.stream.Collectors;
+import ru.nsu.fit.makhov.tree.Tree.Node;
+import ru.nsu.fit.makhov.tree.Tree.Search;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TreeTest {
 
-  private Tree<Integer> tree;
+  Tree<Integer> tree;
+
+  @Test
+  public void treeSampleTest() {
+    Tree<String> tree = new Tree<>();
+    tree.add("A");
+    Tree.Node<String> nodeB = tree.add("B");
+    tree.add(nodeB, "AB");
+    tree.add(nodeB, "BB");
+    assertEquals(
+        Arrays.asList("AB", "BB"),
+        tree.stream().filter(s -> s.getSons().isEmpty())
+            .filter(s -> s.getValue().contains("B"))
+            .map(Tree.Node::getValue)
+            .collect(Collectors.toList()));
+  }
 
   @BeforeEach
-  public void setup() {
-    tree =
-        new Tree<>(
-            ((o1, o2) -> (o1 > o2) ? 1 : (o1.equals(o2)) ? 0 : -1), 6, 8, 5, 2, 9, 7, 4, 10, 3, 1);
+  public void setup() { //[1, 2, -2, 4, 5, 6, -4, -5, -6]
+    tree = new Tree<>();
+    tree.add(1);
+    Tree.Node<Integer> node2 = tree.add(2);
+    tree.add(node2, 4);
+    tree.add(node2, 5);
+    tree.add(node2, 6);
+    node2 = tree.add(-2);
+    tree.add(node2, -4);
+    tree.add(node2, -5);
+    tree.add(node2, -6);
   }
 
   @Test
-  public void treeDFSTest() {
-    tree.setSearch(Tree.Search.DFS);
-    assertEquals(Arrays.asList(6, 8, 9, 10, 7, 5, 2, 4, 3, 1), tree.toList());
+  public void treeBFSToListTest() {
+    tree.setSearch(Search.BFS);
+    assertEquals(Arrays.asList(1, 2, -2, 4, 5, 6, -4, -5, -6), tree.toList());
   }
 
   @Test
-  public void treeBFSTest() {
-    tree.setSearch(Tree.Search.BFS);
-    assertEquals(Arrays.asList(6, 5, 8, 2, 7, 9, 1, 4, 10, 3), tree.toList());
+  public void treeDFSToListTest() {
+    tree.setSearch(Search.DFS);
+    assertEquals(Arrays.asList(1, -2, -6, -5, -4, 2, 6, 5, 4), tree.toList());
   }
-
   @Test
-  public void treeRemoveRootTest() {
-    tree.remove(6);
-    assertEquals(Arrays.asList(7, 5, 8, 2, 9, 1, 4, 10, 3), tree.toList());
-  }
-
-  @Test
-  public void treeRemoveTwoChildrenNodeTest() {
-    tree.remove(8);
-    assertEquals(Arrays.asList(6, 5, 9, 2, 7, 10, 1, 4, 3), tree.toList());
-  }
-
-  @Test
-  public void treeRemoveOneChildrenNodeTest() {
-    tree.remove(5);
-    assertEquals(Arrays.asList(6, 2, 8, 1, 4, 7, 9, 3, 10), tree.toList());
-  }
-
-  @Test
-  public void treeAddExistValueTest() {
-    tree.add(8);
-    assertEquals(Arrays.asList(6, 5, 8, 2, 7, 9, 1, 4, 10, 3), tree.toList());
-  }
-
-  @Test
-  public void treeConcurrentModificationExceptionTest() {
-    Iterator<Integer> itr = tree.iterator();
-    itr.next();
-    tree.add(-10);
+  public void treeBFSIteratorTest() {
+    tree.setSearch(Search.BFS);
+    Iterator<Node<Integer>> itr = tree.iterator();
+    assertEquals(1, itr.next().getValue());
+    assertTrue(itr.hasNext());
+    assertEquals(2, itr.next().getValue());
+    assertEquals(-2, itr.next().getValue());
+    tree.add(1);
     assertThrows(ConcurrentModificationException.class, itr::next);
   }
 
   @Test
-  public void treeSampleTest() {
-    Tree<String> stringTree =
-        new Tree<>((o1, o2) -> (o1.compareTo(o2) > 0) ? 1 : (o1.equals(o2)) ? 0 : -1);
-    stringTree.add("A");
-    stringTree.add("AB");
-    stringTree.add("BB");
-    assertEquals(
-        Arrays.asList("AB", "BB"),
-        stringTree.stream().filter(s -> s.contains("B")).collect(Collectors.toList()));
+  public void treeDFSIteratorTest() {
+    tree.setSearch(Search.DFS);
+    Iterator<Node<Integer>> itr = tree.iterator();
+    assertEquals(1, itr.next().getValue());
+    assertTrue(itr.hasNext());
+    assertEquals(-2, itr.next().getValue());
+    assertEquals(-6, itr.next().getValue());
+    tree.add(1);
+    assertThrows(ConcurrentModificationException.class, itr::next);
+  }
+
+  @Test
+  public void treeRemoveTest() {
+    List<Node<Integer>> nodes = tree.stream().collect(Collectors.toList()); //[1, 2, -2, 4, 5, 6, -4, -5, -6]
+    //leaf
+    tree.remove(nodes.get(4));
+    assertEquals(Arrays.asList(1, 2, -2, 4, 6, -4, -5, -6), tree.toList());
+    //node
+    tree.remove(nodes.get(2));
+    assertEquals(Arrays.asList(1, 2, -4, -5, -6, 4, 6), tree.toList());
+    //root
+    tree.remove(nodes.get(0));
+    assertEquals(Collections.emptyList(), tree.toList());
   }
 
 }

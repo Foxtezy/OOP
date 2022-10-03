@@ -1,7 +1,7 @@
 package ru.nsu.fit.makhov.tree;
 
 import java.util.ArrayDeque;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
@@ -12,70 +12,18 @@ import java.util.stream.StreamSupport;
 import ru.nsu.fit.makhov.tree.utils.Stack;
 
 /**
- * The <code>Tree</code> class represents a binary tree set of objects.
+ * The <code>Tree</code> class represents tree of objects.
  *
  * @param <T> type of objects
  */
-public class Tree<T> implements Iterable<T> {
+public class Tree<T> implements Iterable<Tree.Node<T>> {
 
-  private final Comparator<T> comparator;
   private Node<T> root = null;
-  private static final boolean RIGHT = true;
-  private static final boolean LEFT = false;
   private Search search = Search.BFS;
 
   private boolean treeChanged = false;
 
-  /**
-   * Constructs a new, empty tree, sorted according to the specified comparator.
-   *
-   * @param comparator - the comparator
-   */
-  public Tree(Comparator<T> comparator) {
-    this.comparator = comparator;
-  }
-
-  /**
-   * Constructs a new tree containing the elements in the specified array.
-   *
-   * @param comparator - the comparator
-   * @param values - array of T
-   */
-  @SafeVarargs
-  public Tree(Comparator<T> comparator, T... values) {
-    this.comparator = comparator;
-    for (T value : values) {
-      add(value);
-    }
-  }
-
-  /**
-   * Constructs a new tree containing the elements in the specified array and iterated by specified
-   * iterator.
-   *
-   * @param comparator - the comparator
-   * @param search - searches enum
-   * @param values - array of T
-   */
-  @SafeVarargs
-  public Tree(Comparator<T> comparator, Search search, T... values) {
-    this.comparator = comparator;
-    this.search = search;
-    for (T value : values) {
-      add(value);
-    }
-  }
-
-  /**
-   * Constructs a new, empty tree, sorted according to the specified comparator and iterated by
-   * specified * iterator.
-   *
-   * @param comparator - the comparator
-   * @param search searches enum
-   */
-  public Tree(Comparator<T> comparator, Search search) {
-    this.comparator = comparator;
-    this.search = search;
+  public Tree() {
   }
 
   public void setSearch(Search search) {
@@ -83,141 +31,97 @@ public class Tree<T> implements Iterable<T> {
   }
 
   public List<T> toList() {
-    return this.stream().collect(Collectors.toList());
+    return this.stream().map(Node::getValue).collect(Collectors.toList());
   }
 
   /**
-   * Add value in tree.
+   * Add new node in tree after root.
    *
-   * @param value - value
+   * @param value value of new node
+   * @return new node
    */
-  public void add(T value) {
+  public Node<T> add(T value) {
     treeChanged = true;
     Node<T> newNode = new Node<>(value);
     if (root == null) {
       root = newNode;
-      return;
-    }
-    Node<T> currentNode = root;
-    while (currentNode != null) {
-      Node<T> parentNode = currentNode;
-      if (comparator.compare(currentNode.value, value) > 0) {
-        currentNode = currentNode.left;
-        if (currentNode == null) {
-          parentNode.left = newNode;
-          newNode.parent = parentNode;
-          newNode.whichSon = LEFT;
-        }
-      } else if (comparator.compare(currentNode.value, value) < 0) {
-        currentNode = currentNode.right;
-        if (currentNode == null) {
-          parentNode.right = newNode;
-          newNode.parent = parentNode;
-          newNode.whichSon = RIGHT;
-        }
-      } else {
-        return; // value is already exist
-      }
-    }
-  }
-
-  private Node<T> findNode(T value) throws NoSuchElementException {
-    if (root == null) {
-      throw new NoSuchElementException("This value is not exist");
-    }
-    Node<T> currentNode = root;
-    while (comparator.compare(currentNode.value, value) != 0) {
-      if (comparator.compare(currentNode.value, value) > 0) {
-        currentNode = currentNode.left;
-      } else if (comparator.compare(currentNode.value, value) < 0) {
-        currentNode = currentNode.right;
-      }
-      if (currentNode == null) {
-        throw new NoSuchElementException("This value is not exist");
-      }
-    }
-    return currentNode;
-  }
-
-  private void delete(Node<T> delNode) {
-    if (delNode.left == null && delNode.right == null) {
-      if (delNode == root) {
-        root = null;
-      } else if (delNode.whichSon == LEFT) {
-        delNode.parent.left = null;
-      } else {
-        delNode.parent.right = null;
-      }
-    } else if (delNode.right == null) {
-      if (delNode == root) {
-        root = delNode.left;
-      } else if (delNode.whichSon == LEFT) {
-        delNode.parent.left = delNode.left;
-      } else {
-        delNode.parent.right = delNode.left;
-      }
-    } else if (delNode.left == null) {
-      if (delNode == root) {
-        root = delNode.right;
-      } else if (delNode.whichSon == LEFT) {
-        delNode.parent.left = delNode.right;
-      } else {
-        delNode.parent.right = delNode.right;
-      }
     } else {
-      Node<T> successorNode = findSuccessor(delNode);
-      delNode.value = successorNode.value;
-      delete(successorNode);
+      root.sons.add(newNode);
+      newNode.parent = root;
     }
+    return newNode;
   }
 
   /**
-   * Remove value from tree.
+   * Add new node in tree after parentNode.
    *
-   * @param value - value
+   * @param parentNode parent of new node
+   * @param value      value of new node
+   * @return new node
    */
-  public void remove(T value) {
+  public Node<T> add(Node<T> parentNode, T value) {
     treeChanged = true;
-    Node<T> delNode = findNode(value);
-    delete(delNode);
+    Node<T> newNode = new Node<>(value);
+    parentNode.sons.add(newNode);
+    newNode.parent = parentNode;
+    return newNode;
   }
 
-  private Node<T> findSuccessor(Node<T> node) {
-    Node<T> successorNode = node.right;
-    while (successorNode.left != null) {
-      successorNode = successorNode.left;
+  /**
+   * Remove node (sons of the node copy to parent node).
+   *
+   * @param delNode delete node
+   */
+  public void remove(Node<T> delNode) {
+    treeChanged = true;
+    if (delNode == root) {
+      root = null;
+    } else {
+      delNode.parent.sons.remove(delNode);
+      delNode.parent.sons.addAll(delNode.sons);
     }
-    return successorNode;
   }
 
   @Override
-  public Iterator<T> iterator() {
+  public Iterator<Node<T>> iterator() {
     treeChanged = false;
     if (search == Search.BFS) {
       return new BreadthFirstSearchIterator(new ArrayDeque<>());
     }
-    return new DeepFirstSearchIterator(new ru.nsu.fit.makhov.tree.utils.Stack<>());
+    return new DeepFirstSearchIterator(new Stack<>());
   }
 
-  public Stream<T> stream() {
+  public Stream<Node<T>> stream() {
     return StreamSupport.stream(spliterator(), false);
   }
 
-  private static class Node<T> {
-    private T value;
-    private Node<T> parent = null;
-    private Node<T> left = null;
-    private Node<T> right = null;
-    private boolean whichSon = RIGHT;
+  /**
+   * The <code>Node</code> class represents node in <code>Tree</code>.
+   *
+   * @param <T> type of object
+   */
+  public static class Node<T> {
+
+    private final T value;
+    private Node<T> parent;
+    private final List<Node<T>> sons = new ArrayList<>();
+
+    public T getValue() {
+      return value;
+    }
+
+    public List<Node<T>> getSons() {
+      return sons;
+    }
 
     public Node(T value) {
       this.value = value;
     }
   }
 
-  private class DeepFirstSearchIterator implements Iterator<T> {
+  private class DeepFirstSearchIterator implements Iterator<Node<T>> {
 
-    private final ru.nsu.fit.makhov.tree.utils.Stack<Node<T>> stack;
+    private final Stack<Node<T>> stack;
 
     public DeepFirstSearchIterator(Stack<Node<T>> stack) {
       this.stack = stack;
@@ -235,22 +139,17 @@ public class Tree<T> implements Iterable<T> {
     }
 
     @Override
-    public T next() throws NoSuchElementException {
+    public Node<T> next() throws NoSuchElementException {
       if (!hasNext()) {
         throw new NoSuchElementException();
       }
       Node<T> currentNode = stack.pop();
-      if (currentNode.left != null) {
-        stack.push(currentNode.left);
-      }
-      if (currentNode.right != null) {
-        stack.push(currentNode.right);
-      }
-      return currentNode.value;
+      currentNode.sons.forEach(stack::push);
+      return currentNode;
     }
   }
 
-  private class BreadthFirstSearchIterator implements Iterator<T> {
+  private class BreadthFirstSearchIterator implements Iterator<Node<T>> {
 
     private final ArrayDeque<Node<T>> queue;
 
@@ -270,22 +169,19 @@ public class Tree<T> implements Iterable<T> {
     }
 
     @Override
-    public T next() throws NoSuchElementException {
+    public Node<T> next() throws NoSuchElementException {
       if (!hasNext()) {
         throw new NoSuchElementException();
       }
       Node<T> currentNode = queue.remove();
-      if (currentNode.left != null) {
-        queue.add(currentNode.left);
-      }
-      if (currentNode.right != null) {
-        queue.add(currentNode.right);
-      }
-      return currentNode.value;
+      queue.addAll(currentNode.sons);
+      return currentNode;
     }
   }
 
-  /** Enum which contains name of the tree searches. */
+  /**
+   * Enum which contains name of the tree searches.
+   */
   public enum Search {
     DFS,
     BFS
