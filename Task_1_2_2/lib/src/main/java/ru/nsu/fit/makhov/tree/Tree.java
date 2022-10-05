@@ -3,13 +3,13 @@ package ru.nsu.fit.makhov.tree;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-import ru.nsu.fit.makhov.tree.utils.Stack;
 
 /**
  * The <code>Tree</code> class represents tree of objects.
@@ -21,7 +21,7 @@ public class Tree<T> implements Iterable<Tree.Node<T>> {
   private Node<T> root = null;
   private Search search = Search.BFS;
 
-  private boolean treeChanged = false;
+  private int changeCounter = 0;
 
   public Tree() {
   }
@@ -41,7 +41,7 @@ public class Tree<T> implements Iterable<Tree.Node<T>> {
    * @return new node
    */
   public Node<T> add(T value) {
-    treeChanged = true;
+    changeCounter++;
     Node<T> newNode = new Node<>(value);
     if (root == null) {
       root = newNode;
@@ -60,7 +60,7 @@ public class Tree<T> implements Iterable<Tree.Node<T>> {
    * @return new node
    */
   public Node<T> add(Node<T> parentNode, T value) {
-    treeChanged = true;
+    changeCounter++;
     Node<T> newNode = new Node<>(value);
     parentNode.sons.add(newNode);
     newNode.parent = parentNode;
@@ -73,7 +73,7 @@ public class Tree<T> implements Iterable<Tree.Node<T>> {
    * @param delNode delete node
    */
   public void remove(Node<T> delNode) {
-    treeChanged = true;
+    changeCounter++;
     if (delNode == root) {
       root = null;
     } else {
@@ -84,11 +84,10 @@ public class Tree<T> implements Iterable<Tree.Node<T>> {
 
   @Override
   public Iterator<Node<T>> iterator() {
-    treeChanged = false;
     if (search == Search.BFS) {
-      return new BreadthFirstSearchIterator(new ArrayDeque<>());
+      return new BreadthFirstSearchIterator(new ArrayDeque<>(), changeCounter);
     }
-    return new DeepFirstSearchIterator(new Stack<>());
+    return new DeepFirstSearchIterator(new ArrayDeque<>(), changeCounter);
   }
 
   public Stream<Node<T>> stream() {
@@ -121,10 +120,13 @@ public class Tree<T> implements Iterable<Tree.Node<T>> {
 
   private class DeepFirstSearchIterator implements Iterator<Node<T>> {
 
-    private final Stack<Node<T>> stack;
+    private final Deque<Node<T>> stack;
 
-    public DeepFirstSearchIterator(Stack<Node<T>> stack) {
+    private final int countOfChanges;
+
+    public DeepFirstSearchIterator(Deque<Node<T>> stack, int countOfChanges) {
       this.stack = stack;
+      this.countOfChanges = countOfChanges;
       if (root != null) {
         stack.push(root);
       }
@@ -132,14 +134,14 @@ public class Tree<T> implements Iterable<Tree.Node<T>> {
 
     @Override
     public boolean hasNext() throws ConcurrentModificationException {
-      if (treeChanged) {
+      if (countOfChanges != changeCounter) {
         throw new ConcurrentModificationException();
       }
       return !stack.isEmpty();
     }
 
     @Override
-    public Node<T> next() throws NoSuchElementException {
+    public Node<T> next() throws ConcurrentModificationException, NoSuchElementException {
       if (!hasNext()) {
         throw new NoSuchElementException();
       }
@@ -151,10 +153,13 @@ public class Tree<T> implements Iterable<Tree.Node<T>> {
 
   private class BreadthFirstSearchIterator implements Iterator<Node<T>> {
 
-    private final ArrayDeque<Node<T>> queue;
+    private final Deque<Node<T>> queue;
 
-    public BreadthFirstSearchIterator(ArrayDeque<Node<T>> queue) {
+    private final int countOfChanges;
+
+    public BreadthFirstSearchIterator(ArrayDeque<Node<T>> queue, int countOfChanges) {
       this.queue = queue;
+      this.countOfChanges = countOfChanges;
       if (root != null) {
         queue.add(root);
       }
@@ -162,14 +167,14 @@ public class Tree<T> implements Iterable<Tree.Node<T>> {
 
     @Override
     public boolean hasNext() throws ConcurrentModificationException {
-      if (treeChanged) {
+      if (countOfChanges != changeCounter) {
         throw new ConcurrentModificationException();
       }
       return !queue.isEmpty();
     }
 
     @Override
-    public Node<T> next() throws NoSuchElementException {
+    public Node<T> next() throws ConcurrentModificationException, NoSuchElementException {
       if (!hasNext()) {
         throw new NoSuchElementException();
       }
@@ -177,13 +182,5 @@ public class Tree<T> implements Iterable<Tree.Node<T>> {
       queue.addAll(currentNode.sons);
       return currentNode;
     }
-  }
-
-  /**
-   * Enum which contains name of the tree searches.
-   */
-  public enum Search {
-    DFS,
-    BFS
   }
 }

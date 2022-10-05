@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import ru.nsu.fit.makhov.tree.Tree.Node;
-import ru.nsu.fit.makhov.tree.Tree.Search;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,6 +59,7 @@ class TreeTest {
     tree.setSearch(Search.DFS);
     assertEquals(Arrays.asList(1, -2, -6, -5, -4, 2, 6, 5, 4), tree.toList());
   }
+
   @Test
   public void treeBFSIteratorTest() {
     tree.setSearch(Search.BFS);
@@ -86,7 +86,8 @@ class TreeTest {
 
   @Test
   public void treeRemoveTest() {
-    List<Node<Integer>> nodes = tree.stream().collect(Collectors.toList()); //[1, 2, -2, 4, 5, 6, -4, -5, -6]
+    List<Node<Integer>> nodes = tree.stream()
+        .collect(Collectors.toList()); //[1, 2, -2, 4, 5, 6, -4, -5, -6]
     //leaf
     tree.remove(nodes.get(4));
     assertEquals(Arrays.asList(1, 2, -2, 4, 6, -4, -5, -6), tree.toList());
@@ -96,6 +97,17 @@ class TreeTest {
     //root
     tree.remove(nodes.get(0));
     assertEquals(Collections.emptyList(), tree.toList());
+  }
+
+  @Test
+  public void treeConcurrentModificationExceptionTest() {
+    Iterator<Node<Integer>> iterator1 = tree.iterator();
+    if (iterator1.hasNext()) {
+      iterator1.next();
+    }
+    tree.add(1);
+    tree.iterator();
+    assertThrows(ConcurrentModificationException.class, iterator1::next);
   }
 
 }
