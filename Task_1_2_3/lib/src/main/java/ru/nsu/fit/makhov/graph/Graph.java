@@ -8,7 +8,9 @@ public interface Graph<T> {
 
   void editVertex(T oldName, T newName);
 
-  void removeVertex(T name);
+  default void removeVertex(T name) {
+    throw new UnsupportedOperationException("remove");
+  }
 
   Vertex<T> getVertex(T name);
 
