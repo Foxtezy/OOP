@@ -1,5 +1,7 @@
 package ru.nsu.fit.makhov.graph;
 
+import java.util.List;
+
 public interface Graph<T> {
 
   void addVertex(T name);
@@ -10,20 +12,10 @@ public interface Graph<T> {
 
   Vertex<T> getVertex(T name);
 
-  void addEdge();
+  void addEdge(Edge<T> newEdge);
 
-  void editEdge();
+  void removeEdge(Edge<T> edge);
 
-  void removeEdge();
-
-  void getEdge();
-
-  interface Vertex<T> {
-    T getValue();
-  }
-
-  interface Edge {
-
-  }
+  Edge<T> getEdge(Edge<T> edge);
 
 }
