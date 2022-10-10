@@ -45,6 +45,20 @@ public class AdjacencyListGraph<T> implements Graph<T> {
   }
 
   @Override
+  public boolean isEdgeExist(Edge<T> edge) {
+    if (!adjList.containsKey(edge.getDeparture())) {
+      return false;
+    }
+    if (!adjList.containsKey(edge.getDestination())) {
+      return false;
+    }
+    if (adjList.get(edge.getDeparture()).get(edge.getDestination()).isInfinite()) {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
   public void addEdge(Edge<T> newEdge) {
     if (!adjList.containsKey(newEdge.getDeparture())) {
       throw new NoSuchElementException("Departure vertex is not exist");
@@ -56,29 +70,18 @@ public class AdjacencyListGraph<T> implements Graph<T> {
   }
 
   @Override
-  public void removeEdge(Edge<T> edge) {
-    if (!adjList.containsKey(edge.getDeparture())) {
-      throw new NoSuchElementException("Departure vertex is not exist");
-    }
-    if (!adjList.containsKey(edge.getDestination())) {
-      throw new NoSuchElementException("Destination vertex is not exist");
-    }
-    if (adjList.get(edge.getDeparture()).get(edge.getDestination()).isInfinite()) {
-      throw new IllegalArgumentException("This edge is not exist");
+  public boolean removeEdge(Edge<T> edge) {
+    if (!isEdgeExist(edge)) {
+      return false;
     }
     adjList.get(edge.getDeparture()).remove(edge.getDestination());
+    return true;
   }
 
   @Override
   public Edge<T> getEdge(Edge<T> edge) {
-    if (!adjList.containsKey(edge.getDeparture())) {
-      throw new NoSuchElementException("Departure vertex is not exist");
-    }
-    if (!adjList.containsKey(edge.getDestination())) {
-      throw new NoSuchElementException("Destination vertex is not exist");
-    }
-    if (adjList.get(edge.getDeparture()).get(edge.getDestination()).isInfinite()) {
-      throw new IllegalArgumentException("This edge is not exist");
+    if (!isEdgeExist(edge)) {
+      throw new NoSuchElementException("Edge is not exist");
     }
     edge.setWeight(adjList.get(edge.getDeparture()).get(edge.getDestination()));
     return edge;

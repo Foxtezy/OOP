@@ -8,15 +8,15 @@ public interface Graph<T> {
 
   void editVertex(T oldName, T newName);
 
-  default void removeVertex(T name) {
-    throw new UnsupportedOperationException("remove");
-  }
+  void removeVertex(T name);
 
   Vertex<T> getVertex(T name);
 
+  boolean isEdgeExist(Edge<T> edge);
+
   void addEdge(Edge<T> newEdge);
 
-  void removeEdge(Edge<T> edge);
+  boolean removeEdge(Edge<T> edge);
 
   Edge<T> getEdge(Edge<T> edge);
 
