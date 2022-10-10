@@ -1,115 +1,73 @@
 package ru.nsu.fit.makhov.graph;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class AdjacencyMatrixGraph<T> implements Graph<T> {
 
   public static final double INFINITY = Double.POSITIVE_INFINITY;
+  private final Map<T, Map<T, Double>> matrix = new HashMap<>();
 
-  private int MAX_CAPACITY = 1000;
-  private final double[][] matrix;
-
-  private final Deque<Integer> emptyIndexes = new ArrayDeque<>();
-
-  private final Map<Integer, T> mapIndexToName = new HashMap<>();
-  private final Map<T, Integer> mapNameToIndex = new HashMap<>();
-
-  private int size = 0;
-
-  public AdjacencyMatrixGraph() {
-    matrix = new double[MAX_CAPACITY][MAX_CAPACITY];
-    for (int i = 0; i < MAX_CAPACITY; i++) {
-      for (int j = 0; j < MAX_CAPACITY; j++) {
-        matrix[i][j] = INFINITY;
-      }
-    }
-  }
-
-  public AdjacencyMatrixGraph(int maxCapacity) {
-    MAX_CAPACITY = maxCapacity;
-    matrix = new double[MAX_CAPACITY][MAX_CAPACITY];
-    for (int i = 0; i < MAX_CAPACITY; i++) {
-      for (int j = 0; j < MAX_CAPACITY; j++) {
-        matrix[i][j] = INFINITY;
-      }
-    }
-  }
+  Map<T, Double> initialRow = new HashMap<>();
 
   @Override
   public void addVertex(T name) {
-    if (mapNameToIndex.containsKey(name)) {
+    if (matrix.containsKey(name)) {
       throw new IllegalArgumentException("This vertex is already exist");
     }
-    if (emptyIndexes.isEmpty()) {
-      mapIndexToName.put(size, name);
-      mapNameToIndex.put(name, size);
-      matrix[size][size] = 0;
-      size++;
-    }
-    else {
-      int index = emptyIndexes.pop();
-      mapIndexToName.put(index, name);
-      mapNameToIndex.put(name, index);
-      matrix[index][index] = 0;
-    }
+    matrix.put(name, new HashMap<>(initialRow));
+    matrix.values().forEach(map -> map.put(name, INFINITY));
+    initialRow.put(name, INFINITY);
+    matrix.get(name).put(name, 0.0);
   }
 
   @Override
   public void editVertex(T oldName, T newName) {
-    if (!mapNameToIndex.containsKey(oldName)) {
+    if (!matrix.containsKey(oldName)) {
       throw new IllegalArgumentException("This vertex is not exist");
     }
-
-    mapNameToIndex.put(newName, mapNameToIndex.remove(oldName));
-    mapIndexToName.replace(mapNameToIndex.get(newName), newName);
+    matrix.put(newName, matrix.remove(oldName));
+    matrix.values().forEach(map -> map.put(newName, map.remove(oldName)));
   }
 
   @Override
   public void removeVertex(T name) {
-    if (!mapNameToIndex.containsKey(name)) {
+    if (!matrix.containsKey(name)) {
       throw new IllegalArgumentException("This vertex is not exist");
     }
-    Integer index = mapNameToIndex.get(name);
-    emptyIndexes.push(index);
-    for (int i = 0; i < size; i++) {
-      matrix[index][i] = INFINITY;
-      matrix[i][index] = INFINITY;
-    }
+    matrix.remove(name);
+    matrix.values().forEach(map -> map.remove(name));
   }
 
   @Override
   public Vertex<T> getVertex(T name) {
-    if (!mapNameToIndex.containsKey(name)) {
+    if (!matrix.containsKey(name)) {
       throw new IllegalArgumentException("This vertex is not exist");
     }
-    int pos = mapNameToIndex.get(name);
-    Set<T> adjSet = new HashSet<>();
-    for (int i = 0; i < size; i++) {
-      if (matrix[pos][i] != INFINITY) {
-        adjSet.add(mapIndexToName.get(i));
-      }
-    }
-    adjSet.remove(name);
+    Map<T, Double> row = matrix.get(name);
+    Set<T> adjSet = row.entrySet().stream().filter(entry -> entry.getValue() != INFINITY)
+        .map(Entry::getKey).collect(Collectors.toSet());
     return new Vertex<>(name, adjSet);
   }
 
   @Override
   public boolean isEdgeExist(Edge<T> edge) {
-    if (!mapNameToIndex.containsKey(edge.getDeparture())) {
+    if (!matrix.containsKey(edge.getDeparture())) {
       return false;
     }
-    if (!mapNameToIndex.containsKey(edge.getDestination())) {
+    if (!matrix.containsKey(edge.getDestination())) {
       return false;
     }
-    int indDeparture = mapNameToIndex.get(edge.getDeparture());
-    int indDestination = mapNameToIndex.get(edge.getDestination());
-    if (matrix[indDestination][indDeparture] == INFINITY) {
+    if (matrix.get(edge.getDestination()).get(edge.getDeparture()).isInfinite()) {
       return false;
     }
     return true;
@@ -117,26 +75,21 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
 
   @Override
   public void addEdge(Edge<T> newEdge) {
-    if (!mapNameToIndex.containsKey(newEdge.getDeparture())) {
+    if (!matrix.containsKey(newEdge.getDeparture())) {
       throw new NoSuchElementException("Departure vertex is not exist");
     }
-    if (!mapNameToIndex.containsKey(newEdge.getDestination())) {
+    if (!matrix.containsKey(newEdge.getDestination())) {
       throw new NoSuchElementException("Destination vertex is not exist");
     }
-    int indDeparture = mapNameToIndex.get(newEdge.getDeparture());
-    int indDestination = mapNameToIndex.get(newEdge.getDestination());
-    matrix[indDeparture][indDestination] = newEdge.getWeight();
+    matrix.get(newEdge.getDeparture()).put(newEdge.getDestination(), newEdge.getWeight());
   }
 
   @Override
-  public boolean removeEdge(Edge<T> edge) {
+  public void removeEdge(Edge<T> edge) {
     if (!isEdgeExist(edge)) {
-      return false;
+      throw new NoSuchElementException("Edge is not exist");
     }
-    int indDeparture = mapNameToIndex.get(edge.getDeparture());
-    int indDestination = mapNameToIndex.get(edge.getDestination());
-    matrix[indDestination][indDeparture] = INFINITY;
-    return true;
+    matrix.get(edge.getDeparture()).put(edge.getDestination(), INFINITY);
   }
 
   @Override
@@ -144,9 +97,7 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
     if (!isEdgeExist(edge)) {
       throw new NoSuchElementException("Edge is not exist");
     }
-    int indDeparture = mapNameToIndex.get(edge.getDeparture());
-    int indDestination = mapNameToIndex.get(edge.getDestination());
-    edge.setWeight(matrix[indDestination][indDeparture]);
+    edge.setWeight(matrix.get(edge.getDeparture()).get(edge.getDestination()));
     return edge;
   }
 }

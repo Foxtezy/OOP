@@ -16,7 +16,7 @@ public interface Graph<T> {
 
   void addEdge(Edge<T> newEdge);
 
-  boolean removeEdge(Edge<T> edge);
+  void removeEdge(Edge<T> edge);
 
   Edge<T> getEdge(Edge<T> edge);
 

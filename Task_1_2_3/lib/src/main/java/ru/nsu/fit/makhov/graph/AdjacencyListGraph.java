@@ -70,12 +70,11 @@ public class AdjacencyListGraph<T> implements Graph<T> {
   }
 
   @Override
-  public boolean removeEdge(Edge<T> edge) {
+  public void removeEdge(Edge<T> edge) {
     if (!isEdgeExist(edge)) {
-      return false;
+      throw new NoSuchElementException("Edge is not exist");
     }
     adjList.get(edge.getDeparture()).remove(edge.getDestination());
-    return true;
   }
 
   @Override

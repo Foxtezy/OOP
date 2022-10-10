@@ -1,0 +1,9 @@
+4 4
+A
+B
+AB
+BB
+A B 1
+B AB 3
+B BB 5
+AB BB 10
