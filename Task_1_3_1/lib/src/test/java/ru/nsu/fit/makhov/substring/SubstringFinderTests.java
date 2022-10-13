@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -15,8 +16,8 @@ class SubstringFinderTests {
 
   private static SubstringFinder substringFinder;
 
-  @BeforeAll
-  public static void setup() throws FileNotFoundException {
+  @BeforeEach
+  public void setup() throws FileNotFoundException {
     substringFinder =
         new SubstringFinder(
             "src/test/resources/input.txt");
