@@ -28,10 +28,8 @@ class SubstringFinderTests {
     Assertions.assertEquals(
         Collections.emptyList(),
         substringFinder.findSubstring("'"));
-    //first
     Assertions.assertEquals(Arrays.asList(0, 25, 51, 90, 116, 141),
         substringFinder.findSubstring("N"));
-    //last
     Assertions.assertEquals(
         Arrays.asList(19, 21, 43, 64, 70, 87, 109, 169, 175),
         substringFinder.findSubstring("u"));
