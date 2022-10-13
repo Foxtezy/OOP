@@ -6,45 +6,61 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Simple substring finder in a file.
+ */
 public class SubstringFinder {
 
-  private final Scanner scanner;
+  private Scanner scanner;
 
-  private static final boolean INSUBSTRING = true;
+  private final File file;
 
-  private static final boolean NOTSUBSTRING = false;
+  private static final boolean IN_SUBSTRING = true;
+
+  private static final boolean NOT_SUBSTRING = false;
 
   public SubstringFinder(String fileName) throws FileNotFoundException {
-    File file = new File(fileName);
+    this.file = new File(fileName);
     this.scanner = new Scanner(file);
   }
 
+  /**
+   * Returns the indices of the beginning of a substring in a string.
+   *
+   * @param substring string to find
+   * @return List of beginning substrings
+   */
   public List<Integer> findSubstring(String substring) {
     List<Integer> listSubstr = new ArrayList<>();
     int pointer = 0;
-    int nSubstring = 0;
-    boolean stat = NOTSUBSTRING;
+    int numSubstring = 0;
+    boolean stat = NOT_SUBSTRING;
     scanner.useDelimiter("");
     for (int i = 0; scanner.hasNext(); i++) {
       char currFile = scanner.next().charAt(0);
       char currStr = substring.charAt(pointer);
       if (currFile != currStr) {
         pointer = 0;
-        stat = NOTSUBSTRING;
+        stat = NOT_SUBSTRING;
         continue;
       }
-      if (stat == INSUBSTRING && pointer < substring.length()) {
+      if (stat == IN_SUBSTRING && pointer < substring.length()) {
         pointer++;
       }
-      if (stat == NOTSUBSTRING && (currFile == currStr)) {
-        nSubstring = i;
+      if (stat == NOT_SUBSTRING && (currFile == currStr)) {
+        numSubstring = i;
         pointer++;
-        stat = INSUBSTRING;
+        stat = IN_SUBSTRING;
       }
-      if (stat == INSUBSTRING && (pointer == substring.length())) {
+      if (stat == IN_SUBSTRING && (pointer == substring.length())) {
         pointer = 0;
-        listSubstr.add(nSubstring);
+        listSubstr.add(numSubstring);
       }
+    }
+    try {
+      scanner = new Scanner(file);
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e);
     }
     return listSubstr;
   }
