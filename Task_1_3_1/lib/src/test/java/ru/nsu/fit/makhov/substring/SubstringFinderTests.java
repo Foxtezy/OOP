@@ -14,17 +14,11 @@ import java.io.FileNotFoundException;
 
 class SubstringFinderTests {
 
-  private static SubstringFinder substringFinder;
-
-  @BeforeEach
-  public void setup() throws FileNotFoundException {
-    substringFinder =
+  @Test
+  public void substringFinderOneCharTest() throws FileNotFoundException {
+    SubstringFinder substringFinder =
         new SubstringFinder(
             "src/test/resources/input.txt");
-  }
-
-  @Test
-  public void substringFinderOneCharTest() {
     Assertions.assertEquals(
         Collections.emptyList(),
         substringFinder.findSubstring("'"));
@@ -39,7 +33,10 @@ class SubstringFinderTests {
   }
 
   @Test
-  public void substringFinderWordTest() {
+  public void substringFinderWordTest() throws FileNotFoundException {
+    SubstringFinder substringFinder =
+        new SubstringFinder(
+            "src/test/resources/input.txt");
     Assertions.assertEquals(
         Arrays.asList(0, 25, 51, 90, 116, 141), substringFinder.findSubstring("Never gonna"));
     Assertions.assertEquals(
