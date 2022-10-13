@@ -25,38 +25,27 @@ class SubstringFinderTests {
 
   @Test
   public void substringFinderOneCharTest() {
-/*    Assertions.assertEquals(
-        Arrays.asList(2, 84, 93, 119, 178, 397, 441, 464, 521, 573, 615, 630, 644, 1024, 1068, 1091,
-            1151, 1203, 1249),
+    Assertions.assertEquals(
+        Collections.emptyList(),
         substringFinder.findSubstring("'"));
     //first
-    Assertions.assertEquals(Arrays.asList(0, 395, 550, 1022, 1180),
-        substringFinder.findSubstring("W"));
+    Assertions.assertEquals(Arrays.asList(0, 25, 51, 90, 116, 141),
+        substringFinder.findSubstring("N"));
     //last
     Assertions.assertEquals(
-        Arrays.asList(30, 42, 70, 111, 115, 147, 154, 171, 203, 205, 236, 238, 260, 281, 287, 304,
-            326, 386, 392, 433, 458, 463, 601, 643, 685, 687, 709, 730, 736, 753, 775, 835, 841,
-            863, 865, 887, 908, 914, 931, 953, 1013, 1019, 1060, 1085, 1090, 1225, 1242, 1274, 1276,
-            1307, 1309, 1331, 1352, 1358, 1375, 1397, 1457, 1463, 1485, 1487, 1509, 1530, 1536,
-            1553, 1575, 1635, 1641, 1663, 1665, 1687, 1708, 1714, 1731, 1753, 1813, 1819),
+        Arrays.asList(19, 21, 43, 64, 70, 87, 109, 169, 175),
         substringFinder.findSubstring("u"));
     Assertions.assertEquals(
-        Arrays.asList(27, 66, 108, 150, 189, 216, 241, 267, 306, 332, 357, 394, 430, 495, 549, 591,
-            626, 665, 690, 716, 755, 781, 806, 843, 868, 894, 933, 959, 984, 1021, 1057, 1125, 1179,
-            1221, 1260, 1287, 1312, 1338, 1377, 1403, 1428, 1465, 1490, 1516, 1555, 1581, 1606,
-            1643, 1668, 1694, 1733, 1759, 1784),
-        substringFinder.findSubstring("\n"));*/
-    Assertions.assertEquals(Collections.emptyList(), substringFinder.findSubstring("F"));
+        Arrays.asList(24, 50, 89, 115, 140),
+        substringFinder.findSubstring("\n"));
   }
 
   @Test
   public void substringFinderWordTest() {
     Assertions.assertEquals(
-        Arrays.asList(217, 242, 268, 307, 333, 358, 666, 691, 717, 756, 782, 807, 844, 869, 895,
-            934, 960, 985, 1288, 1313, 1339, 1378, 1404, 1429, 1466, 1491, 1517, 1556, 1582, 1607,
-            1644, 1669, 1695, 1734, 1760, 1785), substringFinder.findSubstring("Never gonna"));
+        Arrays.asList(0, 25, 51, 90, 116, 141), substringFinder.findSubstring("Never gonna"));
     Assertions.assertEquals(
-        Collections.singletonList(0), substringFinder.findSubstring("We're no strangers to love"));
+        Collections.emptyList(), substringFinder.findSubstring("We're no strangers to love"));
   }
 
   @Test
