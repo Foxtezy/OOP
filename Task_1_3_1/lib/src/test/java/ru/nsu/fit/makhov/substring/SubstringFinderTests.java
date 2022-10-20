@@ -3,6 +3,7 @@
  */
 package ru.nsu.fit.makhov.substring;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import org.junit.jupiter.api.Assertions;
@@ -14,34 +15,37 @@ import java.io.FileNotFoundException;
 class SubstringFinderTests {
 
   private static SubstringFinder substringFinder;
+  private static String fileName;
 
   @BeforeAll
   public static void init() {
     substringFinder = new SubstringFinder();
+    String separator = File.separator;
+    fileName = "src" + separator + "test" + separator + "resources" + separator + "input.txt";
   }
 
   @Test
   public void substringFinderOneCharTest() throws FileNotFoundException {
     Assertions.assertEquals(
         Collections.emptyList(),
-        substringFinder.findSubstring("src/test/resources/input.txt", "'"));
+        substringFinder.findSubstring(fileName, "'"));
     Assertions.assertEquals(Arrays.asList(0, 25, 51, 90, 116, 141),
-        substringFinder.findSubstring("src/test/resources/input.txt", "N"));
+        substringFinder.findSubstring(fileName, "N"));
     Assertions.assertEquals(
         Arrays.asList(19, 21, 43, 64, 70, 87, 109, 169, 175),
-        substringFinder.findSubstring("src/test/resources/input.txt", "u"));
+        substringFinder.findSubstring(fileName, "u"));
     Assertions.assertEquals(
         Arrays.asList(24, 50, 89, 115, 140),
-        substringFinder.findSubstring("src/test/resources/input.txt", "\n"));
+        substringFinder.findSubstring(fileName, "\n"));
   }
 
   @Test
   public void substringFinderWordTest() throws FileNotFoundException {
     Assertions.assertEquals(
         Arrays.asList(0, 25, 51, 90, 116, 141),
-        substringFinder.findSubstring("src/test/resources/input.txt", "Never gonna"));
+        substringFinder.findSubstring(fileName, "Never gonna"));
     Assertions.assertEquals(
-        Collections.emptyList(), substringFinder.findSubstring("src/test/resources/input.txt",
+        Collections.emptyList(), substringFinder.findSubstring(fileName,
             "We're no strangers to love"));
   }
 
