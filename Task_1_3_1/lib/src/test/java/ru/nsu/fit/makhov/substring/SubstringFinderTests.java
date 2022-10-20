@@ -21,7 +21,7 @@ class SubstringFinderTests {
   public static void init() {
     substringFinder = new SubstringFinder();
     String separator = File.separator;
-    fileName = "src" + separator + "test" + separator + "resources" + separator + "input.txt";
+    fileName = "src" + separator + "test" + separator + "resources" + separator + "input";
   }
 
   @Test
