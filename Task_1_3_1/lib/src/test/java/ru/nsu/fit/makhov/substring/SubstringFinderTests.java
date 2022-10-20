@@ -7,44 +7,47 @@ import java.util.Arrays;
 import java.util.Collections;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 
 class SubstringFinderTests {
 
+  private static SubstringFinder substringFinder;
+
+  @BeforeAll
+  public static void init() {
+    substringFinder = new SubstringFinder();
+  }
+
   @Test
   public void substringFinderOneCharTest() throws FileNotFoundException {
-    SubstringFinder substringFinder =
-        new SubstringFinder(
-            "src/test/resources/input.txt");
     Assertions.assertEquals(
         Collections.emptyList(),
-        substringFinder.findSubstring("'"));
+        substringFinder.findSubstring("src/test/resources/input.txt", "'"));
     Assertions.assertEquals(Arrays.asList(0, 25, 51, 90, 116, 141),
-        substringFinder.findSubstring("N"));
+        substringFinder.findSubstring("src/test/resources/input.txt", "N"));
     Assertions.assertEquals(
         Arrays.asList(19, 21, 43, 64, 70, 87, 109, 169, 175),
-        substringFinder.findSubstring("u"));
+        substringFinder.findSubstring("src/test/resources/input.txt", "u"));
     Assertions.assertEquals(
         Arrays.asList(24, 50, 89, 115, 140),
-        substringFinder.findSubstring("\n"));
+        substringFinder.findSubstring("src/test/resources/input.txt", "\n"));
   }
 
   @Test
   public void substringFinderWordTest() throws FileNotFoundException {
-    SubstringFinder substringFinder =
-        new SubstringFinder(
-            "src/test/resources/input.txt");
     Assertions.assertEquals(
-        Arrays.asList(0, 25, 51, 90, 116, 141), substringFinder.findSubstring("Never gonna"));
+        Arrays.asList(0, 25, 51, 90, 116, 141),
+        substringFinder.findSubstring("src/test/resources/input.txt", "Never gonna"));
     Assertions.assertEquals(
-        Collections.emptyList(), substringFinder.findSubstring("We're no strangers to love"));
+        Collections.emptyList(), substringFinder.findSubstring("src/test/resources/input.txt",
+            "We're no strangers to love"));
   }
 
   @Test
   public void SubstringFinderFileNotFoundExceptionTest() {
-    Assertions.assertThrows(FileNotFoundException.class, () -> new SubstringFinder("BibaBobovich"));
+    Assertions.assertThrows(FileNotFoundException.class,
+        () -> substringFinder.findSubstring("BibaBobovich", "biba"));
   }
 }

@@ -11,18 +11,9 @@ import java.util.Scanner;
  */
 public class SubstringFinder {
 
-  private Scanner scanner;
-
-  private final File file;
-
   private static final boolean IN_SUBSTRING = true;
 
   private static final boolean NOT_SUBSTRING = false;
-
-  public SubstringFinder(String fileName) throws FileNotFoundException {
-    this.file = new File(fileName);
-    this.scanner = new Scanner(file);
-  }
 
   /**
    * Returns the indices of the beginning of a substring in a string.
@@ -30,7 +21,9 @@ public class SubstringFinder {
    * @param substring string to find
    * @return List of beginning substrings
    */
-  public List<Integer> findSubstring(String substring) {
+  public List<Integer> findSubstring(String fileName, String substring)
+      throws FileNotFoundException {
+    Scanner scanner = new Scanner(new File(fileName));
     List<Integer> listSubstr = new ArrayList<>();
     int pointer = 0;
     int numSubstring = 0;
@@ -57,11 +50,7 @@ public class SubstringFinder {
         listSubstr.add(numSubstring);
       }
     }
-    try {
-      scanner = new Scanner(file);
-    } catch (FileNotFoundException e) {
-      throw new RuntimeException(e);
-    }
+    scanner.close();
     return listSubstr;
   }
 }
