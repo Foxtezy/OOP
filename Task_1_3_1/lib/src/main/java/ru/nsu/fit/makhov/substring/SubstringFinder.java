@@ -1,10 +1,10 @@
 package ru.nsu.fit.makhov.substring;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Simple substring finder in a file.
@@ -15,42 +15,64 @@ public class SubstringFinder {
 
   private static final boolean NOT_SUBSTRING = false;
 
+  private static List<Integer> listSubstr;
+
+  private static char[] substring;
+
+  private static int countOfWritten = 0;
+
+  private static boolean stat = NOT_SUBSTRING;
+  private static int subPointer = 0;
+  private static int numSubstring = 0;
+
+  private SubstringFinder() {
+  }
+
   /**
    * Returns the indices of the beginning of a substring in a string.
    *
    * @param substring string to find
    * @return List of beginning substrings
    */
-  public List<Integer> findSubstring(String fileName, String substring)
-      throws FileNotFoundException {
-    Scanner scanner = new Scanner(new File(fileName));
-    List<Integer> listSubstr = new ArrayList<>();
-    int pointer = 0;
-    int numSubstring = 0;
-    boolean stat = NOT_SUBSTRING;
-    scanner.useDelimiter("");
-    for (int i = 0; scanner.hasNext(); i++) {
-      char currFile = scanner.next().charAt(0);
-      char currStr = substring.charAt(pointer);
-      if (currFile != currStr) {
-        pointer = 0;
+  public static List<Integer> findSubstring(String fileName, String substring) {
+    SubstringFinder.listSubstr = new ArrayList<>();
+    SubstringFinder.substring = substring.toCharArray();
+    countOfWritten = 0;
+    stat = NOT_SUBSTRING;
+    subPointer = 0;
+    numSubstring = 0;
+    char[] buff = new char[10];
+    try (Reader reader = new FileReader(fileName)) {
+      while (reader.ready()) {
+        int bufSize = reader.read(buff);
+        findSubstringInBuf(buff, bufSize);
+        countOfWritten += bufSize;
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return listSubstr;
+  }
+
+  private static void findSubstringInBuf(char[] buf, int bufSize) {
+    for (int i = 0; i < bufSize; i++) {
+      if (buf[i] != substring[subPointer]) {
+        subPointer = 0;
         stat = NOT_SUBSTRING;
         continue;
       }
-      if (stat == IN_SUBSTRING && pointer < substring.length()) {
-        pointer++;
+      if (stat == IN_SUBSTRING && subPointer < substring.length) {
+        subPointer++;
       }
-      if (stat == NOT_SUBSTRING && (currFile == currStr)) {
-        numSubstring = i;
-        pointer++;
+      if (stat == NOT_SUBSTRING && (buf[i] == substring[subPointer])) {
+        numSubstring = i + countOfWritten;
+        subPointer++;
         stat = IN_SUBSTRING;
       }
-      if (stat == IN_SUBSTRING && (pointer == substring.length())) {
-        pointer = 0;
+      if (stat == IN_SUBSTRING && (subPointer == substring.length)) {
+        subPointer = 0;
         listSubstr.add(numSubstring);
       }
     }
-    scanner.close();
-    return listSubstr;
   }
 }
