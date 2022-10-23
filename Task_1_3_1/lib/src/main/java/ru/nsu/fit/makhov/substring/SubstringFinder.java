@@ -42,19 +42,8 @@ public class SubstringFinder {
    * @return List of beginning substrings
    */
   public List<Integer> findSubstring(String fileName, String substring) {
-    listSubstr = new ArrayList<>();
-    this.substring = substring.toCharArray();
-    countOfWritten = 0;
-    stat = NOT_SUBSTRING;
-    subPointer = 0;
-    numSubstring = 0;
-    char[] buff = new char[bufSize];
     try (Reader reader = new FileReader(fileName)) {
-      while (reader.ready()) {
-        int bufSize = reader.read(buff);
-        findSubstringInBuf(buff, bufSize);
-        countOfWritten += bufSize;
-      }
+      findSubstring(reader, substring);
     } catch (IOException e) {
       e.printStackTrace();
     }
