@@ -3,7 +3,6 @@ package ru.nsu.fit.makhov.substring;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +25,19 @@ public class SubstringFinder {
   private int subPointer = 0;
   private int numSubstring = 0;
 
+  private int bufSize = 10;
+
+  public SubstringFinder() {
+  }
+
+  public SubstringFinder(int bufSize) {
+    this.bufSize = bufSize;
+  }
 
   /**
    * Returns the indices of the beginning of a substring in a string.
    *
+   * @param fileName  name of file
    * @param substring string to find
    * @return List of beginning substrings
    */
@@ -40,7 +48,7 @@ public class SubstringFinder {
     stat = NOT_SUBSTRING;
     subPointer = 0;
     numSubstring = 0;
-    CharBuffer buff = CharBuffer.allocate(100);
+    char[] buff = new char[bufSize];
     try (Reader reader = new FileReader(fileName)) {
       while (reader.ready()) {
         int bufSize = reader.read(buff);
@@ -53,6 +61,13 @@ public class SubstringFinder {
     return listSubstr;
   }
 
+  /**
+   * Returns the indices of the beginning of a substring in a string.
+   *
+   * @param reader    reader
+   * @param substring string to find
+   * @return List of beginning substrings
+   */
   public List<Integer> findSubstring(Reader reader, String substring) {
     listSubstr = new ArrayList<>();
     this.substring = substring.toCharArray();
@@ -60,10 +75,13 @@ public class SubstringFinder {
     stat = NOT_SUBSTRING;
     subPointer = 0;
     numSubstring = 0;
-    CharBuffer buff = CharBuffer.allocate(100);
+    char[] buff = new char[bufSize];
     try (reader) {
-      while (reader.ready()) {
+      while (true) {
         int bufSize = reader.read(buff);
+        if (bufSize == -1) {
+          break;
+        }
         findSubstringInBuf(buff, bufSize);
         countOfWritten += bufSize;
       }
@@ -73,9 +91,9 @@ public class SubstringFinder {
     return listSubstr;
   }
 
-  private void findSubstringInBuf(CharBuffer buf, int bufSize) {
+  private void findSubstringInBuf(char[] buf, int bufSize) {
     for (int i = 0; i < bufSize; i++) {
-      if (buf.get(i) != substring[subPointer]) {
+      if (buf[i] != substring[subPointer]) {
         subPointer = 0;
         stat = NOT_SUBSTRING;
         continue;
@@ -83,7 +101,7 @@ public class SubstringFinder {
       if (stat == IN_SUBSTRING && subPointer < substring.length) {
         subPointer++;
       }
-      if (stat == NOT_SUBSTRING && (buf.get(i) == substring[subPointer])) {
+      if (stat == NOT_SUBSTRING && (buf[i] == substring[subPointer])) {
         numSubstring = i + countOfWritten;
         subPointer++;
         stat = IN_SUBSTRING;

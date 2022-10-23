@@ -28,6 +28,12 @@ dependencies {
     implementation 'com.google.guava:guava:31.0.1-jre'
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
