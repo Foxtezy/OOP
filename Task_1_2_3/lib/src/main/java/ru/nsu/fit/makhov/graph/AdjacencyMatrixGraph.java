@@ -3,17 +3,19 @@ package ru.nsu.fit.makhov.graph;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
-import java.util.PriorityQueue;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
+import ru.nsu.fit.makhov.graph.utils.Pair;
 
+/**
+ * Class which represents directed, weighted graphs using adjacency list.
+ *
+ * @param <T> type of names of vertexes
+ */
 public class AdjacencyMatrixGraph<T> implements Graph<T> {
 
   public static final double INFINITY = Double.POSITIVE_INFINITY;
@@ -48,6 +50,7 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
     }
     matrix.remove(name);
     matrix.values().forEach(map -> map.remove(name));
+    initialRow.remove(name);
   }
 
   @Override
@@ -103,14 +106,17 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
     return edge;
   }
 
+  @Override
   public List<Pair<T, Double>> sort(T src) {
-    Map<T, Double>  distances = new HashMap<>(initialRow);
+    Map<T, Double> distances = new HashMap<>(initialRow);
     distances.replace(src, 0.0);
     var grayVertexes = new ArrayList<>(initialRow.keySet());
-    Comparator<Entry<T, Double>> mapCmp = (entry1, entry2) -> ((entry1.getValue() > entry2.getValue())
-        ? 1 : entry1.getValue().equals(entry2.getValue()) ? 0 : -1);
+    Comparator<Entry<T, Double>> mapCmp = (entry1, entry2) -> (
+        (entry1.getValue() > entry2.getValue())
+            ? 1 : entry1.getValue().equals(entry2.getValue()) ? 0 : -1);
     while (!grayVertexes.isEmpty()) {
-      T u = distances.entrySet().stream().filter((entry) -> grayVertexes.contains(entry.getKey())).min(mapCmp).get().getKey();
+      T u = distances.entrySet().stream().filter((entry) -> grayVertexes.contains(entry.getKey()))
+          .min(mapCmp).get().getKey();
       grayVertexes.remove(u);
       for (Map.Entry<T, Double> v : matrix.get(u).entrySet()) {
         if (v.getValue() != INFINITY
@@ -118,12 +124,6 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
           distances.replace(v.getKey(), distances.get(u) + v.getValue());
         }
       }
-      /*
-      for uv in E:
-      if D[v] > D[u] + w(uv):
-      D[v] = D[u] + w(uv)
-      F[v] = u
-      mark[v] = G*/
     }
     Comparator<Pair<T, Double>> pairCmp = (p1, p2) -> ((p1.value() > p2.value())
         ? 1 : p1.value().equals(p2.value()) ? 0 : -1);

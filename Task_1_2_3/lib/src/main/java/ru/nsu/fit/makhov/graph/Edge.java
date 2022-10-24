@@ -1,5 +1,10 @@
 package ru.nsu.fit.makhov.graph;
 
+/**
+ * Class which represents edge in weighted, oriented graph.
+ *
+ * @param <T> type of names of vertexes.
+ */
 public class Edge<T> {
 
   private final T departure;
@@ -12,6 +17,13 @@ public class Edge<T> {
     this.destination = destination;
   }
 
+  /**
+   * Constructor with weight.
+   *
+   * @param departure   departure vertex.
+   * @param destination destination vertex.
+   * @param weight      weight of the vertex.
+   */
   public Edge(T departure, T destination, Double weight) {
     this.departure = departure;
     this.destination = destination;

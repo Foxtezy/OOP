@@ -2,23 +2,13 @@ package ru.nsu.fit.makhov.graph;
 
 import java.util.Set;
 
-public class Vertex<T> {
-
-  private final T value;
-
-  private final Set<T> adjSet;
-
-  public Vertex(T value, Set<T> adjSet) {
-    this.value = value;
-    this.adjSet = adjSet;
-  }
-
-  public T getValue() {
-    return value;
-  }
-
-  public Set<T> getAdjSet() {
-    return adjSet;
-  }
+/**
+ * Class which represents vertex in weighted, oriented graph.
+ *
+ * @param name   name of the vertex.
+ * @param adjSet set of adjacency vertexes.
+ * @param <T>    type of names of vertexes.
+ */
+public record Vertex<T>(T name, Set<T> adjSet) {
 
 }

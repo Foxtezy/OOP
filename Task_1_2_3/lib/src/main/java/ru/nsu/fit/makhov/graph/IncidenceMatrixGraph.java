@@ -1,6 +1,7 @@
 package ru.nsu.fit.makhov.graph;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -9,7 +10,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.stream.Collectors;
+import ru.nsu.fit.makhov.graph.utils.Pair;
 
+/**
+ * Class which represents directed, weighted graphs using adjacency list.
+ *
+ * @param <T> type of names of vertexes
+ */
 public class IncidenceMatrixGraph<T> implements Graph<T> {
 
   public static final double INFINITY = Double.POSITIVE_INFINITY;
@@ -40,7 +48,7 @@ public class IncidenceMatrixGraph<T> implements Graph<T> {
     }
     List<Double> removeVertexRow = new ArrayList<>(matrix.get(name));
     matrix.remove(name);
-    for (int i = 0; i < removeVertexRow.size(); i++) {
+    for (int i = removeVertexRow.size() - 1; i >= 0; i--) {
       if (removeVertexRow.get(i) != INFINITY) {
         int finalI = i;
         matrix.values().forEach(l -> l.remove(finalI));
@@ -140,7 +148,39 @@ public class IncidenceMatrixGraph<T> implements Graph<T> {
 
   @Override
   public List<Pair<T, Double>> sort(T src) {
-    return null;
+    var grayVertexes = new ArrayList<>(matrix.keySet());
+    Map<T, Double> distances = new HashMap<>();
+    for (T v : grayVertexes) {
+      distances.put(v, INFINITY);
+    }
+    distances.replace(src, 0.0);
+    Comparator<Entry<T, Double>> mapCmp = (entry1, entry2) -> (
+        (entry1.getValue() > entry2.getValue())
+            ? 1 : entry1.getValue().equals(entry2.getValue()) ? 0 : -1);
+    while (!grayVertexes.isEmpty()) {
+      T u = distances.entrySet().stream().filter((entry) -> grayVertexes.contains(entry.getKey()))
+          .min(mapCmp).get().getKey();
+      grayVertexes.remove(u);
+      for (int i = 0; i < matrix.get(u).size(); i++) {
+        Pair<T, Double> v = null;
+        if (matrix.get(u).get(i) < 0) {
+          for (Entry<T, List<Double>> row : matrix.entrySet()) {
+            if (row.getValue().get(i) != INFINITY && row.getValue().get(i) > 0) {
+              v = new Pair<>(row.getKey(), row.getValue().get(i));
+              break;
+            }
+          }
+        }
+        if (v != null && distances.get(v.key()) > distances.get(u) + v.value()) {
+          distances.replace(v.key(), distances.get(u) + v.value());
+        }
+      }
+    }
+    Comparator<Pair<T, Double>> pairCmp = (p1, p2) -> ((p1.value() > p2.value())
+        ? 1 : p1.value().equals(p2.value()) ? 0 : -1);
+    return distances.entrySet().stream()
+        .map((entry) -> new Pair<>(entry.getKey(), entry.getValue())).sorted(pairCmp)
+        .collect(Collectors.toList());
   }
 
 
