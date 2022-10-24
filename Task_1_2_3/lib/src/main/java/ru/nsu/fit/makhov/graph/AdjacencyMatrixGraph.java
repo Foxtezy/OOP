@@ -125,8 +125,8 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
         }
       }
     }
-    Comparator<Pair<T, Double>> pairCmp = (p1, p2) -> ((p1.value() > p2.value())
-        ? 1 : p1.value().equals(p2.value()) ? 0 : -1);
+    Comparator<Pair<T, Double>> pairCmp = (p1, p2) -> ((p1.getValue() > p2.getValue())
+        ? 1 : p1.getValue().equals(p2.getValue()) ? 0 : -1);
     return distances.entrySet().stream()
         .map((entry) -> new Pair<>(entry.getKey(), entry.getValue())).sorted(pairCmp)
         .collect(Collectors.toList());
