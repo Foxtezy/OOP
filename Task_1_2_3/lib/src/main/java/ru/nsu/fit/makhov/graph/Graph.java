@@ -1,6 +1,7 @@
 package ru.nsu.fit.makhov.graph;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Graph<T> {
 
@@ -19,5 +20,7 @@ public interface Graph<T> {
   void removeEdge(Edge<T> edge);
 
   Edge<T> getEdge(Edge<T> edge);
+
+  List<Pair<T, Double>> sort(T src);
 
 }

@@ -1,9 +1,28 @@
-4 4
+7 20
 A
 B
-AB
-BB
-A B 1
-B AB 3
-B BB 5
-AB BB 10
+C
+D
+E
+F
+G
+A B 5
+A D 12
+A G 25
+B A 5
+B D 8
+C D 2
+C E 4
+C F 5
+C G 10
+D A 12
+D B 8
+D C 2
+E C 4
+E G 5
+F C 5
+F G 5
+G A 25
+G C 10
+G E 5
+G F 5
