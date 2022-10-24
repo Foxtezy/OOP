@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class AdjacencyMatrixGraphTests extends GraphTests {
 
+
   @BeforeEach
   public void setupTests() {
     super.graph = new AdjacencyMatrixGraph<>();
