@@ -67,7 +67,7 @@ public class IncidenceMatrixGraph<T> implements Graph<T> {
       if (vertexRow.get(i) < 0 && vertexRow.get(i) != INFINITY) {
         int finalI = i;
         List<T> vertex = matrix.entrySet().stream()
-            .filter(entry -> entry.getValue().get(finalI) != INFINITY && entry.getKey() != name)
+            .filter(entry -> entry.getValue().get(finalI) != INFINITY && entry.getValue().get(finalI) > 0)
             .map(Entry::getKey).toList();
         adjSet.add(vertex.get(0));
       }

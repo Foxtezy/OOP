@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import ru.nsu.fit.makhov.graph.utils.Pair;
 
+@Disabled
 public abstract class GraphTests {
 
   protected Graph<String> graph;
@@ -30,25 +34,50 @@ public abstract class GraphTests {
     }
   }
 
-  protected void removeVertex() {
+  @Test
+  protected void removeVertexTest() {
     graph.removeVertex("E");
     Assertions.assertEquals(
         Arrays.asList(new Pair<>("C", 0.0), new Pair<>("D", 2.0), new Pair<>("F", 5.0),
             new Pair<>("B", 10.0), new Pair<>("G", 10.0), new Pair<>("A", 14.0)), graph.sort("C"));
   }
 
-  protected void removeEdge() {
+  @Test
+  protected void removeEdgeTest() {
     graph.removeEdge(new Edge<>("C", "D"));
     Assertions.assertEquals(
         Arrays.asList(new Pair<>("C", 0.0), new Pair<>("E", 4.0), new Pair<>("F", 5.0),
-            new Pair<>("G", 9.0), new Pair<>("A", 34.0), new Pair<>("B", 39.0), new Pair<>("D", 46.0)), graph.sort("C"));
+            new Pair<>("G", 9.0), new Pair<>("A", 34.0), new Pair<>("B", 39.0),
+            new Pair<>("D", 46.0)), graph.sort("C"));
   }
 
-  protected void sort() {
+  @Test
+  protected void getEdgeTest() {
+    Edge<String> edge = new Edge<>("E", "C", 4.0);
+    Assertions.assertEquals(edge, graph.getEdge(new Edge<>("E", "C")));
+  }
+
+  @Test
+  protected void getVertexTest() {
+    Vertex<String> vertex = new Vertex<>("B", Set.of("A", "D"));
+    Assertions.assertEquals(vertex, graph.getVertex("B"));
+  }
+
+  @Test
+  protected void editVertexTest() {
+    graph.editVertex("A", "ABBA");
     Assertions.assertEquals(
         Arrays.asList(new Pair<>("C", 0.0), new Pair<>("D", 2.0), new Pair<>("E", 4.0),
-            new Pair<>("F", 5.0),
-            new Pair<>("G", 9.0), new Pair<>("B", 10.0), new Pair<>("A", 14.0)), graph.sort("C"));
+            new Pair<>("F", 5.0), new Pair<>("G", 9.0), new Pair<>("B", 10.0),
+            new Pair<>("ABBA", 14.0)), graph.sort("C"));
+  }
+
+  @Test
+  protected void sortTest() {
+    Assertions.assertEquals(
+        Arrays.asList(new Pair<>("C", 0.0), new Pair<>("D", 2.0), new Pair<>("E", 4.0),
+            new Pair<>("F", 5.0), new Pair<>("G", 9.0), new Pair<>("B", 10.0),
+            new Pair<>("A", 14.0)), graph.sort("C"));
   }
 
 

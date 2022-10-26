@@ -1,5 +1,6 @@
 package ru.nsu.fit.makhov.graph;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -26,4 +27,19 @@ public class Vertex<T> {
     return adjSet;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Vertex<?> vertex)) {
+      return false;
+    }
+    return getValue().equals(vertex.getValue()) && getAdjSet().equals(vertex.getAdjSet());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getValue(), getAdjSet());
+  }
 }

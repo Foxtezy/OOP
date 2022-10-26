@@ -1,5 +1,7 @@
 package ru.nsu.fit.makhov.graph;
 
+import java.util.Objects;
+
 /**
  * Class which represents edge in weighted, oriented graph.
  *
@@ -46,4 +48,20 @@ public class Edge<T> {
     this.weight = weight;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Edge<?> edge)) {
+      return false;
+    }
+    return getDeparture().equals(edge.getDeparture()) && getDestination().equals(
+        edge.getDestination()) && Objects.equals(getWeight(), edge.getWeight());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getDeparture(), getDestination(), getWeight());
+  }
 }

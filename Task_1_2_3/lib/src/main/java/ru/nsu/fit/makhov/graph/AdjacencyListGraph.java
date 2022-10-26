@@ -36,7 +36,7 @@ public class AdjacencyListGraph<T> implements Graph<T> {
       throw new IllegalArgumentException("This vertex is not exist");
     }
     adjList.put(newName, adjList.remove(oldName));
-    adjList.values().forEach(m -> m.put(newName, m.remove(oldName)));
+    adjList.values().stream().filter(m -> m.containsKey(oldName)).forEach(m -> m.put(newName, m.remove(oldName)));
   }
 
   @Override

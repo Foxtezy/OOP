@@ -41,6 +41,7 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
     }
     matrix.put(newName, matrix.remove(oldName));
     matrix.values().forEach(map -> map.put(newName, map.remove(oldName)));
+    initialRow.put(newName, initialRow.remove(oldName));
   }
 
   @Override
@@ -61,6 +62,7 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
     Map<T, Double> row = matrix.get(name);
     Set<T> adjSet = row.entrySet().stream().filter(entry -> entry.getValue() != INFINITY)
         .map(Entry::getKey).collect(Collectors.toSet());
+    adjSet.remove(name);
     return new Vertex<>(name, adjSet);
   }
 
