@@ -1,7 +1,6 @@
 package ru.nsu.fit.makhov.graph;
 
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Class which represents vertex in weighted, oriented graph.
@@ -10,21 +9,24 @@ import java.util.Set;
  */
 public class Vertex<T> {
 
-  private final T value;
+  private T value;
+  private final long key;
 
-  private final Set<T> adjSet;
-
-  public Vertex(T value, Set<T> adjSet) {
+  public Vertex(T value, long key) {
     this.value = value;
-    this.adjSet = adjSet;
+    this.key = key;
   }
 
   public T getValue() {
     return value;
   }
 
-  public Set<T> getAdjSet() {
-    return adjSet;
+  public long getKey() {
+    return key;
+  }
+
+  public void setValue(T value) {
+    this.value = value;
   }
 
   @Override
@@ -35,11 +37,16 @@ public class Vertex<T> {
     if (!(o instanceof Vertex<?> vertex)) {
       return false;
     }
-    return getValue().equals(vertex.getValue()) && getAdjSet().equals(vertex.getAdjSet());
+    return getKey() == vertex.getKey();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getValue(), getAdjSet());
+    return Objects.hash(getKey());
+  }
+
+  @Override
+  public String toString() {
+    return "(" + value + "," + key + ')';
   }
 }

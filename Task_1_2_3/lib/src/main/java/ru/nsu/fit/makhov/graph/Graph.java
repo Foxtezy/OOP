@@ -1,6 +1,7 @@
 package ru.nsu.fit.makhov.graph;
 
 import java.util.List;
+import java.util.Set;
 import ru.nsu.fit.makhov.graph.utils.Pair;
 
 /**
@@ -14,31 +15,33 @@ public interface Graph<T> {
    * Adds new vertex to the graph.
    *
    * @param name name of vertex.
+   * @return new vertex.
    */
-  void addVertex(T name);
+  Vertex<T> addVertex(T name);
 
   /**
    * Edit name of vertex.
    *
-   * @param oldName old name of vertex.
+   * @param vertex  vertex.
    * @param newName new name of vertex.
+   * @return new vertex.
    */
-  void editVertex(T oldName, T newName);
+  Vertex<T> editVertex(Vertex<T> vertex, T newName);
 
   /**
    * Remove vertex from the graph.
    *
-   * @param name name of vertex.
+   * @param vertex vertex.
    */
-  void removeVertex(T name);
+  void removeVertex(Vertex<T> vertex);
 
   /**
-   * Get vertex.
+   * Get adjacency set of vertex.
    *
-   * @param name name of vertex.
-   * @return vertex.
+   * @param vertex vertex.
+   * @return adjSet.
    */
-  Vertex<T> getVertex(T name);
+  Set<Vertex<T>> getVertexAdjSet(Vertex<T> vertex);
 
   /**
    * Returns true if edge exist.
@@ -74,8 +77,8 @@ public interface Graph<T> {
    * Topological sort of the vertex.
    *
    * @param src vertex relative to which to sort.
-   * @return a list of pairs with the name of the vertex and its distance from src.
+   * @return a list of pairs with the vertex and its distance from src.
    */
-  List<Pair<T, Double>> sort(T src);
+  List<Pair<Vertex<T>, Double>> sort(Vertex<T> src);
 
 }

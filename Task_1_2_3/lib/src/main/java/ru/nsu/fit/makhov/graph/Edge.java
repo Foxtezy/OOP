@@ -9,12 +9,12 @@ import java.util.Objects;
  */
 public class Edge<T> {
 
-  private final T departure;
-  private final T destination;
+  private final Vertex<T> departure;
+  private final Vertex<T> destination;
 
   private Double weight = Double.POSITIVE_INFINITY;
 
-  public Edge(T departure, T destination) {
+  public Edge(Vertex<T> departure, Vertex<T> destination) {
     this.departure = departure;
     this.destination = destination;
   }
@@ -26,17 +26,17 @@ public class Edge<T> {
    * @param destination destination vertex.
    * @param weight      weight of the vertex.
    */
-  public Edge(T departure, T destination, Double weight) {
+  public Edge(Vertex<T> departure, Vertex<T> destination, Double weight) {
     this.departure = departure;
     this.destination = destination;
     this.weight = weight;
   }
 
-  public T getDeparture() {
+  public Vertex<T> getDeparture() {
     return departure;
   }
 
-  public T getDestination() {
+  public Vertex<T> getDestination() {
     return destination;
   }
 
