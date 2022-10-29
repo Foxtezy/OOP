@@ -134,13 +134,13 @@ implements <a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Gra
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds new edge to the graph.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addVertex(T)" class="member-name-link">addVertex</a><wbr>(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds new vertex to the graph.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#editVertex(T,T)" class="member-name-link">editVertex</a><wbr>(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;oldName,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#editVertex(ru.nsu.fit.makhov.graph.Vertex,T)" class="member-name-link">editVertex</a><wbr>(<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;vertex,
  <a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;newName)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Edit name of vertex.</div>
@@ -150,10 +150,10 @@ implements <a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Gra
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get edge.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVertex(T)" class="member-name-link">getVertex</a><wbr>(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;name)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVertexAdjSet(ru.nsu.fit.makhov.graph.Vertex)" class="member-name-link">getVertexAdjSet</a><wbr>(<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;vertex)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get vertex.</div>
+<div class="block">Get adjacency set of vertex.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEdgeExist(ru.nsu.fit.makhov.graph.Edge)" class="member-name-link">isEdgeExist</a><wbr>(<a href="Edge.html" title="class in ru.nsu.fit.makhov.graph">Edge</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;edge)</code></div>
@@ -166,12 +166,12 @@ implements <a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Gra
 <div class="block">Removes edge from the graph.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeVertex(T)" class="member-name-link">removeVertex</a><wbr>(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;name)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeVertex(ru.nsu.fit.makhov.graph.Vertex)" class="member-name-link">removeVertex</a><wbr>(<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;vertex)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Remove vertex from the graph.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="utils/Pair.html" title="class in ru.nsu.fit.makhov.graph.utils">Pair</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sort(T)" class="member-name-link">sort</a><wbr>(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;src)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="utils/Pair.html" title="class in ru.nsu.fit.makhov.graph.utils">Pair</a>&lt;<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sort(ru.nsu.fit.makhov.graph.Vertex)" class="member-name-link">sort</a><wbr>(<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;src)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Topological sort of the vertex.</div>
 </div>
@@ -231,7 +231,7 @@ implements <a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Gra
 <li>
 <section class="detail" id="addVertex(T)">
 <h3 id="addVertex(java.lang.Object)">addVertex</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addVertex</span><wbr><span class="parameters">(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</span>&nbsp;<span class="element-name">addVertex</span><wbr><span class="parameters">(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;name)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#addVertex(T)">Graph</a></code></span></div>
 <div class="block">Adds new vertex to the graph.</div>
 <dl class="notes">
@@ -239,52 +239,56 @@ implements <a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Gra
 <dd><code><a href="Graph.html#addVertex(T)">addVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Graph</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>name</code> - name of vertex.</dd>
+<dt>Returns:</dt>
+<dd>new vertex.</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="editVertex(T,T)">
-<h3 id="editVertex(java.lang.Object,java.lang.Object)">editVertex</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">editVertex</span><wbr><span class="parameters">(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;oldName,
+<section class="detail" id="editVertex(ru.nsu.fit.makhov.graph.Vertex,T)">
+<h3 id="editVertex(ru.nsu.fit.makhov.graph.Vertex,java.lang.Object)">editVertex</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</span>&nbsp;<span class="element-name">editVertex</span><wbr><span class="parameters">(<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;vertex,
  <a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;newName)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#editVertex(T,T)">Graph</a></code></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#editVertex(ru.nsu.fit.makhov.graph.Vertex,T)">Graph</a></code></span></div>
 <div class="block">Edit name of vertex.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Graph.html#editVertex(T,T)">editVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Graph</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></dd>
+<dd><code><a href="Graph.html#editVertex(ru.nsu.fit.makhov.graph.Vertex,T)">editVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Graph</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></dd>
 <dt>Parameters:</dt>
-<dd><code>oldName</code> - old name of vertex.</dd>
+<dd><code>vertex</code> - vertex.</dd>
 <dd><code>newName</code> - new name of vertex.</dd>
+<dt>Returns:</dt>
+<dd>new vertex.</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="removeVertex(T)">
-<h3 id="removeVertex(java.lang.Object)">removeVertex</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeVertex</span><wbr><span class="parameters">(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;name)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#removeVertex(T)">Graph</a></code></span></div>
+<section class="detail" id="removeVertex(ru.nsu.fit.makhov.graph.Vertex)">
+<h3>removeVertex</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeVertex</span><wbr><span class="parameters">(<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;vertex)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#removeVertex(ru.nsu.fit.makhov.graph.Vertex)">Graph</a></code></span></div>
 <div class="block">Remove vertex from the graph.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Graph.html#removeVertex(T)">removeVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Graph</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></dd>
+<dd><code><a href="Graph.html#removeVertex(ru.nsu.fit.makhov.graph.Vertex)">removeVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Graph</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></dd>
 <dt>Parameters:</dt>
-<dd><code>name</code> - name of vertex.</dd>
+<dd><code>vertex</code> - vertex.</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="getVertex(T)">
-<h3 id="getVertex(java.lang.Object)">getVertex</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</span>&nbsp;<span class="element-name">getVertex</span><wbr><span class="parameters">(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;name)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#getVertex(T)">Graph</a></code></span></div>
-<div class="block">Get vertex.</div>
+<section class="detail" id="getVertexAdjSet(ru.nsu.fit.makhov.graph.Vertex)">
+<h3>getVertexAdjSet</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&gt;</span>&nbsp;<span class="element-name">getVertexAdjSet</span><wbr><span class="parameters">(<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;vertex)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#getVertexAdjSet(ru.nsu.fit.makhov.graph.Vertex)">Graph</a></code></span></div>
+<div class="block">Get adjacency set of vertex.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Graph.html#getVertex(T)">getVertex</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Graph</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></dd>
+<dd><code><a href="Graph.html#getVertexAdjSet(ru.nsu.fit.makhov.graph.Vertex)">getVertexAdjSet</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Graph</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></dd>
 <dt>Parameters:</dt>
-<dd><code>name</code> - name of vertex.</dd>
+<dd><code>vertex</code> - vertex.</dd>
 <dt>Returns:</dt>
-<dd>vertex.</dd>
+<dd>adjSet.</dd>
 </dl>
 </section>
 </li>
@@ -349,18 +353,18 @@ implements <a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Gra
 </section>
 </li>
 <li>
-<section class="detail" id="sort(T)">
-<h3 id="sort(java.lang.Object)">sort</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="utils/Pair.html" title="class in ru.nsu.fit.makhov.graph.utils">Pair</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&gt;</span>&nbsp;<span class="element-name">sort</span><wbr><span class="parameters">(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;src)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#sort(T)">Graph</a></code></span></div>
+<section class="detail" id="sort(ru.nsu.fit.makhov.graph.Vertex)">
+<h3>sort</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="utils/Pair.html" title="class in ru.nsu.fit.makhov.graph.utils">Pair</a>&lt;<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&gt;</span>&nbsp;<span class="element-name">sort</span><wbr><span class="parameters">(<a href="Vertex.html" title="class in ru.nsu.fit.makhov.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;src)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#sort(ru.nsu.fit.makhov.graph.Vertex)">Graph</a></code></span></div>
 <div class="block">Topological sort of the vertex.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Graph.html#sort(T)">sort</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Graph</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></dd>
+<dd><code><a href="Graph.html#sort(ru.nsu.fit.makhov.graph.Vertex)">sort</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.fit.makhov.graph">Graph</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>src</code> - vertex relative to which to sort.</dd>
 <dt>Returns:</dt>
-<dd>a list of pairs with the name of the vertex and its distance from src.</dd>
+<dd>a list of pairs with the vertex and its distance from src.</dd>
 </dl>
 </section>
 </li>
