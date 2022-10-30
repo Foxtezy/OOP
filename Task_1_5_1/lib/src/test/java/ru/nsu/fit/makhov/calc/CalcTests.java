@@ -8,10 +8,36 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CalcTests {
+
   ExpirationListener expirationListener = new ExpirationListener();
 
   @Test
-  public void calcTest() {
+  public void sampleCalcTest() {
     Assertions.assertEquals(0.0, expirationListener.calcExpiration("sin + - 1 2 1"));
+  }
+
+  @Test
+  public void calcTest1() {
+    Assertions.assertEquals(4.0, expirationListener.calcExpiration("+ 2 2"));
+  }
+
+  @Test
+  public void calcTest2() {
+    Assertions.assertEquals(4.0, expirationListener.calcExpiration("pow 2 / 8 * 2 2"));
+  }
+
+  @Test
+  public void calcNoSuchOperationExceptionTest() {
+    try {
+      expirationListener.calcExpiration("son 1");
+      Assertions.fail();
+    } catch (NoSuchOperationException e) {
+      Assertions.assertEquals("son", e.getMessage());
+    }
+  }
+
+  @Test
+  public void calcExpirationException() {
+    Assertions.assertThrows(ExpirationException.class, () -> expirationListener.calcExpiration("2 + 2"));
   }
 }
