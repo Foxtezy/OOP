@@ -18,12 +18,17 @@ class CalcTests {
 
   @Test
   public void calcTest1() {
-    Assertions.assertEquals(4.0, expirationListener.calcExpiration("+ 2 2"));
+    Assertions.assertEquals(2.0, expirationListener.calcExpiration("log 2 4"));
   }
 
   @Test
   public void calcTest2() {
     Assertions.assertEquals(4.0, expirationListener.calcExpiration("pow 2 / 8 * 2 2"));
+  }
+
+  @Test
+  public void calcTest3() {
+    Assertions.assertEquals(1.0, expirationListener.calcExpiration("cos sqrt 0"));
   }
 
   @Test
@@ -37,7 +42,12 @@ class CalcTests {
   }
 
   @Test
-  public void calcExpirationException() {
+  public void calcExpirationException1() {
     Assertions.assertThrows(ExpirationException.class, () -> expirationListener.calcExpiration("2 + 2"));
+  }
+
+  @Test
+  public void calcExpirationException2() {
+    Assertions.assertThrows(ExpirationException.class, () -> expirationListener.calcExpiration("+ 2 2 2"));
   }
 }

@@ -44,7 +44,7 @@ public class Operations {
       numOfArgs = 2
   )
   Double logarithm(List<Double> args) {
-    return Math.log(args.get(1) / Math.log(args.get(0)));
+    return Math.log(args.get(1)) / Math.log(args.get(0));
   }
 
   @Operation(
