@@ -4,6 +4,7 @@
 package ru.nsu.fit.makhov.calc;
 
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CalcTests {
@@ -11,6 +12,6 @@ class CalcTests {
 
   @Test
   public void calcTest() {
-    System.out.println(expirationListener.calcExpiration("son 0"));
+    Assertions.assertEquals(0.0, expirationListener.calcExpiration("sin + - 1 2 1"));
   }
 }

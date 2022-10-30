@@ -27,7 +27,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'ru.nsu.fit.makhov.calc.App'
+    mainClass = 'ru.nsu.fit.makhov.calc.Calculator'
 }
 
 tasks.named('test') {
