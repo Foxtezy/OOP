@@ -2,15 +2,15 @@ package ru.nsu.fit.makhov.notebook.models;
 
 import java.util.Date;
 
-public class Note {
+public class NoteIn {
 
   private final String body;
 
   private final Date date;
 
-  public Note(String body) {
+  public NoteIn(String body) {
     this.body = body;
-    date = new Date(System.currentTimeMillis());
+    date = new Date();
   }
 
   public String getBody() {

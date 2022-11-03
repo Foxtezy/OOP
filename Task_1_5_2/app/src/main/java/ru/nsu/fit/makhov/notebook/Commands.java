@@ -5,14 +5,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.HashMap;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import ru.nsu.fit.makhov.notebook.json.JsonReader;
 import ru.nsu.fit.makhov.notebook.json.JsonWriter;
-import ru.nsu.fit.makhov.notebook.models.DTO;
-import ru.nsu.fit.makhov.notebook.models.Note;
+import ru.nsu.fit.makhov.notebook.models.NoteOut;
+import ru.nsu.fit.makhov.notebook.models.NoteIn;
 
 public class Commands {
 
@@ -22,16 +26,13 @@ public class Commands {
 
   private final JsonWriter jsonWriter = new JsonWriter();
 
-  @Operation(name = "add", arity = 2)
+  @Operation(name = "add")
   public void addNote(List<String> args) {
-    Note newNote = new Note(args.get(1));
-    Map<String, Note> notes = null;
+    NoteIn newNoteIn = new NoteIn(args.get(1));
+    Map<String, NoteIn> notes = null;
     try (Reader reader = new FileReader(JSON_NAME)) {
       notes = jsonReader.getNotes(reader);
-      if (notes == null) {
-        notes = new HashMap<>();
-      }
-      notes.put(args.get(0), newNote);
+      notes.put(args.get(0), newNoteIn);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -42,12 +43,12 @@ public class Commands {
     }
   }
 
-  @Operation(name = "rm", arity = 1)
+  @Operation(name = "rm")
   public void rmNote(List<String> args) {
-    Map<String, Note> notes = null;
+    Map<String, NoteIn> notes = null;
     try (Reader reader = new FileReader(JSON_NAME)) {
       notes = jsonReader.getNotes(reader);
-      if (notes == null || !notes.containsKey(args.get(0))) {
+      if (!notes.containsKey(args.get(0))) {
         throw new RuntimeException();
       }
       notes.remove(args.get(0));
@@ -61,25 +62,65 @@ public class Commands {
     }
   }
 
-  @Operation(name = "show", arity = 0)
-  public List<DTO> showNotes(List<String> args) {
-    Map<String, Note> notes = null;
+  @Operation(name = "show")
+  public List<NoteOut> showNotes(List<String> args) {
+    if (args.size() == 0) {
+      return showAllNotes();
+    }
+    if (args.size() >= 3) {
+      return showNotesWithRestrictions(args);
+    }
+    return null;
+  }
+
+  public List<NoteOut> showAllNotes() {
+    Map<String, NoteIn> notes = null;
     try (Reader reader = new FileReader(JSON_NAME)) {
       notes = jsonReader.getNotes(reader);
     } catch (IOException e) {
       e.printStackTrace();
     }
-    if (notes == null) {
-      notes = new HashMap<>();
-    }
-    return notes.entrySet().stream().map(entry -> new DTO(entry.getKey(),
-        entry.getValue().getDate(), entry.getValue().getBody())).collect(
+    return notes.entrySet().stream().map(entry -> new NoteOut(entry.getKey(),
+        entry.getValue().getDate(), entry.getValue().getBody())).sorted().collect(
         Collectors.toList());
   }
 
-  @Operation(name = "show", arity = 4)
-  public List<DTO> showNotesRestrictions(List<String> args) {
-    return null;
-  }
+  public List<NoteOut> showNotesWithRestrictions(List<String> args) {
+    DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    long start = 0;
+    long end = 0;
+    try {
+      start = df.parse(args.get(0)).getTime();
+      end = df.parse(args.get(1)).getTime();
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    Map<String, NoteIn> notes = null;
+    try (Reader reader = new FileReader(JSON_NAME)) {
+      notes = jsonReader.getNotes(reader);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    long finalStart = start;
+    long finalEnd = end;
+    List<NoteOut> noteOuts = notes.entrySet().stream()
+        .filter(entry -> entry.getValue().getDate().getTime() > finalStart
+            && entry.getValue().getDate().getTime() < finalEnd)
+        .map(entry -> new NoteOut(entry.getKey(),
+            entry.getValue().getDate(), entry.getValue().getBody())).sorted().toList();
 
+    List<String> keyWords = new ArrayList<>(args);
+    keyWords.remove(0);
+    keyWords.remove(0);
+
+    return noteOuts.stream().filter(note -> {
+      int cnt = 0;
+      for (String keyWord : keyWords) {
+        if (note.getName().contains(keyWord)) {
+          cnt++;
+        }
+      }
+      return cnt == keyWords.size();
+    }).collect(Collectors.toList());
+  }
 }

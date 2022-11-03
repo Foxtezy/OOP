@@ -11,6 +11,4 @@ public @interface Operation {
 
   String name();
 
-  int arity();
-
 }

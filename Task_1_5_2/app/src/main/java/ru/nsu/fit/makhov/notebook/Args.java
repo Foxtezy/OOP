@@ -18,18 +18,6 @@ public class Args {
   @Parameter()
   private List<String> arguments = new ArrayList<>();
 
-  public boolean isAdd() {
-    return add;
-  }
-
-  public boolean isRm() {
-    return rm;
-  }
-
-  public boolean isShow() {
-    return show;
-  }
-
   public List<String> getArguments() {
     return arguments;
   }

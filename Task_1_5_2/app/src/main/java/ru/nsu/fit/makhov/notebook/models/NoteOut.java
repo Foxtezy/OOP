@@ -1,14 +1,15 @@
 package ru.nsu.fit.makhov.notebook.models;
 
 import java.util.Date;
+import javax.annotation.Nonnull;
 
-public class DTO {
+public class NoteOut implements Comparable<NoteOut> {
 
   private final String name;
   private final Date date;
   private final String body;
 
-  public DTO(String name, Date date, String body) {
+  public NoteOut(String name, Date date, String body) {
     this.name = name;
     this.date = date;
     this.body = body;
@@ -33,5 +34,10 @@ public class DTO {
         ", date=" + date +
         ", body='" + body + '\'' +
         '}';
+  }
+
+  @Override
+  public int compareTo(@Nonnull NoteOut o) {
+    return date.compareTo(o.date);
   }
 }
