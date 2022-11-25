@@ -23,6 +23,10 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.0.1-jre'
+
+    // https://mvnrepository.com/artifact/io.github.classgraph/classgraph
+    implementation group: 'io.github.classgraph', name: 'classgraph', version: '4.8.151'
+
 }
 
 application {
