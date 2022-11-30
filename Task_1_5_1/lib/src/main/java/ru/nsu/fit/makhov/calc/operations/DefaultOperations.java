@@ -9,31 +9,6 @@ import ru.nsu.fit.makhov.calc.Operation;
  */
 public class DefaultOperations {
 
-
-  @Operation(
-      name = "+",
-      numOfArgs = 2
-  )
-  public Function<List<Double>, Double> plus = args -> args.get(0) + args.get(1);
-
-  @Operation(
-      name = "-",
-      numOfArgs = 2
-  )
-  public Function<List<Double>, Double> minus = args -> args.get(0) - args.get(1);
-
-  @Operation(
-      name = "*",
-      numOfArgs = 2
-  )
-  public Function<List<Double>, Double> multiply = args -> args.get(0) * args.get(1);
-
-  @Operation(
-      name = "/",
-      numOfArgs = 2
-  )
-  public Function<List<Double>, Double> division = args -> args.get(0) / args.get(1);
-
   @Operation(
       name = "log",
       numOfArgs = 2

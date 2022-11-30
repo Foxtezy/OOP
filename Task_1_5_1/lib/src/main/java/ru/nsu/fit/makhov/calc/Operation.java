@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * Annotation which annotate operation.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 public @interface Operation {
 
   /**

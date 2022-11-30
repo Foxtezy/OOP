@@ -3,8 +3,6 @@ package ru.nsu.fit.makhov.calc;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ScanResult;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,8 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.function.Function;
-import ru.nsu.fit.makhov.calc.operations.DefaultOperations;
+import ru.nsu.fit.makhov.calc.operations.OperationInterface;
 
 /**
  * Listener of expirations.
@@ -23,22 +20,17 @@ public class ExpirationListener {
 
   private final Deque<Double> stackOfNumbers = new ArrayDeque<>();
 
-  private static final Map<String, OperationClass> functions = new HashMap<>();
+  private static final Map<String, OperationInterface<?, ?>> operations = new HashMap<>();
 
 
   static {
     try (ScanResult scanResult = new ClassGraph().acceptPackages(
-        "ru.nsu.fit.makhov.calc.operations").scan()) {
-      for (ClassInfo classInfo : scanResult.getAllClasses()) {
-        for (Field field : classInfo.loadClass().getDeclaredFields()) {
-          if (field.isAnnotationPresent(Operation.class)) {
-            Operation cmd = field.getAnnotation(Operation.class);
-            @SuppressWarnings("unchecked cast")
-            var func = (Function<List<Double>, Double>) field.get(
-                classInfo.loadClass().getDeclaredConstructor().newInstance());
-            functions.put(cmd.name(), new OperationClass(cmd.numOfArgs(), func));
-          }
-        }
+        "ru.nsu.fit.makhov.calc").scan()) {
+      for (ClassInfo classInfo : scanResult.getAllClasses()
+          .stream().filter(c -> c.hasAnnotation(Operation.class)).toList()) {
+        Operation cmd = classInfo.loadClass().getAnnotation(Operation.class);
+        OperationInterface<?, ?> operation = (OperationInterface<?, ?>) classInfo.loadClass().getDeclaredConstructor().newInstance();
+        operations.put(cmd.name(), operation);
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -76,7 +68,7 @@ public class ExpirationListener {
         stackOfNumbers.push(num);
         continue;
       }
-      OperationClass operation = functions.get(expiration.get(i));
+      OperationClass operation = operations.get(expiration.get(i));
       if (operation == null) {
         throw new NoSuchOperationException(expiration.get(i));
       }
