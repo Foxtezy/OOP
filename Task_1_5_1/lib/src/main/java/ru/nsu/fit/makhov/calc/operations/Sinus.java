@@ -3,6 +3,9 @@ package ru.nsu.fit.makhov.calc.operations;
 import java.util.List;
 import ru.nsu.fit.makhov.calc.Operation;
 
+/**
+ * Sinus.
+ */
 @Operation(
     name = "sin",
     numOfArgs = 1

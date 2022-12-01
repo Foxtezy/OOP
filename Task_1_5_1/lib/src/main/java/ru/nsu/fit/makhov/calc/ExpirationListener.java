@@ -20,16 +20,22 @@ public class ExpirationListener {
 
   private final Deque<Double> stackOfNumbers = new ArrayDeque<>();
 
-  private static final Map<String, OperationInterface<?, ?>> operations = new HashMap<>();
+  private static final Map<String, OperationInterface<List<Double>, Double>> operations =
+      new HashMap<>();
 
 
   static {
     try (ScanResult scanResult = new ClassGraph().acceptPackages(
         "ru.nsu.fit.makhov.calc").scan()) {
-      for (ClassInfo classInfo : scanResult.getAllClasses()
-          .stream().filter(c -> c.hasAnnotation(Operation.class)).toList()) {
-        Operation cmd = classInfo.loadClass().getAnnotation(Operation.class);
-        OperationInterface<?, ?> operation = (OperationInterface<?, ?>) classInfo.loadClass().getDeclaredConstructor().newInstance();
+      List<? extends Class<?>> classes = scanResult.getAllClasses()
+          .stream().map(ClassInfo::loadClass)
+          .filter(c -> c.isAnnotationPresent(Operation.class)).toList();
+      for (Class<?> classInfo : classes) {
+        Operation cmd = classInfo.getAnnotation(Operation.class);
+        @SuppressWarnings("unchecked cast")
+        OperationInterface<List<Double>, Double> operation =
+            (OperationInterface<List<Double>, Double>) classInfo
+                .getDeclaredConstructor().newInstance();
         operations.put(cmd.name(), operation);
       }
     } catch (Exception e) {
@@ -68,12 +74,12 @@ public class ExpirationListener {
         stackOfNumbers.push(num);
         continue;
       }
-      OperationClass operation = operations.get(expiration.get(i));
+      OperationInterface<List<Double>, Double> operation = operations.get(expiration.get(i));
       if (operation == null) {
         throw new NoSuchOperationException(expiration.get(i));
       }
       List<Double> listOfArgs = new ArrayList<>();
-      int numOfArgs = operation.getNumOfArgs();
+      int numOfArgs = operation.getClass().getAnnotation(Operation.class).numOfArgs();
       for (int j = 0; j < numOfArgs; j++) {
         try {
           listOfArgs.add(stackOfNumbers.pop());
@@ -81,7 +87,7 @@ public class ExpirationListener {
           throw new ExpirationException();
         }
       }
-      Double res = operation.getFunction().apply(listOfArgs);
+      Double res = operation.apply(listOfArgs);
       stackOfNumbers.push(res);
     }
     if (stackOfNumbers.size() != 1) {

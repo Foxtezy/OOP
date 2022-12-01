@@ -3,6 +3,9 @@ package ru.nsu.fit.makhov.calc.operations;
 import java.util.List;
 import ru.nsu.fit.makhov.calc.Operation;
 
+/**
+ * Logarithm.
+ */
 @Operation(
     name = "log",
     numOfArgs = 2
