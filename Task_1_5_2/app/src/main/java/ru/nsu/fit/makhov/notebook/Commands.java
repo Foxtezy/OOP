@@ -9,7 +9,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,7 +25,7 @@ public class Commands {
 
   private final JsonWriter jsonWriter = new JsonWriter();
 
-  @Operation(name = "add")
+
   public void addNote(List<String> args) {
     NoteIn newNoteIn = new NoteIn(args.get(1));
     Map<String, NoteIn> notes = null;
@@ -43,7 +42,7 @@ public class Commands {
     }
   }
 
-  @Operation(name = "rm")
+
   public void rmNote(List<String> args) {
     Map<String, NoteIn> notes = null;
     try (Reader reader = new FileReader(JSON_NAME)) {
@@ -62,7 +61,7 @@ public class Commands {
     }
   }
 
-  @Operation(name = "show")
+
   public List<NoteOut> showNotes(List<String> args) {
     if (args.size() == 0) {
       return showAllNotes();

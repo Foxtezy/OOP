@@ -8,7 +8,10 @@ import ru.nsu.fit.makhov.notebook.models.NoteIn;
 
 public class JsonReader {
 
-  public Map<String, NoteIn> getNotes(Reader json) {
+  private JsonReader() {
+  }
+
+  public static Map<String, NoteIn> getNotes(Reader json) {
     Gson gson = new Gson();
     return gson.fromJson(json, new TypeToken<Map<String, NoteIn>>(){}.getType());
   }

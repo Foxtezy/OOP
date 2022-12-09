@@ -8,7 +8,10 @@ import ru.nsu.fit.makhov.notebook.models.NoteIn;
 
 public class JsonWriter {
 
-  public void saveNotes(Writer writer, Map<String, NoteIn> notes) {
+  private JsonWriter() {
+  }
+
+  public static void saveNotes(Writer writer, Map<String, NoteIn> notes) {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     gson.toJson(notes, writer);
   }

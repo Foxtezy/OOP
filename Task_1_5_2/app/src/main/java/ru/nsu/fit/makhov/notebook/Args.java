@@ -6,19 +6,13 @@ import java.util.List;
 
 public class Args {
 
-  @Parameter(names = {"-a", "--add"})
-  private boolean add = false;
+  @Parameter(names = {"-a", "--add"}, arity = 2)
+  private List<String> add;
 
-  @Parameter(names = {"-r", "--rm"})
-  private boolean rm = false;
+  @Parameter(names = {"-r", "--rm"}, arity = 1)
+  private List<String> rm;
 
-  @Parameter(names = {"-s", "--show"})
-  private boolean show = false;
+  @Parameter(names = {"-s", "--show"}, variableArity = true)
+  private List<String> show;
 
-  @Parameter()
-  private List<String> arguments = new ArrayList<>();
-
-  public List<String> getArguments() {
-    return arguments;
-  }
 }
