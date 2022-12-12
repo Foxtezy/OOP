@@ -5,7 +5,7 @@ import com.beust.jcommander.JCommander;
 public class App {
 
     public static void main(String[] args) {
-        String[] testArgs = {"--show", "03.11.2022 22:22", "03.11.2022 22:27", "a", "2"};
+        String[] testArgs = {"--show"};
         Args arguments = new Args();
         JCommander.newBuilder()
             .addObject(arguments)

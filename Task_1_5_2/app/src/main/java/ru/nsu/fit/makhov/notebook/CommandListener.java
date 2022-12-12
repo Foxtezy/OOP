@@ -46,7 +46,7 @@ public class CommandListener {
     Method command = commands.get(parameterName);
     List<NoteOut> list = null;
     try {
-      list = (List<NoteOut>) command.invoke(commandsClass, args.getArguments());
+      //list = (List<NoteOut>) command.invoke(commandsClass, args.getArguments());
     } catch (Exception e) {
       e.printStackTrace();
     }

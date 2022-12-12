@@ -13,6 +13,6 @@ public @interface Operation {
 
   int numOfArgs();
 
-  boolean returnable();
+  boolean variableArity() default false;
 
 }

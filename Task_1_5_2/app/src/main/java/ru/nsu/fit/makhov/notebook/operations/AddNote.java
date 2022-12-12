@@ -7,6 +7,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import ru.nsu.fit.makhov.notebook.Operation;
 import ru.nsu.fit.makhov.notebook.json.JsonReader;
 import ru.nsu.fit.makhov.notebook.json.JsonWriter;
@@ -15,13 +16,12 @@ import ru.nsu.fit.makhov.notebook.models.NoteOut;
 
 @Operation(
     name = "add",
-    numOfArgs = 2,
-    returnable = false
+    numOfArgs = 2
 )
 public class AddNote implements NoteOperation{
 
   @Override
-  public List<NoteOut> execute(List<String> args) {
+  public Optional<List<NoteOut>> execute(List<String> args) {
     NoteIn newNoteIn = new NoteIn(args.get(1));
     Map<String, NoteIn> notes = null;
     try (Reader reader = new FileReader(JSON_NAME)) {
@@ -35,6 +35,6 @@ public class AddNote implements NoteOperation{
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return null;
+    return Optional.empty();
   }
 }

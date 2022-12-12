@@ -21,22 +21,22 @@ public class Commands {
 
   private static final String JSON_NAME = "src/main/resources/notes.json";
 
-  private final JsonReader jsonReader = new JsonReader();
+  //private final JsonReader jsonReader = new JsonReader();
 
-  private final JsonWriter jsonWriter = new JsonWriter();
+  //private final JsonWriter jsonWriter = new JsonWriter();
 
 
   public void addNote(List<String> args) {
     NoteIn newNoteIn = new NoteIn(args.get(1));
     Map<String, NoteIn> notes = null;
     try (Reader reader = new FileReader(JSON_NAME)) {
-      notes = jsonReader.getNotes(reader);
+      notes = JsonReader.getNotes(reader);
       notes.put(args.get(0), newNoteIn);
     } catch (IOException e) {
       e.printStackTrace();
     }
     try (Writer writer = new FileWriter(JSON_NAME)) {
-      jsonWriter.saveNotes(writer, notes);
+      JsonWriter.saveNotes(writer, notes);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -46,7 +46,7 @@ public class Commands {
   public void rmNote(List<String> args) {
     Map<String, NoteIn> notes = null;
     try (Reader reader = new FileReader(JSON_NAME)) {
-      notes = jsonReader.getNotes(reader);
+      notes = JsonReader.getNotes(reader);
       if (!notes.containsKey(args.get(0))) {
         throw new RuntimeException();
       }
@@ -55,7 +55,7 @@ public class Commands {
       e.printStackTrace();
     }
     try (Writer writer = new FileWriter(JSON_NAME)) {
-      jsonWriter.saveNotes(writer, notes);
+      JsonWriter.saveNotes(writer, notes);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -75,7 +75,7 @@ public class Commands {
   public List<NoteOut> showAllNotes() {
     Map<String, NoteIn> notes = null;
     try (Reader reader = new FileReader(JSON_NAME)) {
-      notes = jsonReader.getNotes(reader);
+      notes = JsonReader.getNotes(reader);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -96,7 +96,7 @@ public class Commands {
     }
     Map<String, NoteIn> notes = null;
     try (Reader reader = new FileReader(JSON_NAME)) {
-      notes = jsonReader.getNotes(reader);
+      notes = JsonReader.getNotes(reader);
     } catch (IOException e) {
       e.printStackTrace();
     }

@@ -7,6 +7,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import ru.nsu.fit.makhov.notebook.Operation;
 import ru.nsu.fit.makhov.notebook.json.JsonReader;
 import ru.nsu.fit.makhov.notebook.json.JsonWriter;
@@ -15,13 +16,12 @@ import ru.nsu.fit.makhov.notebook.models.NoteOut;
 
 @Operation(
     name = "rm",
-    numOfArgs = 1,
-    returnable = false
+    numOfArgs = 1
 )
 public class RemoveNote implements NoteOperation {
 
   @Override
-  public List<NoteOut> execute(List<String> args) {
+  public Optional<List<NoteOut>> execute(List<String> args) {
     Map<String, NoteIn> notes = null;
     try (Reader reader = new FileReader(JSON_NAME)) {
       notes = JsonReader.getNotes(reader);
@@ -37,6 +37,6 @@ public class RemoveNote implements NoteOperation {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return null;
+    return Optional.empty();
   }
 }
