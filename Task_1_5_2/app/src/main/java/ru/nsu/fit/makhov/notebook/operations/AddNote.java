@@ -16,7 +16,8 @@ import ru.nsu.fit.makhov.notebook.models.NoteOut;
 
 @Operation(
     name = "add",
-    numOfArgs = 2
+    numOfArgs = 2,
+    minNumOfArgs = 2
 )
 public class AddNote implements NoteOperation{
 

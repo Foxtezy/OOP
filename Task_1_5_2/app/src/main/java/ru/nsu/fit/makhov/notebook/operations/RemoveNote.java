@@ -16,7 +16,8 @@ import ru.nsu.fit.makhov.notebook.models.NoteOut;
 
 @Operation(
     name = "rm",
-    numOfArgs = 1
+    numOfArgs = 1,
+    minNumOfArgs = 1
 )
 public class RemoveNote implements NoteOperation {
 

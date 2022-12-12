@@ -2,7 +2,23 @@ package ru.nsu.fit.makhov.notebook.models;
 
 import java.util.Objects;
 
-public record OperationDescription(String name, int numOfArgs) {
+public class OperationDescription {
+
+  private final String name;
+  private final int numOfArgs;
+
+  private int minNumOfArgs;
+
+  public OperationDescription(String name, int numOfArgs) {
+    this.name = name;
+    this.numOfArgs = numOfArgs;
+  }
+
+  public OperationDescription(String name, int numOfArgs, int minNumOfArgs) {
+    this.name = name;
+    this.numOfArgs = numOfArgs;
+    this.minNumOfArgs = minNumOfArgs;
+  }
 
   @Override
   public boolean equals(Object o) {

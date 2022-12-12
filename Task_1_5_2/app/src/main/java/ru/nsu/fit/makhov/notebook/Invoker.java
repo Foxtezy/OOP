@@ -3,13 +3,12 @@ package ru.nsu.fit.makhov.notebook;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ScanResult;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import ru.nsu.fit.makhov.notebook.exceptions.OperationNotFoundException;
+import ru.nsu.fit.makhov.notebook.models.NoteOut;
 import ru.nsu.fit.makhov.notebook.models.OperationDescription;
 import ru.nsu.fit.makhov.notebook.operations.NoteOperation;
 
@@ -28,7 +27,7 @@ public class Invoker {
         Operation cmd = operationClass.getAnnotation(Operation.class);
         NoteOperation operation = (NoteOperation) operationClass
             .getDeclaredConstructor().newInstance();
-        operations.put(new OperationDescription(cmd.name(), cmd.numOfArgs()),
+        operations.put(new OperationDescription(cmd.name(), cmd.numOfArgs(), cmd.minNumOfArgs()),
             operation);
       }
     } catch (Exception e) {
@@ -36,8 +35,12 @@ public class Invoker {
     }
   }
 
-  public static <T> Optional<T> invoke(String name, Collection<String> args) {
-    Optional<NoteOperation> noteOperation = Optional.ofNullable(
-        operations.get(new OperationDescription(name, args.size())));
+  public static Optional<List<NoteOut>> invoke(String name, List<String> args) { // TODO: 13.12.2022 vararg minNumOfArgs check
+    NoteOperation noteOperation = Optional.ofNullable(
+        operations.get(new OperationDescription(name, args.size()))).orElseGet(() -> operations.get(new OperationDescription(name, -1)));
+    if (noteOperation == null) {
+      throw new OperationNotFoundException();
+    }
+    return noteOperation.execute(args);
   }
 }

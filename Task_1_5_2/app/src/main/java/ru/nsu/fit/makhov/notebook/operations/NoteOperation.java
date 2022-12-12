@@ -1,5 +1,6 @@
 package ru.nsu.fit.makhov.notebook.operations;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import ru.nsu.fit.makhov.notebook.models.NoteOut;

@@ -13,6 +13,6 @@ public @interface Operation {
 
   int numOfArgs();
 
-  boolean variableArity() default false;
+  int minNumOfArgs();
 
 }

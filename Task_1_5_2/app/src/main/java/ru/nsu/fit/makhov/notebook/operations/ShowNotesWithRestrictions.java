@@ -8,7 +8,7 @@ import ru.nsu.fit.makhov.notebook.models.NoteOut;
 @Operation(
     name = "show",
     numOfArgs = -1,
-    variableArity = true
+    minNumOfArgs = 2
 )
 public class ShowNotesWithRestrictions implements NoteOperation {
 
