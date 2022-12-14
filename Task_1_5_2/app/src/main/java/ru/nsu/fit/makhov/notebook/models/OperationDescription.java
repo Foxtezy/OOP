@@ -7,17 +7,24 @@ public class OperationDescription {
   private final String name;
   private final int numOfArgs;
 
-  private int minNumOfArgs;
+  private final boolean varArg;
 
-  public OperationDescription(String name, int numOfArgs) {
+  public OperationDescription(String name, int numOfArgs, boolean varArg) {
     this.name = name;
     this.numOfArgs = numOfArgs;
+    this.varArg = varArg;
   }
 
-  public OperationDescription(String name, int numOfArgs, int minNumOfArgs) {
-    this.name = name;
-    this.numOfArgs = numOfArgs;
-    this.minNumOfArgs = minNumOfArgs;
+  public String getName() {
+    return name;
+  }
+
+  public int getNumOfArgs() {
+    return numOfArgs;
+  }
+
+  public boolean isVarArg() {
+    return varArg;
   }
 
   @Override

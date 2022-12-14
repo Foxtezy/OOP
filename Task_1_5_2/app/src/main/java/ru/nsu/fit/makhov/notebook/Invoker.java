@@ -6,16 +6,21 @@ import io.github.classgraph.ScanResult;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 import ru.nsu.fit.makhov.notebook.exceptions.OperationNotFoundException;
 import ru.nsu.fit.makhov.notebook.models.NoteOut;
 import ru.nsu.fit.makhov.notebook.models.OperationDescription;
 import ru.nsu.fit.makhov.notebook.operations.NoteOperation;
+import ru.nsu.fit.makhov.notebook.operations.Operation;
 
 public class Invoker {
 
   private static final Map<OperationDescription, NoteOperation> operations = new HashMap<>();
 
+  private Invoker() {
+  }
 
   static {
     try (ScanResult scanResult = new ClassGraph().acceptPackages(
@@ -27,7 +32,7 @@ public class Invoker {
         Operation cmd = operationClass.getAnnotation(Operation.class);
         NoteOperation operation = (NoteOperation) operationClass
             .getDeclaredConstructor().newInstance();
-        operations.put(new OperationDescription(cmd.name(), cmd.numOfArgs(), cmd.minNumOfArgs()),
+        operations.put(new OperationDescription(cmd.name(), cmd.numOfArgs(), cmd.varArg()),
             operation);
       }
     } catch (Exception e) {
@@ -35,12 +40,12 @@ public class Invoker {
     }
   }
 
-  public static Optional<List<NoteOut>> invoke(String name, List<String> args) { // TODO: 13.12.2022 vararg minNumOfArgs check
-    NoteOperation noteOperation = Optional.ofNullable(
-        operations.get(new OperationDescription(name, args.size()))).orElseGet(() -> operations.get(new OperationDescription(name, -1)));
-    if (noteOperation == null) {
-      throw new OperationNotFoundException();
-    }
+  public static Optional<List<NoteOut>> invoke(String name, List<String> args) {
+    NoteOperation noteOperation = operations.entrySet().stream()
+        .filter(m -> Objects.equals(m.getKey().getName(), name))
+        .filter(m -> m.getKey().getNumOfArgs() == args.size() ||
+                (m.getKey().getNumOfArgs() < args.size() && m.getKey().isVarArg()))
+        .map(Entry::getValue).findFirst().orElseThrow(OperationNotFoundException::new);
     return noteOperation.execute(args);
   }
 }

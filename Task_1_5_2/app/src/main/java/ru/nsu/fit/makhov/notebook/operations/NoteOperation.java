@@ -7,6 +7,6 @@ import ru.nsu.fit.makhov.notebook.models.NoteOut;
 
 public interface NoteOperation {
 
-  String JSON_NAME = "src/main/resources/notes.json";
+  String JSON_NAME = "app/src/main/resources/notes.json";
   Optional<List<NoteOut>> execute(List<String> args);
 }
