@@ -21,12 +21,11 @@ public class App {
    * Main.
    */
   public static void main(String[] args) {
-    String[] testArgs = {"--show", "14.12.2019 7:00", "17.12.2023 13:00"};
     AbstractArgs arguments = new DefaultArgs();
     JCommander.newBuilder()
         .addObject(arguments)
         .build()
-        .parse(testArgs);
+        .parse(args);
     OperationListener operationListener = new OperationListener(JSON_NAME, arguments);
     try {
       Optional<List<NoteOut>> notes = operationListener.onOperationReceived();
