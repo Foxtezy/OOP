@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ru.nsu.fit.makhov.notebook"},{"l":"ru.nsu.fit.makhov.notebook.args"},{"l":"ru.nsu.fit.makhov.notebook.exceptions"},{"l":"ru.nsu.fit.makhov.notebook.json"},{"l":"ru.nsu.fit.makhov.notebook.models"},{"l":"ru.nsu.fit.makhov.notebook.operations"}];updateSearchResults();
