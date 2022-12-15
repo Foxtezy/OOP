@@ -15,6 +15,9 @@ import ru.nsu.fit.makhov.notebook.json.JsonReader;
 import ru.nsu.fit.makhov.notebook.models.NoteIn;
 import ru.nsu.fit.makhov.notebook.models.NoteOut;
 
+/**
+ * Show notes with restrictions.
+ */
 @Operation(
     name = "show",
     numOfArgs = 2,
@@ -23,21 +26,21 @@ import ru.nsu.fit.makhov.notebook.models.NoteOut;
 public class ShowNotesWithRestrictions implements NoteOperation {
 
   @Override
-  public Optional<List<NoteOut>> execute(List<String> args) {
+  public Optional<List<NoteOut>> execute(String jsonName, List<String> args) {
     DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-    long start = 0;
-    long end = 0;
+    long start;
+    long end;
     try {
       start = df.parse(args.get(0)).getTime();
       end = df.parse(args.get(1)).getTime();
     } catch (ParseException e) {
-      e.printStackTrace();
+      throw new RuntimeException();
     }
-    Map<String, NoteIn> notes = null;
-    try (Reader reader = new FileReader(JSON_NAME)) {
-      notes = JsonReader.getNotes(reader);
+    Map<String, NoteIn> notes;
+    try (Reader reader = new FileReader(jsonName)) {
+      notes = JsonReader.getNotes(reader).orElseThrow(RuntimeException::new);
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException();
     }
     long finalStart = start;
     long finalEnd = end;
@@ -46,19 +49,17 @@ public class ShowNotesWithRestrictions implements NoteOperation {
             && entry.getValue().getDate().getTime() < finalEnd)
         .map(entry -> new NoteOut(entry.getKey(),
             entry.getValue().getDate(), entry.getValue().getBody())).sorted().toList();
-
-    List<String> keyWords = new ArrayList<>(args);
-    keyWords.remove(0);
-    keyWords.remove(0);
-
+    List<String> keyWords = args.stream().skip(2).toList();
+    if (keyWords.isEmpty()) {
+      return Optional.of(noteOuts);
+    }
     return Optional.of(noteOuts.stream().filter(note -> {
-      int cnt = 0;
       for (String keyWord : keyWords) {
         if (note.getName().contains(keyWord)) {
-          cnt++;
+          return true;
         }
       }
-      return cnt == keyWords.size();
+      return false;
     }).collect(Collectors.toList()));
   }
 }

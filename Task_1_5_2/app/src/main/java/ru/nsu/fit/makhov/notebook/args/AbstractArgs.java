@@ -4,7 +4,11 @@ import com.beust.jcommander.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractArgs {
+/**
+ * A class that should inherit all
+ * classes that provide command line arguments.
+ */
+public abstract class AbstractArgs {
 
   @Parameter
   private List<String> args = new ArrayList<>();

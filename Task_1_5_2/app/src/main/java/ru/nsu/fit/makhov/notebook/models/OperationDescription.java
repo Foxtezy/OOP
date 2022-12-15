@@ -2,6 +2,9 @@ package ru.nsu.fit.makhov.notebook.models;
 
 import java.util.Objects;
 
+/**
+ * Class that represent operation in Map.
+ */
 public class OperationDescription {
 
   private final String name;
@@ -9,6 +12,9 @@ public class OperationDescription {
 
   private final boolean varArg;
 
+  /**
+   * All args constructor.
+   */
   public OperationDescription(String name, int numOfArgs, boolean varArg) {
     this.name = name;
     this.numOfArgs = numOfArgs;

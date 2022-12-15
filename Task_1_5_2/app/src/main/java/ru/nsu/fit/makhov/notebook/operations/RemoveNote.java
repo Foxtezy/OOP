@@ -8,11 +8,15 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import ru.nsu.fit.makhov.notebook.exceptions.NoteNotFoundException;
 import ru.nsu.fit.makhov.notebook.json.JsonReader;
 import ru.nsu.fit.makhov.notebook.json.JsonWriter;
 import ru.nsu.fit.makhov.notebook.models.NoteIn;
 import ru.nsu.fit.makhov.notebook.models.NoteOut;
 
+/**
+ * Remove note.
+ */
 @Operation(
     name = "rm",
     numOfArgs = 1
@@ -20,21 +24,21 @@ import ru.nsu.fit.makhov.notebook.models.NoteOut;
 public class RemoveNote implements NoteOperation {
 
   @Override
-  public Optional<List<NoteOut>> execute(List<String> args) {
-    Map<String, NoteIn> notes = null;
-    try (Reader reader = new FileReader(JSON_NAME)) {
-      notes = JsonReader.getNotes(reader);
+  public Optional<List<NoteOut>> execute(String jsonName, List<String> args) {
+    Map<String, NoteIn> notes;
+    try (Reader reader = new FileReader(jsonName)) {
+      notes = JsonReader.getNotes(reader).orElseThrow(RuntimeException::new);
       if (!notes.containsKey(args.get(0))) {
-        throw new RuntimeException();
+        throw new NoteNotFoundException();
       }
       notes.remove(args.get(0));
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException();
     }
-    try (Writer writer = new FileWriter(JSON_NAME)) {
+    try (Writer writer = new FileWriter(jsonName)) {
       JsonWriter.saveNotes(writer, notes);
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException();
     }
     return Optional.empty();
   }

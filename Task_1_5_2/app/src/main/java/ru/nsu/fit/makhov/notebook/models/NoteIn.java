@@ -2,6 +2,9 @@ package ru.nsu.fit.makhov.notebook.models;
 
 import java.util.Date;
 
+/**
+ * Class which represent input note.
+ */
 public class NoteIn {
 
   private final String body;

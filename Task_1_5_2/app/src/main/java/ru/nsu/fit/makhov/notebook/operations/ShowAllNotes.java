@@ -11,19 +11,22 @@ import ru.nsu.fit.makhov.notebook.json.JsonReader;
 import ru.nsu.fit.makhov.notebook.models.NoteIn;
 import ru.nsu.fit.makhov.notebook.models.NoteOut;
 
+/**
+ * Show all notes.
+ */
 @Operation(
     name = "show",
     numOfArgs = 0
 )
-public class ShowAllNotes implements NoteOperation{
+public class ShowAllNotes implements NoteOperation {
 
   @Override
-  public Optional<List<NoteOut>> execute(List<String> args) {
-    Map<String, NoteIn> notes = null;
-    try (Reader reader = new FileReader(JSON_NAME)) {
-      notes = JsonReader.getNotes(reader);
+  public Optional<List<NoteOut>> execute(String jsonName, List<String> args) {
+    Map<String, NoteIn> notes;
+    try (Reader reader = new FileReader(jsonName)) {
+      notes = JsonReader.getNotes(reader).orElseThrow(RuntimeException::new);
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException();
     }
     return Optional.of(notes.entrySet().stream().map(entry -> new NoteOut(entry.getKey(),
         entry.getValue().getDate(), entry.getValue().getBody())).sorted().collect(

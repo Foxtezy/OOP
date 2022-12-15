@@ -6,6 +6,9 @@ import java.io.Writer;
 import java.util.Map;
 import ru.nsu.fit.makhov.notebook.models.NoteIn;
 
+/**
+ * Writer of jsons.
+ */
 public class JsonWriter {
 
   private JsonWriter() {

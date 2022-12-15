@@ -15,6 +15,9 @@ import ru.nsu.fit.makhov.notebook.models.OperationDescription;
 import ru.nsu.fit.makhov.notebook.operations.NoteOperation;
 import ru.nsu.fit.makhov.notebook.operations.Operation;
 
+/**
+ * The class that calls the operations.
+ */
 public class Invoker {
 
   private static final Map<OperationDescription, NoteOperation> operations = new HashMap<>();
@@ -40,12 +43,20 @@ public class Invoker {
     }
   }
 
-  public static Optional<List<NoteOut>> invoke(String name, List<String> args) {
+  /**
+   * Invoke operation.
+   *
+   * @param jsonName path to json with notes.
+   * @param name     name of operation.
+   * @param args     args of operation.
+   * @return optional list of NoteOuts.
+   */
+  public static Optional<List<NoteOut>> invoke(String jsonName, String name, List<String> args) {
     NoteOperation noteOperation = operations.entrySet().stream()
         .filter(m -> Objects.equals(m.getKey().getName(), name))
-        .filter(m -> m.getKey().getNumOfArgs() == args.size() ||
-                (m.getKey().getNumOfArgs() < args.size() && m.getKey().isVarArg()))
+        .filter(m -> m.getKey().getNumOfArgs() == args.size()
+            || (m.getKey().getNumOfArgs() < args.size() && m.getKey().isVarArg()))
         .map(Entry::getValue).findFirst().orElseThrow(OperationNotFoundException::new);
-    return noteOperation.execute(args);
+    return noteOperation.execute(jsonName, args);
   }
 }
