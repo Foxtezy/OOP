@@ -6,11 +6,11 @@ import java.io.Reader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import ru.nsu.fit.makhov.notebook.configs.DataConfig;
 import ru.nsu.fit.makhov.notebook.json.JsonReader;
 import ru.nsu.fit.makhov.notebook.models.NoteIn;
 import ru.nsu.fit.makhov.notebook.models.NoteOut;
@@ -27,7 +27,7 @@ public class ShowNotesWithRestrictions implements NoteOperation {
 
   @Override
   public Optional<List<NoteOut>> execute(String jsonName, List<String> args) {
-    DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    DateFormat df = new SimpleDateFormat(DataConfig.INPUT_DATA_FORMAT);
     long start;
     long end;
     try {
