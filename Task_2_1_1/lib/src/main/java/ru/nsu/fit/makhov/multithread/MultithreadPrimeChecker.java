@@ -10,16 +10,20 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import ru.nsu.fit.makhov.PrimeChecker;
 import org.junit.platform.commons.function.Try;
+import ru.nsu.fit.makhov.utils.Timer;
 
 public class MultithreadPrimeChecker implements PrimeChecker {
 
   @Override
   public boolean isPrime(List<Integer> nums) {
-    ExecutorService executor = Executors.newFixedThreadPool(5);
-    List<Callable<Boolean>> tasks = nums.stream().map(IsPrimeTask::new).collect(Collectors.toList());
+    ExecutorService executor = Executors.newFixedThreadPool(10);
+    List<Callable<Boolean>> tasks = nums.stream().map(IsPrimeTask::new)
+        .collect(Collectors.toList());
     List<Future<Boolean>> results = new ArrayList<>();
     try {
-       results = executor.invokeAll(tasks);
+      long start = Timer.startTimer();
+      results = executor.invokeAll(tasks);
+      System.out.println(Timer.stopTimer(start));
     } catch (Exception e) {
       e.printStackTrace();
     }

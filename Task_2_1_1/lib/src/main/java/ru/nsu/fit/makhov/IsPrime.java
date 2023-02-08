@@ -1,11 +1,9 @@
 package ru.nsu.fit.makhov;
 
-import java.util.function.Predicate;
 
-public class IsPrime implements Predicate<Long> {
+public class IsPrime {
 
-  @Override
-  public boolean test(Long num) {
+  public static Boolean apply(Integer num) {
     for (int i = 2; i < Math.sqrt(num) + 1; i++) {
       if (num % i == 0) {
         return false;

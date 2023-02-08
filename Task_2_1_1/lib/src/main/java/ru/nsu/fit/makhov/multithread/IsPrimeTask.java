@@ -5,14 +5,14 @@ import ru.nsu.fit.makhov.IsPrime;
 
 public class IsPrimeTask implements Callable<Boolean> {
 
-  private final long num;
+  private final int num;
 
-  public IsPrimeTask(long num) {
+  public IsPrimeTask(int num) {
     this.num = num;
   }
 
   @Override
   public Boolean call() {
-    return new IsPrime().test(num);
+    return IsPrime.apply(num);
   }
 }
