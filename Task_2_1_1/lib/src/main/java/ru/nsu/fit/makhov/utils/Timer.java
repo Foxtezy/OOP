@@ -6,11 +6,11 @@ public final class Timer {
   }
 
   public static long startTimer() {
-    return System.nanoTime();
+    return System.currentTimeMillis();
   }
 
   public static long stopTimer(long startTime) {
-    return System.nanoTime() - startTime;
+    return System.currentTimeMillis() - startTime;
   }
 
 }

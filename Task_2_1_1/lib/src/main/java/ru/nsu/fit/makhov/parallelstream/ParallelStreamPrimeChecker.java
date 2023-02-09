@@ -8,6 +8,7 @@ public class ParallelStreamPrimeChecker implements PrimeChecker {
 
   @Override
   public boolean isPrime(List<Integer> nums) {
-    return nums.parallelStream().map(IsPrime::apply).anyMatch(r -> r == false);
+    List<Boolean> list = nums.parallelStream().map(IsPrime::apply).toList();
+    return list.stream().anyMatch(r -> !r);
   }
 }

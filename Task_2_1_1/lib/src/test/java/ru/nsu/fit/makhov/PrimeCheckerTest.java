@@ -29,6 +29,6 @@ public abstract class PrimeCheckerTest {
         .limit(100000).boxed().toList();
     long start = Timer.startTimer();
     primeChecker.isPrime(list);
-    System.out.println("TIME " + primeChecker.getClass().getName() + ": " + Timer.stopTimer(start));
+    System.out.println("TIME " + primeChecker.getClass().getName() + ": " + Timer.stopTimer(start) + " ms");
   }
 }

@@ -10,6 +10,6 @@ class MultithreadingTest extends PrimeCheckerTest {
 
   @BeforeEach
   public void setupTests() {
-    super.primeChecker = new MultithreadPrimeChecker();
+    super.primeChecker = new MultithreadPrimeChecker(9);
   }
 }

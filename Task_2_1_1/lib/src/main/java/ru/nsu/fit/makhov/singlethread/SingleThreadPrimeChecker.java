@@ -8,6 +8,7 @@ public class SingleThreadPrimeChecker implements PrimeChecker {
 
   @Override
   public boolean isPrime(List<Integer> nums) {
-    return nums.stream().map(IsPrime::apply).anyMatch(r -> r == false);
+    List<Boolean> list = nums.stream().map(IsPrime::apply).toList();
+    return list.stream().anyMatch(r -> !r);
   }
 }
