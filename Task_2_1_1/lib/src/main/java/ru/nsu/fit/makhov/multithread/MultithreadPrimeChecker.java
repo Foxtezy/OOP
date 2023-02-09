@@ -33,6 +33,7 @@ public class MultithreadPrimeChecker implements PrimeChecker {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    executor.shutdown();
     return results.stream().map(f -> Try.call(f::get))
         .map(Try::toOptional)
         .filter(Optional::isPresent)
