@@ -8,9 +8,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
-import ru.nsu.fit.makhov.PrimeChecker;
 import org.junit.platform.commons.function.Try;
+import ru.nsu.fit.makhov.PrimeChecker;
 
+/**
+ * Class that checks whether there are composite numbers in the list using thread pool.
+ */
 public class MultithreadPrimeChecker implements PrimeChecker {
 
   private final int countOfThreads;

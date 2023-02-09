@@ -4,6 +4,9 @@ import java.util.List;
 import ru.nsu.fit.makhov.IsPrime;
 import ru.nsu.fit.makhov.PrimeChecker;
 
+/**
+ * Class that checks in one thread whether there are composite numbers in the list.
+ */
 public class SingleThreadPrimeChecker implements PrimeChecker {
 
   @Override

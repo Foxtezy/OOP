@@ -3,6 +3,9 @@ package ru.nsu.fit.makhov.multithread;
 import java.util.concurrent.Callable;
 import ru.nsu.fit.makhov.IsPrime;
 
+/**
+ * Task for checking a number for primality.
+ */
 public class IsPrimeTask implements Callable<Boolean> {
 
   private final int num;
