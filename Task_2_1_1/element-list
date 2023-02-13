@@ -1,5 +1,6 @@
 ru.nsu.fit.makhov
 ru.nsu.fit.makhov.multithread
+ru.nsu.fit.makhov.mythreadpool
 ru.nsu.fit.makhov.parallelstream
 ru.nsu.fit.makhov.singlethread
 ru.nsu.fit.makhov.utils
