@@ -46,7 +46,8 @@ public abstract class PrimeCheckerTest {
       throw new RuntimeException();
     }
     long start = Timer.startTimer();
-    primeChecker.isPrime(list);
+    boolean res = primeChecker.isPrime(list);
     System.out.println("TIME " + primeChecker.getClass().getName() + ": " + Timer.stopTimer(start) + " ms");
+    System.out.println("Result: " + res);
   }
 }
