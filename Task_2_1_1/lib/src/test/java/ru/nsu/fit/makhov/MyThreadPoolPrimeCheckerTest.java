@@ -7,6 +7,6 @@ public class MyThreadPoolPrimeCheckerTest extends PrimeCheckerTest {
 
   @BeforeEach
   public void setupTests() {
-    super.primeChecker = new MyThreadPoolPrimeChecker(8);
+    super.primeChecker = new MyThreadPoolPrimeChecker(4);
   }
 }
