@@ -3,7 +3,12 @@ package ru.nsu.fit.makhov;
 /**
  * A class with a static method for checking whether a number is prime.
  */
-public class IsPrime {
+public final class IsPrime {
+
+  private IsPrime() {
+    throw new java.lang.UnsupportedOperationException(
+        "This is a utility class and cannot be instantiated");
+  }
 
   /**
    * Checking whether a number is prime.

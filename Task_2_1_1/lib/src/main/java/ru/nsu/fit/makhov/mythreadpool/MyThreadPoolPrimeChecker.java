@@ -19,10 +19,11 @@ public class MyThreadPoolPrimeChecker implements PrimeChecker {
 
   @Override
   public boolean isPrime(List<Integer> nums) {
-    TaskManager<Boolean> threadPool = new TaskManager<>(countOfThreads);
     List<Callable<Boolean>> tasks = nums.stream().map(IsPrimeTask::new)
         .collect(Collectors.toList());
-    List<Boolean> results = threadPool.invokeAll(tasks);
+    ThreadPool<Boolean> threadPool = new ThreadPool<>(tasks, countOfThreads);
+    threadPool.invokeAll();
+    List<Boolean> results = threadPool.getResult();
     return results.stream().anyMatch(r -> !r);
   }
 }

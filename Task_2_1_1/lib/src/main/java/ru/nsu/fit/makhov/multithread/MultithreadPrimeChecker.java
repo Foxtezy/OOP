@@ -30,7 +30,7 @@ public class MultithreadPrimeChecker implements PrimeChecker {
     List<Future<Boolean>> results = new ArrayList<>();
     try {
       results = executor.invokeAll(tasks);
-    } catch (Exception e) {
+    } catch (InterruptedException e) {
       e.printStackTrace();
     }
     executor.shutdown();

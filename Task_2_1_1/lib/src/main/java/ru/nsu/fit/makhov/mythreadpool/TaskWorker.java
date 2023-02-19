@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 
+/**
+ * The class that should run Callable tasks.
+ *
+ * @param <T> return values of Callable Tasks.
+ */
 public class TaskWorker<T> implements Runnable {
 
   private final BlockingQueue<Callable<T>> inputQueue;
@@ -12,6 +17,13 @@ public class TaskWorker<T> implements Runnable {
 
   private final Object monitor;
 
+  /**
+   * Constructor.
+   *
+   * @param inputQueue input queue.
+   * @param outputList result list.
+   * @param monitor monitor.
+   */
   public TaskWorker(BlockingQueue<Callable<T>> inputQueue, List<T> outputList, Object monitor) {
     this.inputQueue = inputQueue;
     this.outputList = outputList;
