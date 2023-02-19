@@ -4,9 +4,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Task manager that executes callable tasks.
@@ -38,7 +38,7 @@ public class TaskManager<T> implements Runnable {
     this.resultList = resultList;
     mainQueue = new ArrayDeque<>(tasks);
     for (int i = 0; i < countOfThreads; i++) {
-      BlockingQueue<Callable<T>> inputQueue = new ArrayBlockingQueue<>(sizeOfQueues);
+      BlockingQueue<Callable<T>> inputQueue = new LinkedBlockingQueue<>(sizeOfQueues);
       List<T> outputList = new ArrayList<>();
       inputQueues.add(inputQueue);
       outputLists.add(outputList);
