@@ -50,14 +50,14 @@ public class TaskManager<T> implements Runnable {
 
   private void fillQueues() {
     while (!mainQueue.isEmpty()) {
+      boolean fullQueues = true;
       for (BlockingQueue<Callable<T>> inputQueue : inputQueues) {
         if (inputQueue.remainingCapacity() > 0 && !mainQueue.isEmpty()) {
           inputQueue.add(mainQueue.poll());
+          fullQueues = false;
         }
       }
-      if (inputQueues.stream()
-          .map(q -> q.remainingCapacity() / (double) (q.remainingCapacity() + q.size()))
-          .max(Double::compareTo).orElseThrow() < 0.05) {
+      if (fullQueues) {
         return;
       }
     }
@@ -73,7 +73,7 @@ public class TaskManager<T> implements Runnable {
     try {
       while (!mainQueue.isEmpty()) {
         synchronized (monitor) {
-          monitor.wait(1000);
+          monitor.wait();
         }
         fillQueues();
       }
