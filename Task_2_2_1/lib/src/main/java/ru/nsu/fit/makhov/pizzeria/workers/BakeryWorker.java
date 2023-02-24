@@ -10,7 +10,7 @@ public class BakeryWorker implements Runnable {
 
   private BlockingQueue<PizzaOrder> inputQueue;
 
-  private BlockingQueue<PizzaOrder> outputQueue;
+  private BlockingQueue<PizzaOrder> storeQueue;
 
   public BakeryWorker(long cookingTimeMs) {
     this.cookingTimeMs = cookingTimeMs;
@@ -21,9 +21,9 @@ public class BakeryWorker implements Runnable {
     this.inputQueue = inputQueue;
   }
 
-  public void setOutputQueue(
-      BlockingQueue<PizzaOrder> outputQueue) {
-    this.outputQueue = outputQueue;
+  public void setStoreQueue(
+      BlockingQueue<PizzaOrder> storeQueue) {
+    this.storeQueue = storeQueue;
   }
 
   @Override
@@ -34,7 +34,7 @@ public class BakeryWorker implements Runnable {
         nextTask.setOrderStatus(OrderStatus.COOKING);
         Thread.sleep(cookingTimeMs);
         nextTask.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
-        outputQueue.put(nextTask);
+        storeQueue.put(nextTask);
       }
     } catch (InterruptedException ignored) {}
   }

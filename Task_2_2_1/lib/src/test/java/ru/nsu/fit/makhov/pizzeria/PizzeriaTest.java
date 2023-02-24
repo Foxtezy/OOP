@@ -6,7 +6,8 @@ package ru.nsu.fit.makhov.pizzeria;
 import org.junit.jupiter.api.Test;
 
 class PizzeriaTest {
-    @Test void appHasAGreeting() {
-
+    @Test
+    void appHasAGreeting() {
+        CommandParser.parseCommand("[123 122] [212 333]");
     }
 }

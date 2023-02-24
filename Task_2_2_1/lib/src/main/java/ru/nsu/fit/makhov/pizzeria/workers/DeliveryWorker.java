@@ -11,15 +11,15 @@ public class DeliveryWorker implements Runnable {
 
   private final int trunkSize;
 
-  private BlockingQueue<PizzaOrder> inputQueue;
+  private BlockingQueue<PizzaOrder> storeQueue;
 
   public DeliveryWorker(int trunkSize) {
     this.trunkSize = trunkSize;
   }
 
-  public void setInputQueue(
-      BlockingQueue<PizzaOrder> inputQueue) {
-    this.inputQueue = inputQueue;
+  public void setStoreQueue(
+      BlockingQueue<PizzaOrder> storeQueue) {
+    this.storeQueue = storeQueue;
   }
 
   @Override
@@ -27,11 +27,11 @@ public class DeliveryWorker implements Runnable {
     try {
       while (true) {
         List<PizzaOrder> inputTasks = new ArrayList<>();
-        inputTasks.add(inputQueue.take());
-        PizzaOrder nextTask = inputQueue.poll();
+        inputTasks.add(storeQueue.take());
+        PizzaOrder nextTask = storeQueue.poll();
         for (int i = 1; i < trunkSize && nextTask != null; i++) {
           inputTasks.add(nextTask);
-          nextTask = inputQueue.poll();
+          nextTask = storeQueue.poll();
         }
         for (PizzaOrder order : inputTasks) {
           order.setOrderStatus(OrderStatus.IN_DELIVERY);

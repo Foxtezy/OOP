@@ -6,18 +6,26 @@ package ru.nsu.fit.makhov.pizzeria;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import ru.nsu.fit.makhov.pizzeria.order.PizzaOrder;
 
 public class Pizzeria {
 
 
-
   public static void main(String[] args) {
     PizzeriaManager pizzeriaManager = new PizzeriaSetup(2, 3).setup();
+    pizzeriaManager.startPizzeria();
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-      String comm = reader.readLine();
-      orderListener.acceptTheOrder(comm);
+      while (true) {
+        String comm = reader.readLine();
+        if (comm.equals("stop")) {
+          break;
+        }
+        PizzaOrder order = CommandParser.parseCommand(comm);
+        pizzeriaManager.addNewOrder(order);
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }
+    pizzeriaManager.stopPizzeria();
   }
 }
