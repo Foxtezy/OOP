@@ -1,29 +1,16 @@
 package ru.nsu.fit.makhov.pizzeria.order;
 
-public class PizzaOrder {
+public class PizzaOrder extends Order {
 
-  private final long orderId;
-  private OrderStatus orderStatus = OrderStatus.WAITING_FOR_COOKING;
   private final long deliveryTimeMs;
 
   public PizzaOrder(long orderId, long deliveryTimeMs) {
-    this.orderId = orderId;
+    super(orderId);
     this.deliveryTimeMs = deliveryTimeMs;
-  }
-
-  public long getOrderId() {
-    return orderId;
-  }
-
-  public OrderStatus getOrderStatus() {
-    return orderStatus;
+    setOrderStatus(OrderStatus.WAITING_FOR_COOKING);
   }
 
   public long getDeliveryTimeMs() {
     return deliveryTimeMs;
-  }
-
-  public void setOrderStatus(OrderStatus orderStatus) {
-    this.orderStatus = orderStatus;
   }
 }

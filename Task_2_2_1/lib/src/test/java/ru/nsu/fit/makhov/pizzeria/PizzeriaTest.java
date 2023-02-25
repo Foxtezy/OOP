@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class PizzeriaTest {
     @Test
-    void appHasAGreeting() {
-        CommandParser.parseCommand("[123 122] [212 333]");
+    void pizzeriaTest() {
+
     }
 }

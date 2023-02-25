@@ -1,4 +1,4 @@
-package ru.nsu.fit.makhov.pizzeria;
+package ru.nsu.fit.makhov.pizzeria.main;
 
 public interface PizzeriaConfig {
 

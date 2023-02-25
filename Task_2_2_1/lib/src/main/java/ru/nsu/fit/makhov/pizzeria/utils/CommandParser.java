@@ -1,4 +1,4 @@
-package ru.nsu.fit.makhov.pizzeria;
+package ru.nsu.fit.makhov.pizzeria.utils;
 
 import java.util.List;
 import ru.nsu.fit.makhov.pizzeria.order.PizzaOrder;
