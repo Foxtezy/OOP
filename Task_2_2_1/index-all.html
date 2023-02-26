@@ -49,7 +49,7 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1>Index</h1>
 </div>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
 <h2 class="title" id="I:A">A</h2>
 <dl class="index">
 <dt><a href="ru/nsu/fit/makhov/pizzeria/orderprocessor/OrderProcessor.html#addNewOrder(ru.nsu.fit.makhov.pizzeria.order.Order)" class="member-name-link">addNewOrder(Order)</a> - Method in interface ru.nsu.fit.makhov.pizzeria.orderprocessor.<a href="ru/nsu/fit/makhov/pizzeria/orderprocessor/OrderProcessor.html" title="interface in ru.nsu.fit.makhov.pizzeria.orderprocessor">OrderProcessor</a></dt>
@@ -99,7 +99,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Manager which starts and stops BakeryWorkers.</div>
 </dd>
-<dt><a href="ru/nsu/fit/makhov/pizzeria/managers/DeliveryManager.html#%3Cinit%3E(java.util.concurrent.BlockingQueue)" class="member-name-link">DeliveryManager(BlockingQueue&lt;Order&gt;)</a> - Constructor for class ru.nsu.fit.makhov.pizzeria.managers.<a href="ru/nsu/fit/makhov/pizzeria/managers/DeliveryManager.html" title="class in ru.nsu.fit.makhov.pizzeria.managers">DeliveryManager</a></dt>
+<dt><a href="ru/nsu/fit/makhov/pizzeria/managers/DeliveryManager.html#%3Cinit%3E(java.util.concurrent.BlockingQueue,ru.nsu.fit.makhov.pizzeria.logger.OrderLogger)" class="member-name-link">DeliveryManager(BlockingQueue&lt;Order&gt;, OrderLogger)</a> - Constructor for class ru.nsu.fit.makhov.pizzeria.managers.<a href="ru/nsu/fit/makhov/pizzeria/managers/DeliveryManager.html" title="class in ru.nsu.fit.makhov.pizzeria.managers">DeliveryManager</a></dt>
 <dd>
 <div class="block">Constructor.</div>
 </dd>
@@ -124,11 +124,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get drivers from json.</div>
 </dd>
-<dt><a href="ru/nsu/fit/makhov/pizzeria/order/Order.html#getOrderId()" class="member-name-link">getOrderId()</a> - Method in class ru.nsu.fit.makhov.pizzeria.order.<a href="ru/nsu/fit/makhov/pizzeria/order/Order.html" title="class in ru.nsu.fit.makhov.pizzeria.order">Order</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/main/PizzeriaInitialisation.html#getOrderProcessor()" class="member-name-link">getOrderProcessor()</a> - Method in class ru.nsu.fit.makhov.pizzeria.main.<a href="ru/nsu/fit/makhov/pizzeria/main/PizzeriaInitialisation.html" title="class in ru.nsu.fit.makhov.pizzeria.main">PizzeriaInitialisation</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="ru/nsu/fit/makhov/pizzeria/order/Order.html#getOrderStatus()" class="member-name-link">getOrderStatus()</a> - Method in class ru.nsu.fit.makhov.pizzeria.order.<a href="ru/nsu/fit/makhov/pizzeria/order/Order.html" title="class in ru.nsu.fit.makhov.pizzeria.order">Order</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/main/PizzeriaInitialisation.html#getPizzeriaManager()" class="member-name-link">getPizzeriaManager()</a> - Method in class ru.nsu.fit.makhov.pizzeria.main.<a href="ru/nsu/fit/makhov/pizzeria/main/PizzeriaInitialisation.html" title="class in ru.nsu.fit.makhov.pizzeria.main">PizzeriaInitialisation</a></dt>
 <dd>&nbsp;</dd>
@@ -144,6 +140,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Reader of jsons.</div>
 </dd>
+</dl>
+<h2 class="title" id="I:L">L</h2>
+<dl class="index">
+<dt><a href="ru/nsu/fit/makhov/pizzeria/logger/OrderLogger.html#log(ru.nsu.fit.makhov.pizzeria.order.Order)" class="member-name-link">log(Order)</a> - Method in class ru.nsu.fit.makhov.pizzeria.logger.<a href="ru/nsu/fit/makhov/pizzeria/logger/OrderLogger.html" title="class in ru.nsu.fit.makhov.pizzeria.logger">OrderLogger</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:M">M</h2>
 <dl class="index">
@@ -163,6 +164,18 @@ loadScripts(document, 'script');</script>
 <div class="block">Abstract order that have an id and status.</div>
 </dd>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/order/Order.html#%3Cinit%3E(long,ru.nsu.fit.makhov.pizzeria.order.OrderStatus)" class="member-name-link">Order(long, OrderStatus)</a> - Constructor for class ru.nsu.fit.makhov.pizzeria.order.<a href="ru/nsu/fit/makhov/pizzeria/order/Order.html" title="class in ru.nsu.fit.makhov.pizzeria.order">Order</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/fit/makhov/pizzeria/logger/OrderLogger.html" class="type-name-link" title="class in ru.nsu.fit.makhov.pizzeria.logger">OrderLogger</a> - Class in <a href="ru/nsu/fit/makhov/pizzeria/logger/package-summary.html">ru.nsu.fit.makhov.pizzeria.logger</a></dt>
+<dd>
+<div class="block">Logger that can log order message.</div>
+</dd>
+<dt><a href="ru/nsu/fit/makhov/pizzeria/logger/OrderLogger.html#%3Cinit%3E(java.util.concurrent.BlockingQueue)" class="member-name-link">OrderLogger(BlockingQueue&lt;OrderMessage&gt;)</a> - Constructor for class ru.nsu.fit.makhov.pizzeria.logger.<a href="ru/nsu/fit/makhov/pizzeria/logger/OrderLogger.html" title="class in ru.nsu.fit.makhov.pizzeria.logger">OrderLogger</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/fit/makhov/pizzeria/logger/OrderMessage.html" class="type-name-link" title="class in ru.nsu.fit.makhov.pizzeria.logger">OrderMessage</a> - Class in <a href="ru/nsu/fit/makhov/pizzeria/logger/package-summary.html">ru.nsu.fit.makhov.pizzeria.logger</a></dt>
+<dd>
+<div class="block">Message of order.</div>
+</dd>
+<dt><a href="ru/nsu/fit/makhov/pizzeria/logger/OrderMessage.html#%3Cinit%3E(ru.nsu.fit.makhov.pizzeria.order.Order)" class="member-name-link">OrderMessage(Order)</a> - Constructor for class ru.nsu.fit.makhov.pizzeria.logger.<a href="ru/nsu/fit/makhov/pizzeria/logger/OrderMessage.html" title="class in ru.nsu.fit.makhov.pizzeria.logger">OrderMessage</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/orderprocessor/OrderProcessor.html" class="type-name-link" title="interface in ru.nsu.fit.makhov.pizzeria.orderprocessor">OrderProcessor</a> - Interface in <a href="ru/nsu/fit/makhov/pizzeria/orderprocessor/package-summary.html">ru.nsu.fit.makhov.pizzeria.orderprocessor</a></dt>
 <dd>
@@ -223,6 +236,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/json/package-summary.html">ru.nsu.fit.makhov.pizzeria.json</a> - package ru.nsu.fit.makhov.pizzeria.json</dt>
 <dd>&nbsp;</dd>
+<dt><a href="ru/nsu/fit/makhov/pizzeria/logger/package-summary.html">ru.nsu.fit.makhov.pizzeria.logger</a> - package ru.nsu.fit.makhov.pizzeria.logger</dt>
+<dd>&nbsp;</dd>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/main/package-summary.html">ru.nsu.fit.makhov.pizzeria.main</a> - package ru.nsu.fit.makhov.pizzeria.main</dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/managers/package-summary.html">ru.nsu.fit.makhov.pizzeria.managers</a> - package ru.nsu.fit.makhov.pizzeria.managers</dt>
@@ -235,6 +250,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/workers/package-summary.html">ru.nsu.fit.makhov.pizzeria.workers</a> - package ru.nsu.fit.makhov.pizzeria.workers</dt>
 <dd>&nbsp;</dd>
+<dt><a href="ru/nsu/fit/makhov/pizzeria/logger/OrderLogger.html#run()" class="member-name-link">run()</a> - Method in class ru.nsu.fit.makhov.pizzeria.logger.<a href="ru/nsu/fit/makhov/pizzeria/logger/OrderLogger.html" title="class in ru.nsu.fit.makhov.pizzeria.logger">OrderLogger</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/workers/BakeryWorker.html#run()" class="member-name-link">run()</a> - Method in class ru.nsu.fit.makhov.pizzeria.workers.<a href="ru/nsu/fit/makhov/pizzeria/workers/BakeryWorker.html" title="class in ru.nsu.fit.makhov.pizzeria.workers">BakeryWorker</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/workers/DeliveryWorker.html#run()" class="member-name-link">run()</a> - Method in class ru.nsu.fit.makhov.pizzeria.workers.<a href="ru/nsu/fit/makhov/pizzeria/workers/DeliveryWorker.html" title="class in ru.nsu.fit.makhov.pizzeria.workers">DeliveryWorker</a></dt>
@@ -243,6 +260,8 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:S">S</h2>
 <dl class="index">
 <dt><a href="ru/nsu/fit/makhov/pizzeria/workers/BakeryWorker.html#setInputQueue(java.util.concurrent.BlockingQueue)" class="member-name-link">setInputQueue(BlockingQueue&lt;Order&gt;)</a> - Method in class ru.nsu.fit.makhov.pizzeria.workers.<a href="ru/nsu/fit/makhov/pizzeria/workers/BakeryWorker.html" title="class in ru.nsu.fit.makhov.pizzeria.workers">BakeryWorker</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/fit/makhov/pizzeria/workers/DeliveryWorker.html#setOrderLogger(ru.nsu.fit.makhov.pizzeria.logger.OrderLogger)" class="member-name-link">setOrderLogger(OrderLogger)</a> - Method in class ru.nsu.fit.makhov.pizzeria.workers.<a href="ru/nsu/fit/makhov/pizzeria/workers/DeliveryWorker.html" title="class in ru.nsu.fit.makhov.pizzeria.workers">DeliveryWorker</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/order/Order.html#setOrderStatus(ru.nsu.fit.makhov.pizzeria.order.OrderStatus)" class="member-name-link">setOrderStatus(OrderStatus)</a> - Method in class ru.nsu.fit.makhov.pizzeria.order.<a href="ru/nsu/fit/makhov/pizzeria/order/Order.html" title="class in ru.nsu.fit.makhov.pizzeria.order">Order</a></dt>
 <dd>&nbsp;</dd>
@@ -271,6 +290,13 @@ loadScripts(document, 'script');</script>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/managers/PizzeriaManager.html#stop()" class="member-name-link">stop()</a> - Method in class ru.nsu.fit.makhov.pizzeria.managers.<a href="ru/nsu/fit/makhov/pizzeria/managers/PizzeriaManager.html" title="class in ru.nsu.fit.makhov.pizzeria.managers">PizzeriaManager</a></dt>
 <dd>&nbsp;</dd>
 </dl>
+<h2 class="title" id="I:T">T</h2>
+<dl class="index">
+<dt><a href="ru/nsu/fit/makhov/pizzeria/logger/OrderMessage.html#toString()" class="member-name-link">toString()</a> - Method in class ru.nsu.fit.makhov.pizzeria.logger.<a href="ru/nsu/fit/makhov/pizzeria/logger/OrderMessage.html" title="class in ru.nsu.fit.makhov.pizzeria.logger">OrderMessage</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/fit/makhov/pizzeria/order/Order.html#toString()" class="member-name-link">toString()</a> - Method in class ru.nsu.fit.makhov.pizzeria.order.<a href="ru/nsu/fit/makhov/pizzeria/order/Order.html" title="class in ru.nsu.fit.makhov.pizzeria.order">Order</a></dt>
+<dd>&nbsp;</dd>
+</dl>
 <h2 class="title" id="I:V">V</h2>
 <dl class="index">
 <dt><a href="ru/nsu/fit/makhov/pizzeria/order/OrderStatus.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class ru.nsu.fit.makhov.pizzeria.order.<a href="ru/nsu/fit/makhov/pizzeria/order/OrderStatus.html" title="enum class in ru.nsu.fit.makhov.pizzeria.order">OrderStatus</a></dt>
@@ -290,7 +316,7 @@ the order they are declared.</div>
 <dt><a href="ru/nsu/fit/makhov/pizzeria/order/OrderStatus.html#WAITING_FOR_DELIVERY" class="member-name-link">WAITING_FOR_DELIVERY</a> - Enum constant in enum class ru.nsu.fit.makhov.pizzeria.order.<a href="ru/nsu/fit/makhov/pizzeria/order/OrderStatus.html" title="enum class in ru.nsu.fit.makhov.pizzeria.order">OrderStatus</a></dt>
 <dd>&nbsp;</dd>
 </dl>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a></main>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a></main>
 </div>
 </div>
 </body>

@@ -1,5 +1,6 @@
 ru.nsu.fit.makhov.pizzeria.exceptions
 ru.nsu.fit.makhov.pizzeria.json
+ru.nsu.fit.makhov.pizzeria.logger
 ru.nsu.fit.makhov.pizzeria.main
 ru.nsu.fit.makhov.pizzeria.managers
 ru.nsu.fit.makhov.pizzeria.order
