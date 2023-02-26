@@ -2,6 +2,7 @@ package ru.nsu.fit.makhov.pizzeria.main;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import ru.nsu.fit.makhov.pizzeria.logger.OrderLogger;
 import ru.nsu.fit.makhov.pizzeria.managers.BakeryManager;
 import ru.nsu.fit.makhov.pizzeria.managers.DeliveryManager;
 import ru.nsu.fit.makhov.pizzeria.managers.Manager;
@@ -29,8 +30,9 @@ public class PizzeriaInitialisation {
   public PizzeriaInitialisation(int inputQueueSize, int storeQueueSize) {
     BlockingQueue<Order> inputQueue = new LinkedBlockingQueue<>(inputQueueSize);
     BlockingQueue<Order> storeQueue = new LinkedBlockingQueue<>(storeQueueSize);
+    OrderLogger orderLogger = new OrderLogger(new LinkedBlockingQueue<>(100));
     Manager bakeryManager = new BakeryManager(inputQueue, storeQueue);
-    Manager deliveryManager = new DeliveryManager(storeQueue);
+    Manager deliveryManager = new DeliveryManager(storeQueue, orderLogger);
     pizzeriaManager = new PizzeriaManager(bakeryManager, deliveryManager);
     orderProcessor = new OrderProcessorImpl(inputQueue);
   }

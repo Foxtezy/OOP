@@ -14,15 +14,12 @@ public abstract class Order {
     this.orderStatus = orderStatus;
   }
 
-  public OrderStatus getOrderStatus() {
-    return orderStatus;
-  }
-
-  public long getOrderId() {
-    return orderId;
-  }
-
   public void setOrderStatus(OrderStatus orderStatus) {
     this.orderStatus = orderStatus;
+  }
+
+  @Override
+  public String toString() {
+    return "Order{" + "orderId=" + orderId + ", orderStatus=" + orderStatus + '}';
   }
 }

@@ -4,6 +4,7 @@ package ru.nsu.fit.makhov.pizzeria.workers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+import ru.nsu.fit.makhov.pizzeria.logger.OrderLogger;
 import ru.nsu.fit.makhov.pizzeria.order.Order;
 import ru.nsu.fit.makhov.pizzeria.order.OrderStatus;
 import ru.nsu.fit.makhov.pizzeria.order.PizzaOrder;
@@ -19,6 +20,8 @@ public class DeliveryWorker implements Runnable {
 
   private BlockingQueue<Order> storeQueue;
 
+  private OrderLogger orderLogger;
+
   public DeliveryWorker(int trunkSize) {
     this.trunkSize = trunkSize;
   }
@@ -29,6 +32,10 @@ public class DeliveryWorker implements Runnable {
 
   public void setWorking(boolean working) {
     isWorking = working;
+  }
+
+  public void setOrderLogger(OrderLogger orderLogger) {
+    this.orderLogger = orderLogger;
   }
 
   @Override
@@ -50,7 +57,7 @@ public class DeliveryWorker implements Runnable {
             order.setOrderStatus(OrderStatus.IN_DELIVERY);
             Thread.sleep(pizzaOrder.getDeliveryTimeMs());
             order.setOrderStatus(OrderStatus.DELIVERED);
-            System.out.printf("[%d], [%s]\n", order.getOrderId(), order.getOrderStatus());
+            orderLogger.log(order);
           }
         }
       }
