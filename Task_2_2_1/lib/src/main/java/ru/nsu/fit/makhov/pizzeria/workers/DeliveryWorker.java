@@ -8,9 +8,14 @@ import ru.nsu.fit.makhov.pizzeria.order.Order;
 import ru.nsu.fit.makhov.pizzeria.order.OrderStatus;
 import ru.nsu.fit.makhov.pizzeria.order.PizzaOrder;
 
+/**
+ * Class that represents runnable delivery worker.
+ */
 public class DeliveryWorker implements Runnable {
 
   private final int trunkSize;
+
+  private volatile boolean isWorking;
 
   private BlockingQueue<Order> storeQueue;
 
@@ -22,10 +27,17 @@ public class DeliveryWorker implements Runnable {
     this.storeQueue = storeQueue;
   }
 
+  public void setWorking(boolean working) {
+    isWorking = working;
+  }
+
   @Override
   public void run() {
     try {
       while (true) {
+        if (storeQueue.isEmpty() && !isWorking) {
+          return;
+        }
         List<Order> inputTasks = new ArrayList<>();
         inputTasks.add(storeQueue.take());
         Order nextTask = storeQueue.poll();
@@ -42,7 +54,8 @@ public class DeliveryWorker implements Runnable {
           }
         }
       }
-    } catch (InterruptedException ignored) {
+    } catch (InterruptedException e) {
+      e.printStackTrace();
     }
   }
 }

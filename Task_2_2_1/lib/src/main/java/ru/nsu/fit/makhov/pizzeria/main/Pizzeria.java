@@ -6,12 +6,20 @@ import java.io.InputStreamReader;
 import ru.nsu.fit.makhov.pizzeria.order.PizzaOrder;
 import ru.nsu.fit.makhov.pizzeria.utils.CommandParser;
 
+/**
+ * Example of Pizzeria.
+ */
 public class Pizzeria {
 
 
+  /**
+   * Main.
+   *
+   * @param args command line args.
+   */
   public static void main(String[] args) {
-    PizzeriaStarter pizzeriaStarter = new PizzeriaStarter(2, 3);
-    pizzeriaStarter.getPizzeriaManager().start();
+    PizzeriaInitialisation pizzeriaInitialisation = new PizzeriaInitialisation(2, 3);
+    pizzeriaInitialisation.getPizzeriaManager().start();
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
       while (true) {
         String comm = reader.readLine();
@@ -19,11 +27,11 @@ public class Pizzeria {
           break;
         }
         PizzaOrder order = CommandParser.parseCommand(comm);
-        pizzeriaStarter.getOrderProcessor().addNewOrder(order);
+        pizzeriaInitialisation.getOrderProcessor().addNewOrder(order);
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
-    pizzeriaStarter.getPizzeriaManager().stop();
+    pizzeriaInitialisation.getPizzeriaManager().stop();
   }
 }

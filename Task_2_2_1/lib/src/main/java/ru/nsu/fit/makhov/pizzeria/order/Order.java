@@ -1,14 +1,18 @@
 package ru.nsu.fit.makhov.pizzeria.order;
 
+/**
+ * Abstract order that have an id and status.
+ */
 public abstract class Order {
-
-  public Order(long orderId) {
-    this.orderId = orderId;
-  }
 
   private final long orderId;
 
   private OrderStatus orderStatus;
+
+  public Order(long orderId, OrderStatus orderStatus) {
+    this.orderId = orderId;
+    this.orderStatus = orderStatus;
+  }
 
   public OrderStatus getOrderStatus() {
     return orderStatus;

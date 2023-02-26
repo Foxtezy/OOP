@@ -1,8 +1,8 @@
 [
   {
-    "cookingTimeMs": 1000
+    "cookingTimeMs": 100
   },
   {
-    "cookingTimeMs": 2000
+    "cookingTimeMs": 200
   }
 ]

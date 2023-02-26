@@ -1,8 +1,18 @@
 package ru.nsu.fit.makhov.pizzeria.main;
 
-public interface PizzeriaConfig {
+/**
+ * Config with name of jsons.
+ */
+public final class PizzeriaConfig {
 
-  String BAKERS_JSON_NAME = "lib/src/main/resources/bakers.json";
+  public static final String BAKERS_JSON_NAME = PizzeriaConfig.class.getClassLoader()
+      .getResource("bakers.json").getFile();
 
-  String DRIVERS_JSON_NAME = "lib/src/main/resources/drivers.json";
+  public static final String DRIVERS_JSON_NAME = PizzeriaConfig.class.getClassLoader()
+      .getResource("drivers.json").getFile();
+
+  private PizzeriaConfig() {
+    throw new UnsupportedOperationException();
+  }
+
 }

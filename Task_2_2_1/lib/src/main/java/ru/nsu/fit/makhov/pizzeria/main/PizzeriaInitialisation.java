@@ -10,17 +10,27 @@ import ru.nsu.fit.makhov.pizzeria.order.Order;
 import ru.nsu.fit.makhov.pizzeria.orderprocessor.OrderProcessor;
 import ru.nsu.fit.makhov.pizzeria.orderprocessor.OrderProcessorImpl;
 
-public class PizzeriaStarter {
+/**
+ * A class that initializes a pizzeria and creates a PizzeriaManager to start a pizzeria and an
+ * OrderProcessor to send an order.
+ */
+public class PizzeriaInitialisation {
 
   private final Manager pizzeriaManager;
 
   private final OrderProcessor orderProcessor;
 
-  public PizzeriaStarter(int inputQueueSize, int storeQueueSize) {
+  /**
+   * Init pizzeria.
+   *
+   * @param inputQueueSize size of queue of new orders.
+   * @param storeQueueSize size of store.
+   */
+  public PizzeriaInitialisation(int inputQueueSize, int storeQueueSize) {
     BlockingQueue<Order> inputQueue = new LinkedBlockingQueue<>(inputQueueSize);
     BlockingQueue<Order> storeQueue = new LinkedBlockingQueue<>(storeQueueSize);
-    BakeryManager bakeryManager = new BakeryManager(inputQueue, storeQueue);
-    DeliveryManager deliveryManager = new DeliveryManager(storeQueue);
+    Manager bakeryManager = new BakeryManager(inputQueue, storeQueue);
+    Manager deliveryManager = new DeliveryManager(storeQueue);
     pizzeriaManager = new PizzeriaManager(bakeryManager, deliveryManager);
     orderProcessor = new OrderProcessorImpl(inputQueue);
   }

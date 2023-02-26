@@ -9,16 +9,27 @@ import ru.nsu.fit.makhov.pizzeria.main.PizzeriaConfig;
 import ru.nsu.fit.makhov.pizzeria.order.Order;
 import ru.nsu.fit.makhov.pizzeria.workers.DeliveryWorker;
 
+/**
+ * Manager which starts and stops BakeryWorkers.
+ */
 public class DeliveryManager implements Manager {
 
   private final List<Thread> drivers;
 
+  private final List<DeliveryWorker> deliveryWorkers;
 
+
+  /**
+   * Constructor.
+   *
+   * @param storeQueue store queue.
+   */
   public DeliveryManager(BlockingQueue<Order> storeQueue) {
-    List<DeliveryWorker> deliveryWorkers = JsonReader.getDeliveryWorkers(
+    deliveryWorkers = JsonReader.getDeliveryWorkers(
             PizzeriaConfig.DRIVERS_JSON_NAME)
         .orElseThrow(BadJsonException::new);
     deliveryWorkers.forEach(b -> b.setStoreQueue(storeQueue));
+    deliveryWorkers.forEach(b -> b.setWorking(true));
     drivers = deliveryWorkers.stream().map(Thread::new).collect(Collectors.toList());
   }
 
@@ -29,12 +40,12 @@ public class DeliveryManager implements Manager {
 
   @Override
   public void stop() {
-    drivers.forEach(Thread::interrupt);
+    deliveryWorkers.forEach(d -> d.setWorking(false));
     for (Thread driver : drivers) {
       try {
         driver.join();
       } catch (InterruptedException e) {
-        throw new RuntimeException(e);
+        e.printStackTrace();
       }
     }
   }

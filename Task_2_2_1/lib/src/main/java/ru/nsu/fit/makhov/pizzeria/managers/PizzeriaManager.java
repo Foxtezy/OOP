@@ -1,6 +1,8 @@
 package ru.nsu.fit.makhov.pizzeria.managers;
 
-
+/**
+ * Manager which starts and stops Bakery and Delivery managers.
+ */
 public class PizzeriaManager implements Manager {
 
   private final Manager bakeryManager;
@@ -8,7 +10,7 @@ public class PizzeriaManager implements Manager {
   private final Manager deliveryManager;
 
 
-  public PizzeriaManager(BakeryManager bakeryManager, DeliveryManager deliveryManager) {
+  public PizzeriaManager(Manager bakeryManager, Manager deliveryManager) {
     this.bakeryManager = bakeryManager;
     this.deliveryManager = deliveryManager;
   }
