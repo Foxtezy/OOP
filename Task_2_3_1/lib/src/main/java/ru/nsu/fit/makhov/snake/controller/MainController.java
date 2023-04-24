@@ -1,4 +1,4 @@
-package ru.nsu.fit.makhov.snake;
+package ru.nsu.fit.makhov.snake.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
