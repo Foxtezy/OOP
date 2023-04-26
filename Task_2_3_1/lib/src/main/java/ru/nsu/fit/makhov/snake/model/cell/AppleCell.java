@@ -1,5 +1,11 @@
 package ru.nsu.fit.makhov.snake.model.cell;
 
-public class AppleCell extends Cell {
+import ru.nsu.fit.makhov.snake.model.snakes.AbstractSnake;
 
+public class AppleCell implements Cell {
+
+    @Override
+    public void interactWithSnake(AbstractSnake snake) {
+
+    }
 }

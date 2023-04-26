@@ -1,5 +1,11 @@
 package ru.nsu.fit.makhov.snake.model.cell;
 
-public class SnakeCell extends Cell {
+import ru.nsu.fit.makhov.snake.model.snakes.AbstractSnake;
 
+public class SnakeCell implements Cell {
+
+    @Override
+    public void interactWithSnake(AbstractSnake snake) {
+        snake.kill();
+    }
 }

@@ -11,8 +11,6 @@ import ru.nsu.fit.makhov.snake.model.cell.EmptyCell;
 @Component
 public class GameField {
 
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-
     private final List<List<Cell>> field = new ArrayList<>();
     
     public void init(int sizeX, int sizeY) {
@@ -32,7 +30,4 @@ public class GameField {
         return field.get(x).set(y, cell);
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener pcl) {
-        support.addPropertyChangeListener(pcl);
-    }
 }
