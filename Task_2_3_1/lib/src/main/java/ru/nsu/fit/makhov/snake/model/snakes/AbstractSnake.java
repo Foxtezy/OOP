@@ -4,7 +4,9 @@ import java.util.Deque;
 import java.util.LinkedList;
 import lombok.RequiredArgsConstructor;
 import ru.nsu.fit.makhov.snake.model.GameField;
+import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.cell.Cell;
+import ru.nsu.fit.makhov.snake.model.cell.EmptyCell;
 import ru.nsu.fit.makhov.snake.model.cell.SnakeCell;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
 
@@ -12,8 +14,8 @@ import ru.nsu.fit.makhov.snake.model.event.Direction;
 public abstract class AbstractSnake extends Thread {
 
     protected final Deque<SnakeSegment> snake = new LinkedList<>();
-    protected final GameField gameField;
-    protected final Object monitor;
+
+    protected final GameModel gameModel;
 
     protected boolean isAlive = true;
 
@@ -22,14 +24,21 @@ public abstract class AbstractSnake extends Thread {
     }
 
     public boolean move(Direction direction) {
-        snake.pollLast();
-        SnakeSegment oldHead = snake.getFirst();
-        SnakeSegment newHead = new SnakeSegment(oldHead, direction);
-        snake.addFirst(newHead);
-        Cell headCell = gameField.getCell(newHead.getX(), newHead.getY());
-        headCell.interactWithSnake(this);
-        gameField.setCell(new SnakeCell(), newHead.getX(), newHead.getY());
+        SnakeSegment head = snake.getFirst();
+        SnakeSegment futureHead = new SnakeSegment(head, direction);
+        Cell headCell = gameModel.getGameField().getCell(futureHead.getX(), futureHead.getY());
+        headCell.interactWithSnake(this, futureHead.getX(), futureHead.getY());
         return isAlive;
+    }
+
+    public void cutTail() {
+        SnakeSegment tail = snake.removeLast();
+        gameModel.getGameField().setCell(new EmptyCell(), tail.getX(), tail.getY());
+    }
+
+    public void addHead(int x, int y) {
+        snake.addFirst(new SnakeSegment(x, y));
+        gameModel.getGameField().setCell(new SnakeCell(), x, y);
     }
 
 }

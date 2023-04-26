@@ -6,35 +6,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.nsu.fit.makhov.snake.model.event.Direction;
 import ru.nsu.fit.makhov.snake.model.event.MoveEvent;
 import ru.nsu.fit.makhov.snake.model.snakes.AbstractSnake;
+import ru.nsu.fit.makhov.snake.model.snakes.PlayerSnake;
 
 @Component
-@RequiredArgsConstructor
 public class GameModel implements Runnable {
 
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-
+    private final PropertyChangeSupport viewSender = new PropertyChangeSupport(this);
     private final GameField gameField;
-
     private final BlockingQueue<MoveEvent> eventQueue = new LinkedBlockingQueue<>();
-
     private final Object monitor = new Object();
-
     private final List<AbstractSnake> snakes = new ArrayList<>();
+    private final PlayerSnake playerSnake = new PlayerSnake(this);
 
     @Value("${game.field.size-x}")
     private int fieldSizeX;
-
     @Value("${game.field.size-y}")
     private int fieldSizeY;
-
     @Value("${game.speed}")
     private int speed;
+
+    public GameModel(GameField gameField) {
+        snakes.add(playerSnake);
+        this.gameField = gameField;
+    }
 
     public void setFieldSizeX(int fieldSizeX) {
         this.fieldSizeX = fieldSizeX;
@@ -48,8 +47,24 @@ public class GameModel implements Runnable {
         snakes.add(snake);
     }
 
+    public void addEvent(MoveEvent event) {
+        eventQueue.add(event);
+    }
+
+    public GameField getGameField() {
+        return gameField;
+    }
+
+    public Object getMonitor() {
+        return monitor;
+    }
+
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
-        support.addPropertyChangeListener(pcl);
+        viewSender.addPropertyChangeListener(pcl);
+    }
+
+    public void changePlayerSnakeDirection(Direction direction) {
+        playerSnake.changeDirection(direction);
     }
 
     @Override
@@ -68,6 +83,7 @@ public class GameModel implements Runnable {
                     // TODO: 26.04.2023 змейка убита
                 }
             }
+            viewSender.firePropertyChange("repaint", null, new GameField(gameField));
             synchronized (monitor) {
                 monitor.notifyAll();
             }

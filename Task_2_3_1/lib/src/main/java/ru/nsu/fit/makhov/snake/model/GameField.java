@@ -1,7 +1,5 @@
 package ru.nsu.fit.makhov.snake.model;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
@@ -11,7 +9,7 @@ import ru.nsu.fit.makhov.snake.model.cell.EmptyCell;
 @Component
 public class GameField {
 
-    private final List<List<Cell>> field = new ArrayList<>();
+    private List<List<Cell>> field = new ArrayList<>();
     
     public void init(int sizeX, int sizeY) {
         for (int i = 0; i < sizeX; i++) {
@@ -19,6 +17,15 @@ public class GameField {
             for (int j = 0; j < sizeY; j++) {
                 field.get(i).add(j, new EmptyCell());
             }
+        }
+    }
+
+    public GameField() {
+    }
+
+    public GameField(GameField gameField) {
+        for (List<Cell> cl : gameField.field) {
+            this.field.add(new ArrayList<>(cl));
         }
     }
 

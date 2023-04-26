@@ -1,27 +1,35 @@
 package ru.nsu.fit.makhov.snake.model.snakes;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import ru.nsu.fit.makhov.snake.model.GameField;
+import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
+import ru.nsu.fit.makhov.snake.model.event.MoveEvent;
 
 public class PlayerSnake extends AbstractSnake {
 
 
-    private final BlockingQueue<Direction> commandQueue = new LinkedBlockingQueue<>();
+    private volatile Direction direction = Direction.UP;
 
-    public PlayerSnake(GameField gameField, Object monitor) {
-        super(gameField, monitor);
+    public PlayerSnake(GameModel gameModel) {
+        super(gameModel);
     }
 
-    public void addCommand(Direction direction) {
-        commandQueue.add(direction);
+    /**
+     * главная апиха
+     * @param direction
+     */
+    public void changeDirection(Direction direction) {
+        this.direction = direction;
     }
 
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-
+            gameModel.addEvent(new MoveEvent(this, direction));
+            try {
+                gameModel.getMonitor().wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 }
