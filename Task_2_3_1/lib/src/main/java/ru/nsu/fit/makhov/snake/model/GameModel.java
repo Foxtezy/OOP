@@ -83,6 +83,7 @@ public class GameModel implements Runnable {
                     // TODO: 26.04.2023 змейка убита
                 }
             }
+            // TODO: 27.04.2023 repaint только измененных тайлов
             viewSender.firePropertyChange("repaint", null, new GameField(gameField));
             synchronized (monitor) {
                 monitor.notifyAll();

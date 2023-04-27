@@ -29,12 +29,20 @@ public class GameField {
         }
     }
 
+    public int getSizeX() {
+        return field.size();
+    }
+
+    public int getSizeY() {
+        return field.get(0).size();
+    }
+
     public Cell getCell(int x, int y) {
         return field.get(x).get(y);
     }
 
-    public Cell setCell(Cell cell, int x, int y) {
-        return field.get(x).set(y, cell);
+    public void setCell(Cell cell, int x, int y) {
+        field.get(x).set(y, cell);
     }
 
 }
