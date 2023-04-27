@@ -2,25 +2,29 @@ package ru.nsu.fit.makhov.snake;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 
+@Component
 public class JavaFXApplication extends Application {
 
     private ConfigurableApplicationContext applicationContext;
 
+    private SpringFXMLLoader springFXMLLoader;
+
     @Override
     public void init() {
-        applicationContext = new SpringApplicationBuilder(SpringApplication.class).run();
+        this.applicationContext = new SpringApplicationBuilder(SpringApplication.class).run();
+        this.springFXMLLoader = applicationContext.getBean(SpringFXMLLoader.class);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/main-view.fxml"));
+        Parent root = springFXMLLoader.load(getClass().getResource("view/main-view.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Snake");
         stage.setScene(scene);

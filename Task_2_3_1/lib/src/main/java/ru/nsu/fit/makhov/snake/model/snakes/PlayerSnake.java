@@ -13,12 +13,10 @@ public class PlayerSnake extends AbstractSnake {
         super(gameModel);
         snake.add(new SnakeSegment(0, 0));
         snake.add(new SnakeSegment(1, 0));
+        snake.add(new SnakeSegment(2, 0));
+        snake.add(new SnakeSegment(3, 0));
     }
 
-    /**
-     * главная апиха
-     * @param direction
-     */
     public void changeDirection(Direction direction) {
         this.direction = direction;
     }
@@ -28,7 +26,9 @@ public class PlayerSnake extends AbstractSnake {
         while (!Thread.currentThread().isInterrupted()) {
             gameModel.addEvent(new MoveEvent(this, direction));
             try {
-                gameModel.getMonitor().wait();
+                synchronized (gameModel.getMonitor()) {
+                    gameModel.getMonitor().wait();
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
