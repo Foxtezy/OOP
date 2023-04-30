@@ -7,7 +7,7 @@ import ru.nsu.fit.makhov.snake.model.event.MoveEvent;
 public class PlayerSnake extends AbstractSnake {
 
 
-    private volatile Direction direction = Direction.UP;
+    private volatile Direction direction = Direction.DOWN;
 
     public PlayerSnake(GameModel gameModel) {
         super(gameModel);

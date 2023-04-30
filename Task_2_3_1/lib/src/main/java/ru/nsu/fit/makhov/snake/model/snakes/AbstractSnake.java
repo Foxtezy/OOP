@@ -2,8 +2,8 @@ package ru.nsu.fit.makhov.snake.model.snakes;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import ru.nsu.fit.makhov.snake.model.GameField;
 import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.cell.Cell;
 import ru.nsu.fit.makhov.snake.model.cell.EmptyCell;
@@ -26,8 +26,12 @@ public abstract class AbstractSnake extends Thread {
     public boolean move(Direction direction) {
         SnakeSegment head = snake.getFirst();
         SnakeSegment futureHead = new SnakeSegment(head, direction);
-        Cell headCell = gameModel.getGameField().getCell(futureHead.getX(), futureHead.getY());
-        headCell.interactWithSnake(this, futureHead.getX(), futureHead.getY());
+        Optional<Cell> headCell = gameModel.getGameField().getCell(futureHead.getX(), futureHead.getY());
+        if (headCell.isPresent()) {
+            headCell.get().interactWithSnake(this, futureHead.getX(), futureHead.getY());
+        } else {
+            kill();
+        }
         return isAlive;
     }
 

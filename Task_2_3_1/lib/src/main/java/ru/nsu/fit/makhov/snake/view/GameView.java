@@ -29,7 +29,7 @@ public class GameView implements PropertyChangeListener {
     private void repaint(GameField gameField) {
         for (int i = 0; i < gameField.getSizeX(); i++) {
             for (int j = 0; j < gameField.getSizeY(); j++) {
-                Cell cell = gameField.getCell(i, j);
+                Cell cell = gameField.getCell(i, j).orElseThrow();
                 gridPane.add(TileFactory.createTile(cell.getClass()), i, j);
             }
         }

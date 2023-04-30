@@ -2,6 +2,7 @@ package ru.nsu.fit.makhov.snake.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.cell.Cell;
 import ru.nsu.fit.makhov.snake.model.cell.EmptyCell;
@@ -9,7 +10,7 @@ import ru.nsu.fit.makhov.snake.model.cell.EmptyCell;
 @Component
 public class GameField {
 
-    private List<List<Cell>> field = new ArrayList<>();
+    private final List<List<Cell>> field = new ArrayList<>();
     
     public void init(int sizeX, int sizeY) {
         for (int i = 0; i < sizeX; i++) {
@@ -37,8 +38,12 @@ public class GameField {
         return field.get(0).size();
     }
 
-    public Cell getCell(int x, int y) {
-        return field.get(x).get(y);
+    public Optional<Cell> getCell(int x, int y) {
+        try {
+            return Optional.of(field.get(x).get(y));
+        } catch (IndexOutOfBoundsException e) {
+            return Optional.empty();
+        }
     }
 
     public void setCell(Cell cell, int x, int y) {

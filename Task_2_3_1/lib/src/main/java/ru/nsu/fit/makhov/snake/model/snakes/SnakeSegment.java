@@ -15,11 +15,11 @@ public class SnakeSegment {
         switch (direction) {
             case UP -> {
                 this.x = head.x;
-                this.y = head.y + 1;
+                this.y = head.y - 1;
             }
             case DOWN -> {
                 this.x = head.x;
-                this.y = head.y - 1;
+                this.y = head.y + 1;
             }
             case LEFT -> {
                 this.x = head.x - 1;
