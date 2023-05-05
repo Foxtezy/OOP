@@ -18,6 +18,7 @@ public class GameModel implements Runnable {
 
     private final PropertyChangeSupport viewSender = new PropertyChangeSupport(this);
     private final GameField gameField;
+    private final AppleSpawner appleSpawner;
     private final BlockingQueue<MoveEvent> eventQueue = new LinkedBlockingQueue<>();
     private final Object monitor = new Object();
     private final List<AbstractSnake> snakes = new ArrayList<>();
@@ -30,9 +31,10 @@ public class GameModel implements Runnable {
     @Value("${game.speed}")
     private int speed;
 
-    public GameModel(GameField gameField) {
+    public GameModel(GameField gameField, AppleSpawner appleSpawner) {
         snakes.add(playerSnake);
         this.gameField = gameField;
+        this.appleSpawner = appleSpawner;
     }
 
     public void setFieldSizeX(int fieldSizeX) {
@@ -55,6 +57,10 @@ public class GameModel implements Runnable {
         return gameField;
     }
 
+    public AppleSpawner getAppleSpawner() {
+        return appleSpawner;
+    }
+
     public Object getMonitor() {
         return monitor;
     }
@@ -71,6 +77,7 @@ public class GameModel implements Runnable {
     public void run() {
         gameField.init(fieldSizeX, fieldSizeY);
         snakes.forEach(Thread::start);
+        appleSpawner.spawnAppleIfFieldEmpty();
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Thread.sleep(speed);

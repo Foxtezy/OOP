@@ -45,4 +45,10 @@ public abstract class AbstractSnake extends Thread {
         gameModel.getGameField().setCell(new SnakeCell(), x, y);
     }
 
+    public void growSnake(int x, int y) {
+        addHead(x, y);
+        gameModel.getAppleSpawner().decCountOfApples();
+        gameModel.getAppleSpawner().spawnAppleIfFieldEmpty();
+    }
+
 }

@@ -7,22 +7,18 @@ import lombok.experimental.UtilityClass;
 import ru.nsu.fit.makhov.snake.model.cell.AppleCell;
 import ru.nsu.fit.makhov.snake.model.cell.Cell;
 import ru.nsu.fit.makhov.snake.model.cell.SnakeCell;
-import ru.nsu.fit.makhov.snake.model.cell.WallCell;
 
 @UtilityClass
 public class TileFactory {
 
     public static Node createTile(Class<? extends Cell> cellClass) {
         if (cellClass == AppleCell.class) {
-            return new Rectangle(10, 10, Color.RED);
+            return new Rectangle(20, 20, Color.RED);
         }
         if (cellClass == SnakeCell.class) {
-            return new Rectangle(10, 10, Color.BLUE);
+            return new Rectangle(20, 20, Color.BLUE);
         }
-        if (cellClass == WallCell.class) {
-            return new Rectangle(10, 10, Color.BROWN);
-        }
-        return new Rectangle(10, 10, Color.GRAY);
+        return new Rectangle(20, 20, Color.GRAY);
     }
 
 }

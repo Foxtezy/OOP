@@ -7,6 +7,6 @@ public class AppleCell implements Cell {
 
     @Override
     public void interactWithSnake(AbstractSnake snake, int x, int y) {
-        snake.addHead(x, y);
+        snake.growSnake(x, y);
     }
 }

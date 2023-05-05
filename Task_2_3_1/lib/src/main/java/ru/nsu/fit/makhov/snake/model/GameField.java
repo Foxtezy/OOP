@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Component;
+import ru.nsu.fit.makhov.snake.model.cell.AppleCell;
 import ru.nsu.fit.makhov.snake.model.cell.Cell;
 import ru.nsu.fit.makhov.snake.model.cell.EmptyCell;
 
