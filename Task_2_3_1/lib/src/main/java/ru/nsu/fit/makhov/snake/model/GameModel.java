@@ -76,6 +76,7 @@ public class GameModel extends Thread implements DisposableBean {
 
     @Override
     public void run() {
+        GameField oldGameField = new GameField(gameField);
         gameField.init(fieldSizeX, fieldSizeY);
         snakes.forEach(Thread::start);
         appleSpawner.spawnAppleIfFieldEmpty();
@@ -91,7 +92,9 @@ public class GameModel extends Thread implements DisposableBean {
                     // TODO: 26.04.2023 змейка убита
                 }
             }
-            viewSender.firePropertyChange("repaint", null, new GameField(gameField));
+            GameField newGameField = new GameField(gameField);
+            viewSender.firePropertyChange("repaint", oldGameField, newGameField);
+            oldGameField = newGameField;
             synchronized (monitor) {
                 monitor.notifyAll();
             }
