@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
@@ -14,7 +15,7 @@ import ru.nsu.fit.makhov.snake.model.snakes.AbstractSnake;
 import ru.nsu.fit.makhov.snake.model.snakes.PlayerSnake;
 
 @Component
-public class GameModel implements Runnable {
+public class GameModel extends Thread implements DisposableBean {
 
     private final PropertyChangeSupport viewSender = new PropertyChangeSupport(this);
     private final GameField gameField;
@@ -95,5 +96,11 @@ public class GameModel implements Runnable {
                 monitor.notifyAll();
             }
         }
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        super.interrupt();
+        snakes.forEach(Thread::interrupt);
     }
 }

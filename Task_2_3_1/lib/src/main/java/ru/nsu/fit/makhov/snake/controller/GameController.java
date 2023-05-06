@@ -34,7 +34,7 @@ public class GameController {
                         }
                     });
             }
-            new Thread(gameModel).start();
+            gameModel.start();
         });
     }
 
