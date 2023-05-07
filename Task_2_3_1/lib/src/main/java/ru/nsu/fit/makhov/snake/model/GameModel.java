@@ -33,6 +33,10 @@ public class GameModel extends Thread implements DisposableBean {
         this.appleSpawner = appleSpawner;
     }
 
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public void setFieldSizeX(int fieldSizeX) {
         this.fieldSizeX = fieldSizeX;
     }
@@ -75,7 +79,7 @@ public class GameModel extends Thread implements DisposableBean {
             viewSender.firePropertyChange("repaint", oldGameField, newGameField);
             oldGameField = newGameField;
             try {
-                Thread.sleep(speed - (System.currentTimeMillis() - currTime));
+                Thread.sleep((1000 / speed)  - (System.currentTimeMillis() - currTime));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

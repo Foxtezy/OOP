@@ -2,8 +2,12 @@
 
 <?import javafx.scene.layout.*?>
 
-<StackPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.fit.makhov.snake.controller.GameController">
+<StackPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+  minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+  xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="ru.nsu.fit.makhov.snake.view.MainView">
   <children>
-    <fx:include fx:id="game" source="game-field.fxml" />
+    <fx:include fx:id="mainMenu" source="main-menu.fxml"/>
+    <fx:include fx:id="game" source="game.fxml"/>
   </children>
 </StackPane>

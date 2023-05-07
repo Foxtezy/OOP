@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-  xmlns:fx="http://javafx.com/fxml"
-  fx:controller="ru.nsu.fit.makhov.snake.controller.MainMenuController"
-  prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.fit.makhov.snake.controller.MainMenuController">
+  <top>
+    <Label alignment="CENTER" prefHeight="83.0" prefWidth="300.0" text="SNAKE GAME" BorderPane.alignment="CENTER">
+      <font>
+        <Font size="36.0" />
+      </font>
+    </Label>
+  </top>
+  <center>
+    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+      <children>
+        <Button alignment="CENTER" mnemonicParsing="false" onAction="#startGame" prefHeight="54.0" prefWidth="162.0" text="START" />
+            <HBox alignment="TOP_CENTER" prefWidth="600.0" spacing="70.0">
+               <children>
+                  <Spinner fx:id="speed" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
+                  <Spinner fx:id="sizeX" editable="true" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
+                  <Spinner fx:id="sizeY" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
+               </children>
+               <VBox.margin>
+                  <Insets left="100.0" right="100.0" />
+               </VBox.margin>
+            </HBox>
+      </children>
+      <opaqueInsets>
+        <Insets />
+      </opaqueInsets>
+      <BorderPane.margin>
+        <Insets bottom="10.0" />
+      </BorderPane.margin>
+    </VBox>
+  </center>
+</BorderPane>

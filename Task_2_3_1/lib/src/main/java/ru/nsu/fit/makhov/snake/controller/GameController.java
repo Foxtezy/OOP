@@ -34,7 +34,6 @@ public class GameController {
                         }
                     });
             }
-            gameModel.start();
         });
     }
 
