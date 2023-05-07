@@ -9,7 +9,7 @@ import ru.nsu.fit.makhov.snake.model.cell.Cell;
 @UtilityClass
 public class TileFactory {
 
-    public static Node createTile(Cell cell) {
+    public static Rectangle createTile(Cell cell) {
         return switch (cell.getCellType()) {
             case APPLE -> new Rectangle(20, 20, Color.RED);
             case SNAKE -> new Rectangle(20, 20, Color.BLUE);

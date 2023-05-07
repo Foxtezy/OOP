@@ -11,7 +11,7 @@ import ru.nsu.fit.makhov.snake.model.cell.SnakeCell;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
 
 @RequiredArgsConstructor
-public abstract class AbstractSnake extends Thread {
+public abstract class AbstractSnake {
 
     protected final Deque<SnakeSegment> snake = new LinkedList<>();
 
@@ -50,5 +50,7 @@ public abstract class AbstractSnake extends Thread {
         gameModel.getAppleSpawner().decCountOfApples();
         gameModel.getAppleSpawner().spawnAppleIfFieldEmpty();
     }
+
+    public abstract boolean turn();
 
 }

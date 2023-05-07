@@ -4,13 +4,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
-import ru.nsu.fit.makhov.snake.model.event.MoveEvent;
 import ru.nsu.fit.makhov.snake.model.snakes.AbstractSnake;
 import ru.nsu.fit.makhov.snake.model.snakes.PlayerSnake;
 
@@ -20,8 +17,6 @@ public class GameModel extends Thread implements DisposableBean {
     private final PropertyChangeSupport viewSender = new PropertyChangeSupport(this);
     private final GameField gameField;
     private final AppleSpawner appleSpawner;
-    private final BlockingQueue<MoveEvent> eventQueue = new LinkedBlockingQueue<>();
-    private final Object monitor = new Object();
     private final List<AbstractSnake> snakes = new ArrayList<>();
     private final PlayerSnake playerSnake = new PlayerSnake(this);
 
@@ -50,9 +45,6 @@ public class GameModel extends Thread implements DisposableBean {
         snakes.add(snake);
     }
 
-    public void addEvent(MoveEvent event) {
-        eventQueue.add(event);
-    }
 
     public GameField getGameField() {
         return gameField;
@@ -60,10 +52,6 @@ public class GameModel extends Thread implements DisposableBean {
 
     public AppleSpawner getAppleSpawner() {
         return appleSpawner;
-    }
-
-    public Object getMonitor() {
-        return monitor;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
@@ -76,27 +64,20 @@ public class GameModel extends Thread implements DisposableBean {
 
     @Override
     public void run() {
-        GameField oldGameField = new GameField(gameField);
         gameField.init(fieldSizeX, fieldSizeY);
-        snakes.forEach(Thread::start);
         appleSpawner.spawnAppleIfFieldEmpty();
+        GameField oldGameField = new GameField(gameField);
+        viewSender.firePropertyChange("init", null, oldGameField);
         while (!Thread.currentThread().isInterrupted()) {
-            try {
-                Thread.sleep(speed);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-            while (!eventQueue.isEmpty()) {
-                MoveEvent event = eventQueue.poll();
-                if (!event.getSnake().move(event.getDirection())) {
-                    // TODO: 26.04.2023 змейка убита
-                }
-            }
+            long currTime = System.currentTimeMillis();
+            snakes.forEach(AbstractSnake::turn);
             GameField newGameField = new GameField(gameField);
             viewSender.firePropertyChange("repaint", oldGameField, newGameField);
             oldGameField = newGameField;
-            synchronized (monitor) {
-                monitor.notifyAll();
+            try {
+                Thread.sleep(speed - (System.currentTimeMillis() - currTime));
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }
     }
@@ -104,6 +85,5 @@ public class GameModel extends Thread implements DisposableBean {
     @Override
     public void destroy() throws Exception {
         super.interrupt();
-        snakes.forEach(Thread::interrupt);
     }
 }

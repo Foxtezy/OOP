@@ -1,13 +1,14 @@
 package ru.nsu.fit.makhov.snake.model.snakes;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
-import ru.nsu.fit.makhov.snake.model.event.MoveEvent;
 
 public class PlayerSnake extends AbstractSnake {
 
-
-    private volatile Direction direction = Direction.DOWN;
+    private Direction direction = Direction.DOWN;
+    private final BlockingQueue<Direction> directionQueue = new LinkedBlockingQueue<>(3);
 
     public PlayerSnake(GameModel gameModel) {
         super(gameModel);
@@ -18,20 +19,14 @@ public class PlayerSnake extends AbstractSnake {
     }
 
     public void changeDirection(Direction direction) {
-        this.direction = direction;
+        directionQueue.offer(direction);
     }
 
     @Override
-    public void run() {
-        while (!Thread.currentThread().isInterrupted()) {
-            gameModel.addEvent(new MoveEvent(this, direction));
-            try {
-                synchronized (gameModel.getMonitor()) {
-                    gameModel.getMonitor().wait();
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+    public boolean turn() {
+        if (!directionQueue.isEmpty()) {
+            direction = directionQueue.poll();
         }
+        return move(direction);
     }
 }
