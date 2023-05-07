@@ -7,21 +7,39 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.fit.makhov.snake.controller.MainMenuController">
   <top>
-    <Label alignment="CENTER" prefHeight="83.0" prefWidth="300.0" text="SNAKE GAME" BorderPane.alignment="CENTER">
+    <Label alignment="CENTER" prefHeight="108.0" prefWidth="604.0" text="SNAKE GAME" BorderPane.alignment="CENTER">
       <font>
         <Font size="36.0" />
       </font>
     </Label>
   </top>
   <center>
-    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+    <VBox alignment="CENTER" prefHeight="282.0" prefWidth="600.0" spacing="20.0">
       <children>
-        <Button alignment="CENTER" mnemonicParsing="false" onAction="#startGame" prefHeight="54.0" prefWidth="162.0" text="START" />
+        <Button alignment="CENTER" mnemonicParsing="false" onAction="#startGame" prefHeight="75.0" prefWidth="189.0" text="START">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
             <HBox alignment="TOP_CENTER" prefWidth="600.0" spacing="70.0">
                <children>
-                  <Spinner fx:id="speed" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
-                  <Spinner fx:id="sizeX" editable="true" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
-                  <Spinner fx:id="sizeY" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Spinner fx:id="speed" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
+                        <Label text="SPEED" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Spinner fx:id="sizeX" editable="true" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
+                        <Label text="WIGHT" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Spinner fx:id="sizeY" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
+                        <Label text="HEIGHT" />
+                     </children>
+                  </VBox>
                </children>
                <VBox.margin>
                   <Insets left="100.0" right="100.0" />

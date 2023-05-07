@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
 import ru.nsu.fit.makhov.snake.model.snakes.AbstractSnake;
+import ru.nsu.fit.makhov.snake.model.snakes.HamiltonSnake;
 import ru.nsu.fit.makhov.snake.model.snakes.PlayerSnake;
 
 @Component
@@ -68,7 +69,9 @@ public class GameModel extends Thread implements DisposableBean {
 
     @Override
     public void run() {
+        // TODO: 08.05.2023 убрать
         gameField.init(fieldSizeX, fieldSizeY);
+        addSnake(new HamiltonSnake(this));
         appleSpawner.spawnAppleIfFieldEmpty();
         GameField oldGameField = new GameField(gameField);
         viewSender.firePropertyChange("init", null, oldGameField);

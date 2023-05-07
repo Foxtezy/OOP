@@ -13,9 +13,9 @@ public class PlayerSnake extends AbstractSnake {
     public PlayerSnake(GameModel gameModel) {
         super(gameModel);
         snake.add(new SnakeSegment(0, 0));
-        snake.add(new SnakeSegment(1, 0));
-        snake.add(new SnakeSegment(2, 0));
-        snake.add(new SnakeSegment(3, 0));
+        snake.add(new SnakeSegment(0, 1));
+        snake.add(new SnakeSegment(0, 2));
+        snake.add(new SnakeSegment(0, 3));
     }
 
     public void changeDirection(Direction direction) {
