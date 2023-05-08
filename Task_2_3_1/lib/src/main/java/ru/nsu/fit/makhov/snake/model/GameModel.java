@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
 import ru.nsu.fit.makhov.snake.model.snakes.AbstractSnake;
+import ru.nsu.fit.makhov.snake.model.snakes.DummySnake;
 import ru.nsu.fit.makhov.snake.model.snakes.HamiltonSnake;
 import ru.nsu.fit.makhov.snake.model.snakes.PlayerSnake;
 
@@ -29,7 +30,6 @@ public class GameModel extends Thread implements DisposableBean {
     private int speed;
 
     public GameModel(GameField gameField, AppleSpawner appleSpawner) {
-        snakes.add(playerSnake);
         this.gameField = gameField;
         this.appleSpawner = appleSpawner;
     }
@@ -71,7 +71,8 @@ public class GameModel extends Thread implements DisposableBean {
     public void run() {
         // TODO: 08.05.2023 убрать
         gameField.init(fieldSizeX, fieldSizeY);
-        addSnake(new HamiltonSnake(this));
+        addSnake(new DummySnake(this));
+        //snakes.add(playerSnake);
         appleSpawner.spawnAppleIfFieldEmpty();
         GameField oldGameField = new GameField(gameField);
         viewSender.firePropertyChange("init", null, oldGameField);

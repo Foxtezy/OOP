@@ -6,6 +6,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.cell.Cell;
+import ru.nsu.fit.makhov.snake.model.cell.CellType;
 import ru.nsu.fit.makhov.snake.model.cell.EmptyCell;
 import ru.nsu.fit.makhov.snake.model.cell.SnakeCell;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
@@ -35,6 +36,13 @@ public abstract class AbstractSnake {
         return isAlive;
     }
 
+    protected boolean tryMove(Direction direction) {
+        SnakeSegment head = snake.peekFirst();
+        SnakeSegment futureHead = new SnakeSegment(head, direction);
+        Optional<Cell> headCell = gameModel.getGameField().getCell(futureHead.getX(), futureHead.getY());
+        return headCell.isPresent() && headCell.get().getCellType() != CellType.SNAKE;
+    }
+
     public void cutTail() {
         SnakeSegment tail = snake.removeLast();
         gameModel.getGameField().setCell(new EmptyCell(), tail.getX(), tail.getY());
@@ -46,9 +54,9 @@ public abstract class AbstractSnake {
     }
 
     public void growSnake(int x, int y) {
-        addHead(x, y);
-        gameModel.getAppleSpawner().decCountOfApples();
+        gameModel.getAppleSpawner().deSpawnApple(x, y);
         gameModel.getAppleSpawner().spawnAppleIfFieldEmpty();
+        addHead(x, y);
     }
 
     public abstract boolean turn();

@@ -1,6 +1,8 @@
 package ru.nsu.fit.makhov.snake.model;
 
+import java.util.List;
 import java.util.Random;
+import javafx.geometry.Point2D;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.cell.AppleCell;
@@ -14,16 +16,21 @@ public class AppleSpawner {
 
     private final Random random = new Random();
 
-    private int countOfApples = 0;
+    private final List<Point2D> apples;
+
+    public List<Point2D> getApples() {
+        return apples;
+    }
 
     public void spawnAppleIfFieldEmpty() {
-        if (countOfApples == 0) {
+        if (apples.isEmpty()) {
             spawnApple();
         }
     }
 
-    public void decCountOfApples() {
-        countOfApples--;
+    public void deSpawnApple(int x, int y) {
+        gameField.setCell(new EmptyCell(), x, y);
+        apples.remove(new Point2D(x, y));
     }
 
     public void spawnApple() {
@@ -34,6 +41,6 @@ public class AppleSpawner {
             y = random.nextInt(gameField.getSizeY());
         } while (gameField.getCell(x, y).orElseThrow().getClass() != EmptyCell.class);
         gameField.setCell(new AppleCell(), x, y);
-        countOfApples++;
+        apples.add(new Point2D(x, y));
     }
 }

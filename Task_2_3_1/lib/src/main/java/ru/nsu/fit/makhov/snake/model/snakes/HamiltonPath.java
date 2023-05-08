@@ -13,10 +13,7 @@ public class HamiltonPath {
         List<Point2D> hamiltonPath = new ArrayList<>();
         List<Direction> commandPath = new ArrayList<>();
         hamiltonPath.add(start);
-        if (!hamiltonStep(hamiltonPath, commandPath, boundX, boundY, start)) {
-            System.out.println("ме");
-            return null;
-        }
+        hamiltonStep(hamiltonPath, commandPath, boundX, boundY, start);
         return commandPath;
     }
 
