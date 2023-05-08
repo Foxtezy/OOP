@@ -7,51 +7,27 @@ import ru.nsu.fit.makhov.snake.model.event.Direction;
 
 public class HamiltonSnake extends AbstractSnake {
 
-    private final List<Point2D> path;
+    private final List<Direction> path;
 
-    private int nextPathIndex;
+    private int nextPathIndex = 0;
 
     public HamiltonSnake(GameModel gameModel) {
         super(gameModel);
-        snake.add(new SnakeSegment(5, 0));
-        snake.add(new SnakeSegment(5, 1));
-        snake.add(new SnakeSegment(5, 2));
-        snake.add(new SnakeSegment(5, 3));
+        snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 0));
+        snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 1));
+        snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 2));
         path = HamiltonPath.getHamiltonPath(gameModel.getGameField().getSizeX(),
-            gameModel.getGameField().getSizeY());
-        nextPathIndex = findHeadIndex() + 1;
+            gameModel.getGameField().getSizeY(), new Point2D(snake.peekFirst().getX(), snake.peekFirst().getY()));
     }
 
-    private int findHeadIndex() {
-        SnakeSegment head = snake.peekFirst();
-        for (int i = 0; i < path.size(); i++) {
-            if (path.get(i).getX() == head.getX() && path.get(i).getY() == head.getY()) {
-                return i;
-            }
-        }
-        return 0;
-    }
 
-    private Direction nextDirection(SnakeSegment head, Point2D nextSegment) {
-        if (head.getX() == nextSegment.getX() && head.getY() - 1 == nextSegment.getY()) {
-            return Direction.UP;
-        } else if (head.getX() - 1 == nextSegment.getX() && head.getY() == nextSegment.getY()) {
-            return Direction.LEFT;
-        } else if (head.getX() == nextSegment.getX() && head.getY() + 1 == nextSegment.getY()) {
-            return Direction.DOWN;
-        } else {
-            return Direction.RIGHT;
-        }
-
-    }
 
     @Override
     public boolean turn() {
-        SnakeSegment head = snake.peekFirst();
-        Point2D nextSegment = path.get(nextPathIndex++);
+        Direction nextDir = path.get(nextPathIndex++);
         if (nextPathIndex == path.size()) {
             nextPathIndex = 0;
         }
-        return move(nextDirection(head, nextSegment));
+        return move(nextDir);
     }
 }
