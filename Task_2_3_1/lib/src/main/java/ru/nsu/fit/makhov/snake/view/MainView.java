@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 public class MainView {
 
     @FXML
-    public Pane mainMenu;
+    private Pane mainMenu;
 
     @FXML
-    public Pane game;
+    private Pane gamePane;
+
 
     public void setVisibleMainMenu(boolean state) {
         mainMenu.setDisable(!state);
@@ -19,8 +20,8 @@ public class MainView {
     }
 
     public void setVisibleGame(boolean state) {
-        game.setDisable(!state);
-        game.setVisible(state);
+        gamePane.setDisable(!state);
+        gamePane.setVisible(state);
     }
 
     @FXML

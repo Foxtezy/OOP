@@ -10,30 +10,34 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.GameField;
-import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.cell.Cell;
 
 @Component
+@RequiredArgsConstructor
 public class GameView implements PropertyChangeListener {
 
     @FXML
+    private Pane gameViewPane;
+    @FXML
+    private Pane gameOver;
+    @FXML
     private GridPane gridPane;
 
-    private List<List<Node>> tileTable;
+    private List<List<Node>> tileTable = new ArrayList<>();
 
     private NumberBinding rectsAreaSize;
 
-    public GameView(GameModel gameModel) {
-        gameModel.addPropertyChangeListener(this);
-    }
 
     @FXML
     public void initialize() {
-        rectsAreaSize = Bindings.min(gridPane.heightProperty(), gridPane.widthProperty());
+        selectGameOver(false);
     }
 
     @Override
@@ -41,19 +45,31 @@ public class GameView implements PropertyChangeListener {
         GameField prevGameField = (GameField) evt.getOldValue();
         GameField currGameField = (GameField) evt.getNewValue();
         String propertyName = evt.getPropertyName();
-        if (propertyName.equals("init")) {
-            Platform.runLater(() -> init(currGameField));
-        } else if (propertyName.equals("repaint")) {
-            Platform.runLater(() -> repaint(prevGameField, currGameField));
+        switch (propertyName) {
+            case "init" ->  Platform.runLater(() -> init(currGameField));
+            case "repaint" -> Platform.runLater(() -> repaint(prevGameField, currGameField));
+            case "gameOver" -> setGameOver();
         }
     }
 
-    public void init(GameField gameField) {
+    private void selectGameOver(boolean state) {
+        gameOver.setDisable(!state);
+        gameOver.setVisible(state);
+    }
+    private void setGameOver() {
+        selectGameOver(true);
+        gameViewPane.getChildren().stream().filter(n -> !Objects.equals(n.getId(), "gameOver")).forEach(n -> n.setOpacity(0.5));
+    }
+
+    private void init(GameField gameField) {
+        rectsAreaSize = Bindings.min(gridPane.heightProperty(), gridPane.widthProperty()).divide(Math.max(gameField.getSizeX(), gameField.getSizeY()));
+        tileTable.forEach(l -> l.forEach(n -> gridPane.getChildren().remove(n)));
+        selectGameOver(false);
+        gameViewPane.getChildren().forEach(n -> n.setOpacity(1));
         gridPane.setGridLinesVisible(true);
         gridPane.setHgap(1);
         gridPane.setVgap(1);
-        tileTable = new ArrayList<>();
-        rectsAreaSize = rectsAreaSize.divide(Math.max(gameField.getSizeX(), gameField.getSizeY()));
+        tileTable.clear();
         for (int i = 0; i < gameField.getSizeX(); i++) {
             tileTable.add(new ArrayList<>());
             for (int j = 0; j < gameField.getSizeY(); j++) {

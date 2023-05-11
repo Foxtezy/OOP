@@ -8,6 +8,6 @@
   fx:controller="ru.nsu.fit.makhov.snake.view.MainView">
   <children>
     <fx:include fx:id="mainMenu" source="main-menu.fxml"/>
-    <fx:include fx:id="game" source="game.fxml"/>
+    <fx:include fx:id="gamePane" source="game.fxml"/>
   </children>
 </StackPane>

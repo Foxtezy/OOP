@@ -7,11 +7,6 @@
   xmlns:fx="http://javafx.com/fxml/1"
   fx:controller="ru.nsu.fit.makhov.snake.controller.GameController">
   <center>
-    <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0"
-      minWidth="0.0">
-      <children>
-        <fx:include source="game-view.fxml"/>
-      </children>
-    </AnchorPane>
+    <fx:include source="game-view.fxml"/>
   </center>
 </BorderPane>

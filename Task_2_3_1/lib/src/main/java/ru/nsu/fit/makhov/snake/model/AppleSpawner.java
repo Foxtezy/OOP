@@ -22,6 +22,10 @@ public class AppleSpawner {
         return apples;
     }
 
+    public void init() {
+        apples.clear();
+    }
+
     public void spawnAppleIfFieldEmpty() {
         if (apples.isEmpty()) {
             spawnApple();

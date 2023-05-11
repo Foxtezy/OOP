@@ -2,14 +2,13 @@ package ru.nsu.fit.makhov.snake.model.snakes;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import javafx.geometry.Point2D;
 import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
 
-public class DummySnake extends AbstractSnake {
+public class SimpleSnake extends AbstractSnake {
 
-    public DummySnake(GameModel gameModel) {
+    public SimpleSnake(GameModel gameModel) {
         super(gameModel);
         snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 0));
         snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 1));

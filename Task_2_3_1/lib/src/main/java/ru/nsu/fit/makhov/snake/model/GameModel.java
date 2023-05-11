@@ -1,6 +1,5 @@
 package ru.nsu.fit.makhov.snake.model;
 
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,18 +8,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
 import ru.nsu.fit.makhov.snake.model.snakes.AbstractSnake;
-import ru.nsu.fit.makhov.snake.model.snakes.DummySnake;
-import ru.nsu.fit.makhov.snake.model.snakes.HamiltonSnake;
+import ru.nsu.fit.makhov.snake.model.snakes.SimpleSnake;
 import ru.nsu.fit.makhov.snake.model.snakes.PlayerSnake;
+import ru.nsu.fit.makhov.snake.view.GameView;
 
 @Component
-public class GameModel extends Thread implements DisposableBean {
+public class GameModel implements Runnable, DisposableBean {
 
     private final PropertyChangeSupport viewSender = new PropertyChangeSupport(this);
     private final GameField gameField;
     private final AppleSpawner appleSpawner;
     private final List<AbstractSnake> snakes = new ArrayList<>();
-    private final PlayerSnake playerSnake = new PlayerSnake(this);
+    private PlayerSnake playerSnake;
+    private final Object monitor = new Object();
+    private volatile boolean pause = false;
+    private Thread thread;
 
     @Value("${game.field.size-x}")
     private int fieldSizeX;
@@ -29,9 +31,10 @@ public class GameModel extends Thread implements DisposableBean {
     @Value("${game.speed}")
     private int speed;
 
-    public GameModel(GameField gameField, AppleSpawner appleSpawner) {
+    public GameModel(GameField gameField, AppleSpawner appleSpawner, GameView gameView) {
         this.gameField = gameField;
         this.appleSpawner = appleSpawner;
+        viewSender.addPropertyChangeListener(gameView);
     }
 
     public void setSpeed(int speed) {
@@ -59,26 +62,42 @@ public class GameModel extends Thread implements DisposableBean {
         return appleSpawner;
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener pcl) {
-        viewSender.addPropertyChangeListener(pcl);
-    }
-
     public void changePlayerSnakeDirection(Direction direction) {
         playerSnake.changeDirection(direction);
     }
 
+    private void init() {
+        thread = Thread.currentThread();
+        gameField.init(fieldSizeX, fieldSizeY);
+        playerSnake = new PlayerSnake(this);
+        snakes.clear();
+        addSnake(new SimpleSnake(this));
+        appleSpawner.init();
+        appleSpawner.spawnAppleIfFieldEmpty();
+        pause = false;
+    }
+
     @Override
     public void run() {
-        // TODO: 08.05.2023 убрать
-        gameField.init(fieldSizeX, fieldSizeY);
-        addSnake(new DummySnake(this));
-        //snakes.add(playerSnake);
-        appleSpawner.spawnAppleIfFieldEmpty();
+        init();
         GameField oldGameField = new GameField(gameField);
         viewSender.firePropertyChange("init", null, oldGameField);
         while (!Thread.currentThread().isInterrupted()) {
+            if (pause) {
+                synchronized (monitor) {
+                    try {
+                        monitor.wait();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
             long currTime = System.currentTimeMillis();
             snakes.forEach(AbstractSnake::turn);
+            if (!playerSnake.turn()) {
+                viewSender.firePropertyChange("gameOver", oldGameField, null);
+                break;
+            }
             GameField newGameField = new GameField(gameField);
             viewSender.firePropertyChange("repaint", oldGameField, newGameField);
             oldGameField = newGameField;
@@ -90,8 +109,17 @@ public class GameModel extends Thread implements DisposableBean {
         }
     }
 
+    public void pause(boolean state) {
+        pause = state;
+        if (!state) {
+            synchronized (monitor) {
+                monitor.notifyAll();
+            }
+        }
+    }
+
     @Override
     public void destroy() throws Exception {
-        super.interrupt();
+        thread.interrupt();
     }
 }

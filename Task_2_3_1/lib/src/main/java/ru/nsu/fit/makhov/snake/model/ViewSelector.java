@@ -20,5 +20,4 @@ public class ViewSelector {
         mainView.setVisibleMainMenu(false);
         mainView.setVisibleGame(true);
     }
-
 }

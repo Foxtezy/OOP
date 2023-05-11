@@ -35,7 +35,7 @@ public class MainMenuController {
         gameModel.setFieldSizeX(sizeX.getValue());
         gameModel.setFieldSizeY(sizeY.getValue());
         gameModel.setSpeed(speed.getValue());
-        gameModel.start();
+        new Thread(gameModel).start();
     }
 
     @FXML
