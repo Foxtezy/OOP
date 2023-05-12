@@ -13,7 +13,6 @@ public class MainView {
     @FXML
     private Pane gamePane;
 
-
     public void setVisibleMainMenu(boolean state) {
         mainMenu.setDisable(!state);
         mainMenu.setVisible(state);

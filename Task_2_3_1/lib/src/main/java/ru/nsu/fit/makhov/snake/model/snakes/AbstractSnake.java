@@ -20,7 +20,10 @@ public abstract class AbstractSnake {
 
     protected boolean isAlive = true;
 
+    protected int score = 0;
+
     public void kill() {
+        snake.forEach(s -> gameModel.getGameField().setCell(new EmptyCell(), s.getX(), s.getY()));
         isAlive = false;
     }
 
@@ -34,6 +37,15 @@ public abstract class AbstractSnake {
             kill();
         }
         return isAlive;
+    }
+
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void addScore(Integer x) {
+        score += x;
     }
 
     protected boolean tryMove(Direction direction) {

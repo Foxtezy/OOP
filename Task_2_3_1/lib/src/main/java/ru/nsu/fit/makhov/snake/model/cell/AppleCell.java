@@ -11,5 +11,6 @@ public class AppleCell extends Cell {
     @Override
     public void interactWithSnake(AbstractSnake snake, int x, int y) {
         snake.growSnake(x, y);
+        snake.addScore(10);
     }
 }

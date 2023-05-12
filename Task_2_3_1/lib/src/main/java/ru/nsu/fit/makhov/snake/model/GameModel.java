@@ -6,9 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.nsu.fit.makhov.snake.model.dto.GameViewDto;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
 import ru.nsu.fit.makhov.snake.model.snakes.AbstractSnake;
-import ru.nsu.fit.makhov.snake.model.snakes.SimpleSnake;
+import ru.nsu.fit.makhov.snake.model.snakes.HamiltonSnake;
 import ru.nsu.fit.makhov.snake.model.snakes.PlayerSnake;
 import ru.nsu.fit.makhov.snake.view.GameView;
 
@@ -74,7 +75,8 @@ public class GameModel implements Runnable, DisposableBean {
         gameField.init(fieldSizeX, fieldSizeY);
         playerSnake = new PlayerSnake(this);
         snakes.clear();
-        addSnake(new SimpleSnake(this));
+        addSnake(new HamiltonSnake(this));
+        //addSnake(new SimpleSnake(this));
         appleSpawner.init();
         appleSpawner.spawnAppleIfFieldEmpty();
         pause = false;
@@ -83,11 +85,11 @@ public class GameModel implements Runnable, DisposableBean {
     @Override
     public void run() {
         init();
-        GameField oldGameField = new GameField(gameField);
-        viewSender.firePropertyChange("init", null, oldGameField);
+        GameViewDto oldGameViewDto = new GameViewDto(playerSnake.getScore(), new GameField(gameField));
+        viewSender.firePropertyChange("init", null, oldGameViewDto);
         while (!Thread.currentThread().isInterrupted()) {
             if (pause) {
-                viewSender.firePropertyChange("pause", oldGameField, null);
+                viewSender.firePropertyChange("pause", oldGameViewDto, null);
                 synchronized (monitor) {
                     try {
                         monitor.wait();
@@ -95,17 +97,17 @@ public class GameModel implements Runnable, DisposableBean {
                         Thread.currentThread().interrupt();
                     }
                 }
-                viewSender.firePropertyChange("resume", null, oldGameField);
+                viewSender.firePropertyChange("resume", null, oldGameViewDto);
             }
             long currTime = System.currentTimeMillis();
-            snakes.forEach(AbstractSnake::turn);
+            snakes.removeIf(snake -> !snake.turn());
             if (!playerSnake.turn()) {
-                viewSender.firePropertyChange("gameOver", oldGameField, null);
+                viewSender.firePropertyChange("gameOver", oldGameViewDto, null);
                 break;
             }
-            GameField newGameField = new GameField(gameField);
-            viewSender.firePropertyChange("repaint", oldGameField, newGameField);
-            oldGameField = newGameField;
+            GameViewDto newGameViewDto = new GameViewDto(playerSnake.getScore(), new GameField(gameField));
+            viewSender.firePropertyChange("repaint", oldGameViewDto, newGameViewDto);
+            oldGameViewDto = newGameViewDto;
             try {
                 Thread.sleep((1000 / speed) - (System.currentTimeMillis() - currTime));
             } catch (InterruptedException e) {

@@ -10,6 +10,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.GameField;
 import ru.nsu.fit.makhov.snake.model.cell.Cell;
+import ru.nsu.fit.makhov.snake.model.dto.GameViewDto;
 
 @Component
 @RequiredArgsConstructor
@@ -28,11 +30,12 @@ public class GameView implements PropertyChangeListener {
     private Pane pause;
     @FXML
     private GridPane gridPane;
+    @FXML
+    private Label scoreLabel;
 
     private final List<List<Node>> tileTable = new ArrayList<>();
 
     private NumberBinding rectsAreaSize;
-
 
     @FXML
     public void initialize() {
@@ -42,12 +45,12 @@ public class GameView implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        GameField prevGameField = (GameField) evt.getOldValue();
-        GameField currGameField = (GameField) evt.getNewValue();
+        GameViewDto prevGameViewDto = (GameViewDto) evt.getOldValue();
+        GameViewDto currGameViewDto = (GameViewDto) evt.getNewValue();
         String propertyName = evt.getPropertyName();
         switch (propertyName) {
-            case "init" ->  Platform.runLater(() -> init(currGameField));
-            case "repaint" -> Platform.runLater(() -> repaint(prevGameField, currGameField));
+            case "init" ->  Platform.runLater(() -> init(currGameViewDto.getPlayerScore(), currGameViewDto.getGameField()));
+            case "repaint" -> Platform.runLater(() -> repaint(currGameViewDto.getPlayerScore(), prevGameViewDto.getGameField(), currGameViewDto.getGameField()));
             case "pause" -> selectPause(true);
             case "resume" -> selectPause(false);
             case "gameOver" -> selectGameOver(true);
@@ -64,7 +67,12 @@ public class GameView implements PropertyChangeListener {
         gameOver.setVisible(state);
     }
 
-    private void init(GameField gameField) {
+    private void setPlayerScore(Integer score) {
+        scoreLabel.setText(score.toString());
+    }
+
+    private void init(Integer playerScore, GameField gameField) {
+        setPlayerScore(playerScore);
         selectGameOver(false);
         selectPause(false);
         rectsAreaSize = Bindings.min(gridPane.heightProperty(), gridPane.widthProperty()).divide(Math.max(gameField.getSizeX(), gameField.getSizeY()));
@@ -82,7 +90,8 @@ public class GameView implements PropertyChangeListener {
         }
     }
 
-    private void repaint(GameField prevGameField, GameField currGameField) {
+    private void repaint(Integer playerScore, GameField prevGameField, GameField currGameField) {
+        setPlayerScore(playerScore);
         for (int i = 0; i < currGameField.getSizeX(); i++) {
             for (int j = 0; j < currGameField.getSizeY(); j++) {
                 Cell prevCell = prevGameField.getCell(i, j).orElseThrow();

@@ -10,7 +10,7 @@ import ru.nsu.fit.makhov.snake.model.cell.EmptyCell;
 @Component
 public class GameField {
 
-    public List<List<Cell>> field = new ArrayList<>();
+    private List<List<Cell>> field = new ArrayList<>();
     
     public void init(int sizeX, int sizeY) {
         field = new ArrayList<>();
