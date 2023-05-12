@@ -31,6 +31,7 @@ public class GameController {
                             case A -> gameModel.changePlayerSnakeDirection(Direction.LEFT);
                             case S -> gameModel.changePlayerSnakeDirection(Direction.DOWN);
                             case D -> gameModel.changePlayerSnakeDirection(Direction.RIGHT);
+                            case ESCAPE -> gameModel.pause(!gameModel.isPause());
                         }
                     });
             }

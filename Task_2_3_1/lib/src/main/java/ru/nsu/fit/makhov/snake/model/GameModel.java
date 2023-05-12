@@ -53,6 +53,9 @@ public class GameModel implements Runnable, DisposableBean {
         snakes.add(snake);
     }
 
+    public boolean isPause() {
+        return pause;
+    }
 
     public GameField getGameField() {
         return gameField;
@@ -84,6 +87,7 @@ public class GameModel implements Runnable, DisposableBean {
         viewSender.firePropertyChange("init", null, oldGameField);
         while (!Thread.currentThread().isInterrupted()) {
             if (pause) {
+                viewSender.firePropertyChange("pause", oldGameField, null);
                 synchronized (monitor) {
                     try {
                         monitor.wait();
@@ -91,6 +95,7 @@ public class GameModel implements Runnable, DisposableBean {
                         Thread.currentThread().interrupt();
                     }
                 }
+                viewSender.firePropertyChange("resume", null, oldGameField);
             }
             long currTime = System.currentTimeMillis();
             snakes.forEach(AbstractSnake::turn);
@@ -102,7 +107,7 @@ public class GameModel implements Runnable, DisposableBean {
             viewSender.firePropertyChange("repaint", oldGameField, newGameField);
             oldGameField = newGameField;
             try {
-                Thread.sleep((1000 / speed)  - (System.currentTimeMillis() - currTime));
+                Thread.sleep((1000 / speed) - (System.currentTimeMillis() - currTime));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -119,7 +124,7 @@ public class GameModel implements Runnable, DisposableBean {
     }
 
     @Override
-    public void destroy() throws Exception {
+    public void destroy() {
         thread.interrupt();
     }
 }

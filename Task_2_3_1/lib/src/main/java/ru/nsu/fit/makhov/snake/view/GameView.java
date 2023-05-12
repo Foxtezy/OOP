@@ -10,7 +10,6 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -24,13 +23,13 @@ import ru.nsu.fit.makhov.snake.model.cell.Cell;
 public class GameView implements PropertyChangeListener {
 
     @FXML
-    private Pane gameViewPane;
-    @FXML
     private Pane gameOver;
+    @FXML
+    private Pane pause;
     @FXML
     private GridPane gridPane;
 
-    private List<List<Node>> tileTable = new ArrayList<>();
+    private final List<List<Node>> tileTable = new ArrayList<>();
 
     private NumberBinding rectsAreaSize;
 
@@ -38,6 +37,7 @@ public class GameView implements PropertyChangeListener {
     @FXML
     public void initialize() {
         selectGameOver(false);
+        selectPause(false);
     }
 
     @Override
@@ -48,24 +48,27 @@ public class GameView implements PropertyChangeListener {
         switch (propertyName) {
             case "init" ->  Platform.runLater(() -> init(currGameField));
             case "repaint" -> Platform.runLater(() -> repaint(prevGameField, currGameField));
-            case "gameOver" -> setGameOver();
+            case "pause" -> selectPause(true);
+            case "resume" -> selectPause(false);
+            case "gameOver" -> selectGameOver(true);
         }
+    }
+
+    private void selectPause(boolean state) {
+        pause.setDisable(!state);
+        pause.setVisible(state);
     }
 
     private void selectGameOver(boolean state) {
         gameOver.setDisable(!state);
         gameOver.setVisible(state);
     }
-    private void setGameOver() {
-        selectGameOver(true);
-        gameViewPane.getChildren().stream().filter(n -> !Objects.equals(n.getId(), "gameOver")).forEach(n -> n.setOpacity(0.5));
-    }
 
     private void init(GameField gameField) {
+        selectGameOver(false);
+        selectPause(false);
         rectsAreaSize = Bindings.min(gridPane.heightProperty(), gridPane.widthProperty()).divide(Math.max(gameField.getSizeX(), gameField.getSizeY()));
         tileTable.forEach(l -> l.forEach(n -> gridPane.getChildren().remove(n)));
-        selectGameOver(false);
-        gameViewPane.getChildren().forEach(n -> n.setOpacity(1));
         gridPane.setGridLinesVisible(true);
         gridPane.setHgap(1);
         gridPane.setVgap(1);
