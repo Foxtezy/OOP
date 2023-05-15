@@ -6,15 +6,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.ViewSelector;
 
+/**
+ * Pause controller.
+ */
 @Component
 @RequiredArgsConstructor
 public class PauseController {
 
-    private final ViewSelector viewSelector;
+  private final ViewSelector viewSelector;
 
-    @FXML
-    public void goToMenu(ActionEvent event) {
-        event.consume();
-        viewSelector.selectMainMenu();
-    }
+  @FXML
+  public void goToMenu(ActionEvent event) {
+    event.consume();
+    viewSelector.selectMainMenu();
+  }
 }

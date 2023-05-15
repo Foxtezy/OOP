@@ -5,29 +5,36 @@ import javafx.geometry.Point2D;
 import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
 
+/**
+ * A snake that walks the Hamiltonian path.
+ */
 public class HamiltonSnake extends AbstractSnake {
 
-    private final List<Direction> path;
+  private final List<Direction> path;
 
-    private int nextPathIndex = 0;
+  private int nextPathIndex = 0;
 
-    public HamiltonSnake(GameModel gameModel, int snakeId) {
-        super(gameModel, snakeId);
-        snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 0));
-        snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 1));
-        snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 2));
-        path = HamiltonPath.getHamiltonPath(gameModel.getGameField().getSizeX(),
-            gameModel.getGameField().getSizeY(), new Point2D(snake.peekFirst().getX(), snake.peekFirst().getY()));
+  /**
+   * Constructor.
+   *
+   * @param gameModel game model.
+   * @param snakeId   snake id.
+   */
+  public HamiltonSnake(GameModel gameModel, int snakeId) {
+    super(gameModel, snakeId);
+    spawn();
+    path = HamiltonPath.getHamiltonPath(gameModel.getGameField().getSizeX(),
+        gameModel.getGameField().getSizeY(),
+        new Point2D(snake.peekFirst().getCoordinateX(), snake.peekFirst().getCoordinateY()));
+  }
+
+
+  @Override
+  public boolean turn() {
+    Direction nextDir = path.get(nextPathIndex++);
+    if (nextPathIndex == path.size()) {
+      nextPathIndex = 0;
     }
-
-
-
-    @Override
-    public boolean turn() {
-        Direction nextDir = path.get(nextPathIndex++);
-        if (nextPathIndex == path.size()) {
-            nextPathIndex = 0;
-        }
-        return move(nextDir);
-    }
+    return move(nextDir);
+  }
 }

@@ -4,35 +4,44 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
 
+/**
+ * Segment of snake.
+ */
 @Data
 @RequiredArgsConstructor
 public class SnakeSegment {
 
-    private final int x;
-    private final int y;
+  private final int coordinateX;
+  private final int coordinateY;
 
-    public SnakeSegment(SnakeSegment head, Direction direction) {
-        switch (direction) {
-            case UP -> {
-                this.x = head.x;
-                this.y = head.y - 1;
-            }
-            case DOWN -> {
-                this.x = head.x;
-                this.y = head.y + 1;
-            }
-            case LEFT -> {
-                this.x = head.x - 1;
-                this.y = head.y;
-            }
-            case RIGHT -> {
-                this.x = head.x + 1;
-                this.y = head.y;
-            }
-            default -> {
-                this.x = 0;
-                this.y = 0;
-            }
-        }
+  /**
+   * Create next segment from others.
+   *
+   * @param head      old snake head.
+   * @param direction direction of new head.
+   */
+  public SnakeSegment(SnakeSegment head, Direction direction) {
+    switch (direction) {
+      case UP -> {
+        this.coordinateX = head.coordinateX;
+        this.coordinateY = head.coordinateY - 1;
+      }
+      case DOWN -> {
+        this.coordinateX = head.coordinateX;
+        this.coordinateY = head.coordinateY + 1;
+      }
+      case LEFT -> {
+        this.coordinateX = head.coordinateX - 1;
+        this.coordinateY = head.coordinateY;
+      }
+      case RIGHT -> {
+        this.coordinateX = head.coordinateX + 1;
+        this.coordinateY = head.coordinateY;
+      }
+      default -> {
+        this.coordinateX = 0;
+        this.coordinateY = 0;
+      }
     }
+  }
 }
