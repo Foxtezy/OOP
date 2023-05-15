@@ -11,11 +11,8 @@ public class PlayerSnake extends AbstractSnake {
     private final BlockingQueue<Direction> directionQueue = new LinkedBlockingQueue<>(3);
 
     public PlayerSnake(GameModel gameModel) {
-        super(gameModel);
-        snake.add(new SnakeSegment(0, 0));
-        snake.add(new SnakeSegment(0, 1));
-        snake.add(new SnakeSegment(0, 2));
-        snake.add(new SnakeSegment(0, 3));
+        super(gameModel, 1);
+        spawn();
     }
 
     public void changeDirection(Direction direction) {

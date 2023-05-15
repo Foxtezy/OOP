@@ -25,10 +25,6 @@ public class GameModel implements Runnable, DisposableBean {
     private volatile boolean pause = false;
     private Thread thread;
 
-    @Value("${game.field.size-x}")
-    private int fieldSizeX;
-    @Value("${game.field.size-y}")
-    private int fieldSizeY;
     @Value("${game.speed}")
     private int speed;
 
@@ -42,12 +38,8 @@ public class GameModel implements Runnable, DisposableBean {
         this.speed = speed;
     }
 
-    public void setFieldSizeX(int fieldSizeX) {
-        this.fieldSizeX = fieldSizeX;
-    }
-
-    public void setFieldSizeY(int fieldSizeY) {
-        this.fieldSizeY = fieldSizeY;
+    public void setFieldSize(int fieldSizeX, int fieldSizeY) {
+        gameField.init(fieldSizeX, fieldSizeY);
     }
 
     public void addSnake(AbstractSnake snake) {
@@ -72,11 +64,7 @@ public class GameModel implements Runnable, DisposableBean {
 
     private void init() {
         thread = Thread.currentThread();
-        gameField.init(fieldSizeX, fieldSizeY);
         playerSnake = new PlayerSnake(this);
-        snakes.clear();
-        addSnake(new HamiltonSnake(this));
-        //addSnake(new SimpleSnake(this));
         appleSpawner.init();
         appleSpawner.spawnAppleIfFieldEmpty();
         pause = false;
@@ -114,6 +102,7 @@ public class GameModel implements Runnable, DisposableBean {
                 Thread.currentThread().interrupt();
             }
         }
+        snakes.clear();
     }
 
     public void pause(boolean state) {

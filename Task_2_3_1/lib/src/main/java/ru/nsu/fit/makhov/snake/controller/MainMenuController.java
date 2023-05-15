@@ -1,7 +1,10 @@
 package ru.nsu.fit.makhov.snake.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -10,19 +13,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.ViewSelector;
+import ru.nsu.fit.makhov.snake.model.snakes.HamiltonSnake;
+import ru.nsu.fit.makhov.snake.model.snakes.SimpleSnake;
 
 @Component
 @RequiredArgsConstructor
 public class MainMenuController {
 
     @FXML
-    public Spinner<Integer> speed;
+    private Spinner<Integer> speed;
 
     @FXML
-    public Spinner<Integer> sizeX;
+    private Spinner<Integer> sizeX;
 
     @FXML
-    public Spinner<Integer> sizeY;
+    private Spinner<Integer> sizeY;
+
+    @FXML
+    private ComboBox<String> secondPlayer;
+
+    @FXML
+    private ComboBox<String> thirdPlayer;
 
     private final ViewSelector viewSelector;
 
@@ -32,10 +43,19 @@ public class MainMenuController {
     public void startGame(ActionEvent event) {
         event.consume();
         viewSelector.selectGame();
-        gameModel.setFieldSizeX(sizeX.getValue());
-        gameModel.setFieldSizeY(sizeY.getValue());
+        gameModel.setFieldSize(sizeX.getValue(), sizeY.getValue());
         gameModel.setSpeed(speed.getValue());
+        addSnakeToField(secondPlayer.getValue(), 2);
+        addSnakeToField(thirdPlayer.getValue(), 3);
         new Thread(gameModel).start();
+    }
+
+    private void addSnakeToField(String type, int id) {
+        if (type == null) return;
+        switch (type) {
+            case "Hamilton" -> gameModel.addSnake(new HamiltonSnake(gameModel, id));
+            case "SimpleSnake" -> gameModel.addSnake(new SimpleSnake(gameModel, id));
+        }
     }
 
     @FXML
@@ -46,5 +66,9 @@ public class MainMenuController {
         sizeX.setValueFactory(sizeFactoryX);
         sizeY.setValueFactory(sizeFactoryY);
         speed.setValueFactory(speedFactory);
+        ObservableList<String> secondPlayerTypes = FXCollections.observableArrayList("None", "Hamilton", "SimpleSnake");
+        ObservableList<String> thirdPlayerTypes = FXCollections.observableArrayList("None", "Hamilton", "SimpleSnake");
+        secondPlayer.setItems(secondPlayerTypes);
+        thirdPlayer.setItems(thirdPlayerTypes);
     }
 }

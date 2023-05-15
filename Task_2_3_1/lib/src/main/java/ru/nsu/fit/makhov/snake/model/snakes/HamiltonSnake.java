@@ -11,8 +11,8 @@ public class HamiltonSnake extends AbstractSnake {
 
     private int nextPathIndex = 0;
 
-    public HamiltonSnake(GameModel gameModel) {
-        super(gameModel);
+    public HamiltonSnake(GameModel gameModel, int snakeId) {
+        super(gameModel, snakeId);
         snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 0));
         snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 1));
         snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 2));

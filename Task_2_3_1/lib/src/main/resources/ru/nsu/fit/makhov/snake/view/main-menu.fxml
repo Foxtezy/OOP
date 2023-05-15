@@ -54,4 +54,15 @@
       </BorderPane.margin>
     </VBox>
   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="56.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" />
+         </BorderPane.margin>
+         <children>
+            <ComboBox fx:id="secondPlayer" prefWidth="150.0" promptText="             2 PLAYER" />
+            <ComboBox fx:id="thirdPlayer" prefWidth="150.0" promptText="           3 PLAYER" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

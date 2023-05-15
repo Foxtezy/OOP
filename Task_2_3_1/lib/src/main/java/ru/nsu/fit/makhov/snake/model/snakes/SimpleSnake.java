@@ -8,11 +8,9 @@ import ru.nsu.fit.makhov.snake.model.event.Direction;
 
 public class SimpleSnake extends AbstractSnake {
 
-    public SimpleSnake(GameModel gameModel) {
-        super(gameModel);
-        snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 0));
-        snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 1));
-        snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 2));
+    public SimpleSnake(GameModel gameModel, int snakeId) {
+        super(gameModel, snakeId);
+        spawn();
     }
 
     private Direction nextDirection(Point2D head, Point2D apple) {
@@ -27,7 +25,7 @@ public class SimpleSnake extends AbstractSnake {
             return Direction.UP;
         }
         List<Direction> directions = List.of(Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT);
-        return directions.stream().filter(this::move).findAny().orElse(Direction.UP);
+        return directions.stream().filter(this::tryMove).findAny().orElse(Direction.DOWN);
     }
 
     @Override

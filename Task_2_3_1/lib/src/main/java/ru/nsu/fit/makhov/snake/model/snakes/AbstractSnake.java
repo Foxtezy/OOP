@@ -22,6 +22,8 @@ public abstract class AbstractSnake {
 
     protected int score = 0;
 
+    protected final int snakeId;
+
     public void kill() {
         snake.forEach(s -> gameModel.getGameField().setCell(new EmptyCell(), s.getX(), s.getY()));
         isAlive = false;
@@ -37,6 +39,33 @@ public abstract class AbstractSnake {
             kill();
         }
         return isAlive;
+    }
+
+    protected void spawn() {
+        switch ((snakeId - 1) % 4) {
+            case 0 -> {
+                snake.add(new SnakeSegment(0, 0));
+                snake.add(new SnakeSegment(0, 1));
+                snake.add(new SnakeSegment(0, 2));
+                snake.add(new SnakeSegment(0, 3));
+            }
+            case 1 -> {
+                snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 0));
+                snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 1));
+                snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 2));
+                snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 3));
+            }
+            case 2 -> {
+                snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, gameModel.getGameField()
+                    .getSizeY() - 1));
+                snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, gameModel.getGameField()
+                    .getSizeY() - 2));
+                snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, gameModel.getGameField()
+                    .getSizeY() - 3));
+                snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, gameModel.getGameField()
+                    .getSizeY() - 4));
+            }
+        }
     }
 
 
@@ -62,7 +91,7 @@ public abstract class AbstractSnake {
 
     public void addHead(int x, int y) {
         snake.addFirst(new SnakeSegment(x, y));
-        gameModel.getGameField().setCell(new SnakeCell(), x, y);
+        gameModel.getGameField().setCell(new SnakeCell(snakeId), x, y);
     }
 
     public void growSnake(int x, int y) {

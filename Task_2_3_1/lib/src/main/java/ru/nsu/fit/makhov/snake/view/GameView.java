@@ -37,6 +37,8 @@ public class GameView implements PropertyChangeListener {
 
     private NumberBinding rectsAreaSize;
 
+    private TileFactory tileFactory;
+
     @FXML
     public void initialize() {
         selectGameOver(false);
@@ -72,6 +74,7 @@ public class GameView implements PropertyChangeListener {
     }
 
     private void init(Integer playerScore, GameField gameField) {
+        tileFactory = new TileFactory();
         setPlayerScore(playerScore);
         selectGameOver(false);
         selectPause(false);
@@ -104,7 +107,7 @@ public class GameView implements PropertyChangeListener {
     }
 
     private void addTile(Cell cell, int x, int y) {
-        Rectangle tile = TileFactory.createTile(cell);
+        Rectangle tile = tileFactory.createTile(cell);
         tile.widthProperty().bind(rectsAreaSize);
         tile.heightProperty().bind(rectsAreaSize);
         tileTable.get(x).add(tile);
