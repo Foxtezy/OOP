@@ -1,0 +1,8 @@
+ru.nsu.fit.makhov.snake
+ru.nsu.fit.makhov.snake.controller
+ru.nsu.fit.makhov.snake.model
+ru.nsu.fit.makhov.snake.model.cell
+ru.nsu.fit.makhov.snake.model.dto
+ru.nsu.fit.makhov.snake.model.event
+ru.nsu.fit.makhov.snake.model.snakes
+ru.nsu.fit.makhov.snake.view
