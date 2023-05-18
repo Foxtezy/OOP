@@ -91,6 +91,7 @@ public class GameModel implements Runnable, DisposableBean {
     init();
     GameViewDto oldGameViewDto = new GameViewDto(playerSnake.getScore(), new GameField(gameField));
     viewSender.firePropertyChange("init", null, oldGameViewDto);
+    int doubleApple = 1;
     while (!Thread.currentThread().isInterrupted()) {
       if (pause) {
         viewSender.firePropertyChange("pause", oldGameViewDto, null);
@@ -118,6 +119,10 @@ public class GameModel implements Runnable, DisposableBean {
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
       }
+      if (doubleApple % 40 == 0) {
+        appleSpawner.spawnApple();
+      }
+      doubleApple++;
     }
     snakes.clear();
   }
