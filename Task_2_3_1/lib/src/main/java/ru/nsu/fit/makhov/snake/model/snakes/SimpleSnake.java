@@ -7,8 +7,8 @@ import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
 
 /**
- * Snake that sees an apple and walks towards it in a straight line.
- * If it kills the snake it will go any other way.
+ * Snake that sees an apple and walks towards it in a straight line. If it kills the snake it will
+ * go any other way.
  */
 public class SimpleSnake extends AbstractSnake {
 
@@ -37,7 +37,8 @@ public class SimpleSnake extends AbstractSnake {
   @Override
   public boolean turn() {
     List<Point2D> apples = gameModel.getAppleSpawner().getApples();
-    Point2D head = new Point2D(snake.peekFirst().getCoordinateX(), snake.peekFirst().getCoordinateY());
+    Point2D head = new Point2D(snake.peekFirst().getCoordinateX(),
+        snake.peekFirst().getCoordinateY());
     Comparator<Point2D> cmp = Comparator.comparingDouble(head::distance);
     Point2D nearestApple = apples.stream().min(cmp).orElseThrow();
     return move(nextDirection(head, nearestApple));

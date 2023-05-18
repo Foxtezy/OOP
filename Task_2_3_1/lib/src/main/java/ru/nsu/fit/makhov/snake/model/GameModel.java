@@ -70,6 +70,10 @@ public class GameModel implements Runnable, DisposableBean {
     playerSnake.changeDirection(direction);
   }
 
+
+  /**
+   * Initialize game model.
+   */
   public void init() {
     thread = Thread.currentThread();
     playerSnake = new PlayerSnake(this);

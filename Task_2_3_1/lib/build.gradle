@@ -18,6 +18,9 @@ plugins {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+    maven {
+        url "https://maven.imagej.net/content/repositories/public/"
+    }
 }
 
 dependencies {
@@ -37,6 +40,9 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.26'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+// https://mvnrepository.com/artifact/com.github.AlmasB/AStar
+    implementation group: 'com.github.AlmasB', name: 'AStar', version: '1.0.1'
 
 }
 

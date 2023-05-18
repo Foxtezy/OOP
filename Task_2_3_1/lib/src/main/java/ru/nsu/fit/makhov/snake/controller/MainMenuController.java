@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.ViewSelector;
+import ru.nsu.fit.makhov.snake.model.snakes.AStarSnake;
 import ru.nsu.fit.makhov.snake.model.snakes.HamiltonSnake;
 import ru.nsu.fit.makhov.snake.model.snakes.SimpleSnake;
 
@@ -64,6 +65,7 @@ public class MainMenuController {
     switch (type) {
       case "Hamilton" -> gameModel.addSnake(new HamiltonSnake(gameModel, id));
       case "SimpleSnake" -> gameModel.addSnake(new SimpleSnake(gameModel, id));
+      case "AStarSnake" -> gameModel.addSnake(new AStarSnake(gameModel, id));
     }
   }
 
@@ -79,9 +81,9 @@ public class MainMenuController {
     sizeY.setValueFactory(sizeFactoryY);
     speed.setValueFactory(speedFactory);
     ObservableList<String> secondPlayerTypes = FXCollections.observableArrayList("None", "Hamilton",
-        "SimpleSnake");
+        "SimpleSnake", "AStarSnake");
     ObservableList<String> thirdPlayerTypes = FXCollections.observableArrayList("None", "Hamilton",
-        "SimpleSnake");
+        "SimpleSnake", "AStarSnake");
     secondPlayer.setItems(secondPlayerTypes);
     thirdPlayer.setItems(thirdPlayerTypes);
   }
