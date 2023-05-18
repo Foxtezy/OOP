@@ -14,9 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.makhov.snake.model.GameField;
+import ru.nsu.fit.makhov.snake.model.GameModel;
 import ru.nsu.fit.makhov.snake.model.cell.Cell;
 import ru.nsu.fit.makhov.snake.model.dto.GameViewDto;
 
@@ -24,7 +24,6 @@ import ru.nsu.fit.makhov.snake.model.dto.GameViewDto;
  * Main game field view.
  */
 @Component
-@RequiredArgsConstructor
 public class GameView implements PropertyChangeListener {
 
   @FXML
@@ -41,6 +40,10 @@ public class GameView implements PropertyChangeListener {
   private NumberBinding rectsAreaSize;
 
   private TileFactory tileFactory;
+
+  public GameView(GameModel gameModel) {
+    gameModel.addPropertyChangeListener(this);
+  }
 
   @FXML
   public void initialize() {

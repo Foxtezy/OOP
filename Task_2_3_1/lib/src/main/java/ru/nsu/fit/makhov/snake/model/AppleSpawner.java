@@ -1,5 +1,6 @@
 package ru.nsu.fit.makhov.snake.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javafx.geometry.Point2D;
@@ -19,7 +20,7 @@ public class AppleSpawner {
 
   private final Random random = new Random();
 
-  private final List<Point2D> apples;
+  private final List<Point2D> apples = new ArrayList<>();
 
   public List<Point2D> getApples() {
     return apples;
@@ -53,6 +54,10 @@ public class AppleSpawner {
       x = random.nextInt(gameField.getSizeX());
       y = random.nextInt(gameField.getSizeY());
     } while (gameField.getCell(x, y).orElseThrow().getClass() != EmptyCell.class);
+    spawnApple(x, y);
+  }
+
+  public void spawnApple(int x, int y) {
     gameField.setCell(new AppleCell(), x, y);
     apples.add(new Point2D(x, y));
   }

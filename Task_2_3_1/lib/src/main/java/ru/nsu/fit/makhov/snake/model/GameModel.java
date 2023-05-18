@@ -1,5 +1,6 @@
 package ru.nsu.fit.makhov.snake.model;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,6 @@ import ru.nsu.fit.makhov.snake.model.dto.GameViewDto;
 import ru.nsu.fit.makhov.snake.model.event.Direction;
 import ru.nsu.fit.makhov.snake.model.snakes.AbstractSnake;
 import ru.nsu.fit.makhov.snake.model.snakes.PlayerSnake;
-import ru.nsu.fit.makhov.snake.view.GameView;
 
 /**
  * Main model class.
@@ -32,12 +32,10 @@ public class GameModel implements Runnable, DisposableBean {
    *
    * @param gameField game field.
    * @param appleSpawner spawner of apples.
-   * @param gameView game view.
    */
-  public GameModel(GameField gameField, AppleSpawner appleSpawner, GameView gameView) {
+  public GameModel(GameField gameField, AppleSpawner appleSpawner) {
     this.gameField = gameField;
     this.appleSpawner = appleSpawner;
-    viewSender.addPropertyChangeListener(gameView);
   }
 
   public void setSpeed(int speed) {
@@ -60,6 +58,10 @@ public class GameModel implements Runnable, DisposableBean {
     return gameField;
   }
 
+  public PlayerSnake getPlayerSnake() {
+    return playerSnake;
+  }
+
   public AppleSpawner getAppleSpawner() {
     return appleSpawner;
   }
@@ -68,12 +70,16 @@ public class GameModel implements Runnable, DisposableBean {
     playerSnake.changeDirection(direction);
   }
 
-  private void init() {
+  public void init() {
     thread = Thread.currentThread();
     playerSnake = new PlayerSnake(this);
     appleSpawner.init();
     appleSpawner.spawnAppleIfFieldEmpty();
     pause = false;
+  }
+
+  public void addPropertyChangeListener(PropertyChangeListener pcl) {
+    viewSender.addPropertyChangeListener(pcl);
   }
 
   @Override

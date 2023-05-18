@@ -27,6 +27,10 @@ public abstract class AbstractSnake {
 
   protected final int snakeId;
 
+  public Deque<SnakeSegment> getSnake() {
+    return snake;
+  }
+
   /**
    * Kill snake.
    */
@@ -59,10 +63,10 @@ public abstract class AbstractSnake {
   protected void spawn() {
     switch ((snakeId - 1) % 4) {
       case 0 -> {
-        snake.add(new SnakeSegment(0, 0));
-        snake.add(new SnakeSegment(0, 1));
-        snake.add(new SnakeSegment(0, 2));
         snake.add(new SnakeSegment(0, 3));
+        snake.add(new SnakeSegment(0, 2));
+        snake.add(new SnakeSegment(0, 1));
+        snake.add(new SnakeSegment(0, 0));
       }
       case 1 -> {
         snake.add(new SnakeSegment(gameModel.getGameField().getSizeX() - 1, 0));
