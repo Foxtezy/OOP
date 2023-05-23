@@ -28,14 +28,12 @@ public class TileFactory {
       case APPLE -> new Rectangle(20, 20, Color.RED);
       case SNAKE -> {
         if (cell instanceof SnakeCell snakeCell) {
-          if (snakeColors.containsKey(snakeCell.getSnakeId())) {
-            yield new Rectangle(20, 20, snakeColors.get(snakeCell.getSnakeId()));
-          } else {
+          if (!snakeColors.containsKey(snakeCell.getSnakeId())) {
             Color snakeColor = new Color(rand.nextDouble(1), rand.nextDouble(1),
                 rand.nextDouble(1), 1);
             snakeColors.put(snakeCell.getSnakeId(), snakeColor);
-            yield new Rectangle(20, 20, snakeColor);
           }
+          yield new Rectangle(20, 20, snakeColors.get(snakeCell.getSnakeId()));
         } else {
           throw new ClassCastException();
         }

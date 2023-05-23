@@ -30,7 +30,7 @@
                   </VBox>
                   <VBox alignment="TOP_CENTER">
                      <children>
-                        <Spinner fx:id="sizeX" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
+                        <Spinner fx:id="sizeX" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
                         <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="WIGHT" textAlignment="CENTER" />
                      </children>
                   </VBox>

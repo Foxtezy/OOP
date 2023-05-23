@@ -30,7 +30,7 @@ public class GameModel implements Runnable, DisposableBean {
   /**
    * Constructor.
    *
-   * @param gameField game field.
+   * @param gameField    game field.
    * @param appleSpawner spawner of apples.
    */
   public GameModel(GameField gameField, AppleSpawner appleSpawner) {
@@ -66,8 +66,15 @@ public class GameModel implements Runnable, DisposableBean {
     return appleSpawner;
   }
 
+  /**
+   * Add new direction to player snake.
+   *
+   * @param direction new direction.
+   */
   public void changePlayerSnakeDirection(Direction direction) {
-    playerSnake.changeDirection(direction);
+    if (playerSnake != null) {
+      playerSnake.changeDirection(direction);
+    }
   }
 
 
@@ -105,11 +112,11 @@ public class GameModel implements Runnable, DisposableBean {
         viewSender.firePropertyChange("resume", null, oldGameViewDto);
       }
       long currTime = System.currentTimeMillis();
-      snakes.removeIf(snake -> !snake.turn());
       if (!playerSnake.turn()) {
         viewSender.firePropertyChange("gameOver", oldGameViewDto, null);
         break;
       }
+      snakes.removeIf(snake -> !snake.turn());
       GameViewDto newGameViewDto = new GameViewDto(playerSnake.getScore(),
           new GameField(gameField));
       viewSender.firePropertyChange("repaint", oldGameViewDto, newGameViewDto);

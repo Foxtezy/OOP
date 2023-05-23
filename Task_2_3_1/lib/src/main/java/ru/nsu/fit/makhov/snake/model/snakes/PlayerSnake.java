@@ -25,7 +25,13 @@ public class PlayerSnake extends AbstractSnake {
   @Override
   public boolean turn() {
     if (!directionQueue.isEmpty()) {
-      direction = directionQueue.poll();
+      Direction nextDirection = directionQueue.poll();
+      if (!(nextDirection == Direction.DOWN && direction == Direction.UP
+          || nextDirection == Direction.UP && direction == Direction.DOWN
+          || nextDirection == Direction.RIGHT && direction == Direction.LEFT
+          || nextDirection == Direction.LEFT && direction == Direction.RIGHT)) {
+        direction = nextDirection;
+      }
     }
     return move(direction);
   }
