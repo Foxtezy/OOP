@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.fit.makhov.snake.controller.MainMenuController">
+  <top>
+    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="153.0" prefWidth="600.0" style="-fx-background-color: #4a44;" text="SNAKE GAME" BorderPane.alignment="CENTER">
+      <font>
+        <Font size="36.0" />
+      </font>
+    </Label>
+  </top>
+  <center>
+    <VBox alignment="CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="282.0" prefWidth="600.0" spacing="20.0">
+      <children>
+        <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#startGame" prefHeight="75.0" prefWidth="189.0" text="START">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+            <HBox alignment="TOP_CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefWidth="600.0" spacing="70.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0">
+                     <children>
+                        <Spinner fx:id="speed" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
+                        <Label text="SPEED" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Spinner fx:id="sizeX" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="WIGHT" textAlignment="CENTER" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Spinner fx:id="sizeY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="60.0" />
+                        <Label text="HEIGHT" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="100.0" right="100.0" />
+               </VBox.margin>
+            </HBox>
+      </children>
+      <opaqueInsets>
+        <Insets />
+      </opaqueInsets>
+      <BorderPane.margin>
+        <Insets bottom="10.0" />
+      </BorderPane.margin>
+    </VBox>
+  </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="56.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" />
+         </BorderPane.margin>
+         <children>
+            <ComboBox fx:id="secondPlayer" prefWidth="150.0" promptText="             2 PLAYER" />
+            <ComboBox fx:id="thirdPlayer" prefWidth="150.0" promptText="           3 PLAYER" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
